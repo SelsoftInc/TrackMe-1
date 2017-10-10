@@ -12,7 +12,7 @@ public interface TenantService {
 
 	//public List<Tenant> tenantList();
 
-	public List<Tenant> getAllTenants();
+	public List<Tenant> getAllTenants(String status);
 
 	public List<Tenant> saveNewTenant();
 

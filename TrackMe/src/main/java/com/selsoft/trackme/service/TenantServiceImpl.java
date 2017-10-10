@@ -25,8 +25,8 @@ public class TenantServiceImpl implements TenantService {
 	}
 
 	@Override
-	public List<Tenant> getAllTenants() {
-		return tenantDAO.fetchTenants(null);
+	public List<Tenant> getAllTenants(String status) {
+		return tenantDAO.fetchTenants(status);
 	}
 
 	@Override

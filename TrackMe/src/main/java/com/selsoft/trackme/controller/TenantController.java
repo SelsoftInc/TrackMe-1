@@ -44,7 +44,7 @@ private static final Logger logger = Logger.getLogger(TenantController.class);
 
 	@RequestMapping(value = "/get-all-tenants", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<Tenant> getAllTenants() {
-		return tenantService.getAllTenants();
+		return tenantService.getAllTenants(null);
 	}
 	
 	
