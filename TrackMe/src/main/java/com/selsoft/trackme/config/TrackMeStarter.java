@@ -1,9 +1,10 @@
-package com.selsoft.trackme;
+package com.selsoft.trackme.config;
 
 import javax.servlet.Filter;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
+import com.selsoft.trackme.CORSFilter;
 import com.selsoft.trackme.email.config.WebConfig;
 
 /**
