@@ -21,8 +21,7 @@ import com.selsoft.trackme.service.TenantService;
 import com.selsoft.trackme.service.UserService;
 
 public class TenantController {
-
-	private static final Logger logger = Logger.getLogger(TenantController.class);
+private static final Logger logger = Logger.getLogger(TenantController.class);
 
 	@Autowired
 	private TenantService tenantService;
@@ -38,9 +37,15 @@ public class TenantController {
 
 	}
 
-	@RequestMapping(value = "/getEmployee", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<Tenant> tenantList() {
-		return tenantService.tenantList();
+	@RequestMapping(value = "/save-new-tenant", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<Tenant> saveNewTenant() {
+		return tenantService.saveNewTenant();
 	}
 
+	@RequestMapping(value = "/get-all-tenants", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<Tenant> getAllTenants() {
+		return tenantService.getAllTenants();
+	}
+	
+	
 }

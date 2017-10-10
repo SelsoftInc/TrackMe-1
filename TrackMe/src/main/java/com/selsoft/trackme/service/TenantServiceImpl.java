@@ -7,13 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.selsoft.trackme.dao.TenantDAO;
-import com.selsoft.trackme.dao.UserDao;
-import com.selsoft.trackme.model.Errors;
-import com.selsoft.trackme.model.Owner;
 import com.selsoft.trackme.model.Tenant;
-import com.selsoft.trackme.model.User;
-import com.selsoft.trackme.utils.Utils;
-import com.selsoft.trackme.validation.UserValidation;
+
 
 @Service("tenantService")
 public class TenantServiceImpl implements TenantService {
@@ -30,8 +25,15 @@ public class TenantServiceImpl implements TenantService {
 	}
 
 	@Override
-	public List<Tenant> tenantList() {
+	public List<Tenant> getAllTenants() {
+		return tenantDAO.fetchTenants(null);
+	}
+
+	@Override
+	public List<Tenant> saveNewTenant() {
 		return tenantDAO.findAll();
 	}
 
+
+	
 }

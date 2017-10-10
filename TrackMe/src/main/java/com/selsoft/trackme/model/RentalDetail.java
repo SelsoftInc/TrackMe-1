@@ -7,6 +7,12 @@ public class RentalDetail {
 	private int deposit;
 	private String leaseType;
 	private Date effectivedate;
+	
+
+	public RentalDetail(String leaseType) {
+		super();
+		this.leaseType = LeaseType.RENT.toString();
+	}
 
 	public int getRent() {
 		return rent;

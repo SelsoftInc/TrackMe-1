@@ -16,6 +16,10 @@ public class Tenant {
 	@JsonProperty(required = true)
 	private String tenantPhoneNumber;
 	private String tenantStatus;
+	public Tenant(String tenantStatus) {
+		
+		this.tenantStatus = TenantStatus.NEW.toString();;
+	}
 
 	public String getTenantFirstName() {
 		return tenantFirstName;
