@@ -4,7 +4,6 @@ import java.util.Locale;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +25,7 @@ import com.selsoft.trackme.model.GenericResponse;
 import com.selsoft.trackme.model.Owner;
 import com.selsoft.trackme.model.User;
 import com.selsoft.trackme.service.UserService;
+import com.selsoft.trackme.utils.UserType;
 
 /**
  * This is the UserController for the User Registration, Login and Retriving
@@ -40,6 +40,7 @@ import com.selsoft.trackme.service.UserService;
 public class UserController {
 
 	private static final Logger logger = Logger.getLogger(UserController.class);
+	private static UserType userType = new UserType();
 
 	@Autowired
 	private UserService userService;
@@ -47,9 +48,9 @@ public class UserController {
 	private MailSenderService mailSender;
 
 	/**
-	 * <<<<<<< HEAD This handler method is for the User Registration, This will
-	 * transfer the data to Service. The User Data will be Binded to the User
-	 * Object which is coming from the Client.
+	 * This handler method is for the User Registration, This will transfer the
+	 * data to Service. The User Data will be Binded to the User Object which is
+	 * coming from the Client.
 	 * 
 	 * @param user
 	 *            as binding object to hold the User's Registration Data from
@@ -64,12 +65,26 @@ public class UserController {
 	 *            as binding object to hold the User's Registration Data from
 	 *            the Registration Form.
 	 * @return the Errors Object as JSON Object, If any Validation error occurs
-	 *         for the I/P data. >>>>>>> refs/remotes/origin/master
+	 *         for the I/P data.
 	 */
 	@RequestMapping(value = "/addUser", method = RequestMethod.POST)
 	public ResponseEntity<Errors> saveUser(@RequestBody User user) {
+		User userWithType = null;
 		logger.info(user.getFirstName() + " data comes into UserController saveUser() for processing");
-		Errors errors = userService.saveUser(user);
+
+		if ("OWN".equals(user.getUserType())) {
+			userWithType = userType.createNewOwner(user);
+		}
+
+		else if ("MGR".equals(user.getUserType())) {
+			userWithType = userType.createNewPropertyManager(user);
+
+		} else if ("TNT".equals(user.getUserType())) {
+			userWithType = userType.createNewTenant(user);
+
+		}
+		Errors errors = userService.saveUser(userWithType);
+
 		return new ResponseEntity<Errors>(errors, HttpStatus.CREATED);
 	}
 
@@ -147,6 +162,7 @@ public class UserController {
 		logger.info("Logout Successfully");
 
 		return new ResponseEntity<User>(new User(), HttpStatus.ACCEPTED);
+
 	}
 
 }
