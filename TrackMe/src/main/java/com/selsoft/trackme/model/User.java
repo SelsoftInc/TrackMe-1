@@ -18,6 +18,16 @@ public class User {
 	private String password;
 	private boolean loggedOn;
 	private String lastAccessed = "";
+	private String userType;
+	
+	
+	public String getUserType() {
+		return userType;
+	}
+
+	public void setUserType(String userType) {
+		this.userType = userType;
+	}
 
 	public String getFirstName() {
 		return firstName;
@@ -67,23 +77,11 @@ public class User {
 		this.lastAccessed = lastAccessed;
 	}
 
+	
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("Employee [firstName=");
-		builder.append(firstName);
-		builder.append(", lastName=");
-		builder.append(lastName);
-		builder.append(", email=");
-		builder.append(email);
-		builder.append(", password=");
-		builder.append(password);
-		builder.append(", loggedOn=");
-		builder.append(loggedOn);
-		builder.append(", lastAccessed=");
-		builder.append(lastAccessed);
-		builder.append("]");
-		return builder.toString();
+		return "User [firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + ", password=" + password
+				+ ", loggedOn=" + loggedOn + ", lastAccessed=" + lastAccessed + ", userType=" + userType + "]";
 	}
 
 }
