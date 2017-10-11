@@ -1,4 +1,4 @@
-package com.selsoft.trackme.email.config;
+package com.selsoft.trackme.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;

@@ -1,4 +1,4 @@
-package com.selsoft.trackme.email.config;
+package com.selsoft.trackme.config;
 
 public class Log4jConfig {
 

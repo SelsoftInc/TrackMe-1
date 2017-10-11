@@ -29,4 +29,6 @@ public interface UserService {
 
 	public void userLogout(String email);
 
+	
+	
 }

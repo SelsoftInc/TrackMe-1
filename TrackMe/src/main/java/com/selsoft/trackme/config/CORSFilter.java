@@ -1,4 +1,4 @@
-package com.selsoft.trackme;
+package com.selsoft.trackme.config;
 
 import java.io.IOException;
 

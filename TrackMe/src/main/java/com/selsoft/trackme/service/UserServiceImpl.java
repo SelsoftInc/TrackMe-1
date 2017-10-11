@@ -57,6 +57,13 @@ public class UserServiceImpl implements UserService {
 
 			user.setPassword(encryptPass);
 			userDao.saveUser(user);
+
+			/*
+			 * if(usertype.equals("MGR")){
+			 * 
+			 * }
+			 */
+
 		} else {
 			logger.info("User data is not Valid returning Error Data");
 			return getError(user);
@@ -193,5 +200,7 @@ public class UserServiceImpl implements UserService {
 		User user = userDao.userLogout(email);
 
 	}
+
+
 
 }

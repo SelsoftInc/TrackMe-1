@@ -1,5 +1,6 @@
 package com.selsoft.trackme.dao;
 
+import com.selsoft.trackme.model.Errors;
 import com.selsoft.trackme.model.PasswordResetToken;
 import com.selsoft.trackme.model.User;
 
@@ -19,4 +20,6 @@ public interface UserDao {
 	public void saveResetPasswordToken(PasswordResetToken token);
 
 	public User userLogout(String email);
+
+	public Errors saveUserType(User user,String userType);
 }

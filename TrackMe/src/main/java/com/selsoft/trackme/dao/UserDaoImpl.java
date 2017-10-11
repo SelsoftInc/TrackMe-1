@@ -64,10 +64,7 @@ public class UserDaoImpl implements UserDao {
 		logger.info("User Email " + user.getEmail() + " last access time " + user.getLastAccessed());
 
 	}
-	// public void changeUserPassword(User user, String password) {
-	// user.setPassword(passwordEncoder.encode(password));
-	// repository.save(user);
-	// }
+	
 
 	@Override
 	public User findUserByEmail(String email) {
@@ -93,6 +90,21 @@ public class UserDaoImpl implements UserDao {
 		logger.info("User " + user.getEmail() + " Logged out Successfully");
 		return user;
 
+	}
+
+	@Override
+	public Errors saveUserType(User user, String userType) {
+		
+		Query query = new Query(Criteria.where("userType").is(user.getUserType()));	
+		Update update = new Update();
+		update.set(" property owner", "OWN");
+		update.set("property manager", "MGR");
+		update.set("property tenant", "TNT");
+		template.updateFirst(query, update, User.class);
+		return null;
+
+		
+		
 	}
 
 }
