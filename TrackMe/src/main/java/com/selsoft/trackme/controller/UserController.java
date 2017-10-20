@@ -91,6 +91,8 @@ public class UserController {
 	 */
 	@RequestMapping(value = "/getUser", method = RequestMethod.GET)
 	public ResponseEntity<User> getUser() {
+		
+		
 		logger.info("Data retrived from UserController getUser()");
 		return new ResponseEntity<User>(new User(), HttpStatus.ACCEPTED);
 	}

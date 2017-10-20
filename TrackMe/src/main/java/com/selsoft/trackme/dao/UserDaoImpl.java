@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.selsoft.trackme.model.PasswordResetToken;
 import com.selsoft.trackme.model.Errors;
 import com.selsoft.trackme.model.User;
+import com.selsoft.trackme.utils.Utils;
 
 /**
  * 
@@ -27,15 +28,13 @@ public class UserDaoImpl implements UserDao {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * com.selsoft.trackme.dao.UserDao#saveUser(com.selsoft.trackme.model.User)
-	 * When User data comes from Service This method, will saves the Data into
-	 * DB by calling MongoTemplate save() =======
+	 * @see com.selsoft.trackme.dao.UserDao#saveUser(com.selsoft.trackme.model.User)
+	 * When User data comes from Service This method, will saves the Data into DB by
+	 * calling MongoTemplate save() =======
 	 * 
-	 * @see
-	 * com.selsoft.trackme.dao.UserDao#saveUser(com.selsoft.trackme.model.User)
-	 * When User data comes from Service This method, will saves the Data into
-	 * DB by calling MongoTemplate save() >>>>>>> refs/remotes/origin/master
+	 * @see com.selsoft.trackme.dao.UserDao#saveUser(com.selsoft.trackme.model.User)
+	 * When User data comes from Service This method, will saves the Data into DB by
+	 * calling MongoTemplate save() >>>>>>> refs/remotes/origin/master
 	 * 
 	 */
 	@Override
@@ -95,6 +94,30 @@ public class UserDaoImpl implements UserDao {
 		update.set("property manager", "MGR");
 		update.set("property tenant", "TNT");
 		template.updateFirst(query, update, User.class);
+		return null;
+
+	}
+
+	@Override
+	public User checkUserLogin(User user) {
+		System.out.println("Check User Login DAO");
+		Query query = new Query(Criteria.where("email").is(user.getEmail()));
+
+		List<User> userExist = template.find(query, User.class);
+		if (userExist.size() > 0) {
+
+			User returnedUser = userExist.get(0);
+			System.out.println(returnedUser);
+			String pass = returnedUser.getPassword();
+			String password = Utils.decryptPassword(pass);
+			System.out.println(user.getPassword());
+			System.out.println(password);
+			if (user.getPassword().equals(password)) {
+				return returnedUser;
+			} else {
+				return null;
+			}
+		}
 		return null;
 
 	}

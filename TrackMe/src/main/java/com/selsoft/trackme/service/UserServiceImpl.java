@@ -6,11 +6,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.selsoft.trackme.dao.UserDao;
 import com.selsoft.trackme.model.Errors;
 import com.selsoft.trackme.model.PasswordResetToken;
@@ -57,7 +59,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	public Errors saveUserLogin(User user) {
-		if (isValidUser(user)) {
+		if (isValidLogin(user)) {
 			logger.info("User data is Valid and processing to Dao");
 
 			String password = user.getPassword();
@@ -77,7 +79,10 @@ public class UserServiceImpl implements UserService {
 
 		} else {
 			logger.info("Email Id or Password are not valid returning Error Data");
-			return getError(user);
+			ValidError validError=new ValidError("ERROR101", "Email or Password are not correct.");
+			List<ValidError> errorList=new ArrayList<>();
+			errorList.add(validError);
+			return new Errors(errorList);
 		}
 		return null;
 	}
@@ -149,6 +154,19 @@ public class UserServiceImpl implements UserService {
 		} else {
 			return false;
 		}
+	}
+
+	public boolean isValidLogin(User user) {
+
+//		String encryptPwd = Utils.encryptPassword(user.getPassword());
+//		user.setPassword(encryptPwd);
+		User validUser = userDao.checkUserLogin(user);
+		if (validUser != null) {
+			return true;
+		} else {
+			return false;
+		}
+
 	}
 
 	public SimpleMailMessage constructResetTokenEmail(String contextPath, Locale locale, String token, User user) {

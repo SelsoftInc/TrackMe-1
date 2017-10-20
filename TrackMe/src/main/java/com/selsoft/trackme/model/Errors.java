@@ -11,6 +11,13 @@ public class Errors {
 
 	private List<ValidError> error;
 
+	public Errors() {
+	}
+
+	public Errors(List<ValidError> error) {
+		this.error = error;
+	}
+
 	public List<ValidError> getError() {
 		return error;
 	}

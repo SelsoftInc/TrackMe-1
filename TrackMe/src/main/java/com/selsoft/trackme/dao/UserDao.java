@@ -14,12 +14,13 @@ public interface UserDao {
 
 	public void saveUserLogin(User user);
 
-	// public void changeUserPassword(User user, String password);
+	public User checkUserLogin(User user);
+
 	public User findUserByEmail(String email);
 
 	public void saveResetPasswordToken(PasswordResetToken token);
 
 	public User userLogout(String email);
 
-	public Errors saveUserType(User user,String userType);
+	public Errors saveUserType(User user, String userType);
 }
