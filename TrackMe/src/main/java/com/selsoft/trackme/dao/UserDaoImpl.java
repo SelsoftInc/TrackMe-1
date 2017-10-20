@@ -1,7 +1,6 @@
 package com.selsoft.trackme.dao;
 
 import java.util.List;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -9,13 +8,9 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
-
 import com.selsoft.trackme.model.PasswordResetToken;
-
 import com.selsoft.trackme.model.Errors;
-
 import com.selsoft.trackme.model.User;
-import com.selsoft.trackme.service.UserServiceImpl;
 
 /**
  * 
@@ -64,7 +59,6 @@ public class UserDaoImpl implements UserDao {
 		logger.info("User Email " + user.getEmail() + " last access time " + user.getLastAccessed());
 
 	}
-	
 
 	@Override
 	public User findUserByEmail(String email) {
@@ -94,8 +88,8 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public Errors saveUserType(User user, String userType) {
-		
-		Query query = new Query(Criteria.where("userType").is(user.getUserType()));	
+
+		Query query = new Query(Criteria.where("userType").is(user.getUserType()));
 		Update update = new Update();
 		update.set(" property owner", "OWN");
 		update.set("property manager", "MGR");
@@ -103,8 +97,6 @@ public class UserDaoImpl implements UserDao {
 		template.updateFirst(query, update, User.class);
 		return null;
 
-		
-		
 	}
 
 }

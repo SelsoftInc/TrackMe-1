@@ -2,25 +2,26 @@ package com.selsoft.trackme.model;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 @Document(collection = "TENANT")
 public class Tenant {
 
-	// @JsonProperty(required = true)
 	private String tenantFirstName;
-	// @JsonProperty(required = true)
+
 	private String tenantLastName;
-	// @JsonProperty(required = true)
+
 	private String tenantEmailId;
-	// @JsonProperty(required = true)
+
 	private String tenantPhoneNumber;
 	private String tenantStatus;
 
 	public Tenant(String tenantStatus) {
 
 		this.tenantStatus = TenantStatus.NEW.toString();
-		;
+
+	}
+
+	public Tenant() {
+
 	}
 
 	public String getTenantFirstName() {

@@ -3,11 +3,9 @@ package com.selsoft.trackme.service;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.itextpdf.text.DocumentException;
 import com.selsoft.trackme.dao.PdfDAO;
 import com.selsoft.trackme.model.Errors;
@@ -25,11 +23,12 @@ public class PdfServiceImpl implements PdfService {
 	@Autowired
 	PdfDAO pdfDAO;
 
+	@SuppressWarnings("unused")
 	private static final Logger logger = Logger.getLogger(PdfService.class);
 
 	@Override
 	public Errors createPdf() throws IOException, DocumentException {
-		
+
 		Activity acc = new Activity("1/15/14", "INDND 333", "Balance Forward", 50.00);
 		Activity acc1 = new Activity("1/15/14", "INV 3005 ", "Rent for February 14 Due 2/1/201", 1000.00);
 		Activity acc2 = new Activity("2/2/14", " ", "$20 Late Fee", 50.00);
@@ -63,10 +62,9 @@ public class PdfServiceImpl implements PdfService {
 		PdfBilling billing = new PdfBilling();
 
 		billing.createPdf(rentalPdf);
-		
+
 		return new Errors();
-		
-//		return pdfDAO.createPdf(rentalPdf);
+
 	}
 
 }

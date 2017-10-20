@@ -2,9 +2,7 @@ package com.selsoft.trackme.controller;
 
 import java.util.Locale;
 import java.util.UUID;
-
 import javax.servlet.http.HttpServletRequest;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.selsoft.trackme.dto.PasswordDto;
 import com.selsoft.trackme.email.common.MailResponse;
 import com.selsoft.trackme.email.service.MailSenderService;

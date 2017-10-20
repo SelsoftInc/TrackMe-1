@@ -1,14 +1,11 @@
 package com.selsoft.trackme.service;
 
 import java.util.List;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.selsoft.trackme.dao.TenantDAO;
 import com.selsoft.trackme.model.Tenant;
-
 
 @Service("tenantService")
 public class TenantServiceImpl implements TenantService {
@@ -16,6 +13,7 @@ public class TenantServiceImpl implements TenantService {
 	@Autowired
 	private TenantDAO tenantDAO;
 
+	@SuppressWarnings("unused")
 	private static final Logger logger = Logger.getLogger(TenantService.class);
 
 	@Override
@@ -34,6 +32,4 @@ public class TenantServiceImpl implements TenantService {
 		return tenantDAO.findAll();
 	}
 
-
-	
 }

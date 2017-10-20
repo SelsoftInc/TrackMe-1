@@ -21,6 +21,11 @@ public class User {
 	private String userType;
 	
 	
+
+	public User() {
+		
+	}
+
 	public String getUserType() {
 		return userType;
 	}
@@ -77,7 +82,6 @@ public class User {
 		this.lastAccessed = lastAccessed;
 	}
 
-	
 	@Override
 	public String toString() {
 		return "User [firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + ", password=" + password

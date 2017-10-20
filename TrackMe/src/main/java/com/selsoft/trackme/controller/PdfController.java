@@ -17,6 +17,7 @@ import com.selsoft.trackme.service.PdfService;
 @RestController
 public class PdfController {
 
+	@SuppressWarnings("unused")
 	private static final Logger logger = Logger.getLogger(PdfController.class);
 
 	@Autowired
@@ -29,7 +30,7 @@ public class PdfController {
 		try {
 			error = pdfService.createPdf();
 		} catch (IOException | DocumentException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 		return error;

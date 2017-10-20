@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.selsoft.trackme.model.Errors;
 import com.selsoft.trackme.model.Property;
+
 import com.selsoft.trackme.service.PropertyService;
 
 @RestController
@@ -30,4 +31,16 @@ public class PropertyController {
 		propertyService.saveNewProperty(property);
 
 	}
+
+	@RequestMapping(value = "setPropertyAsActive", method = RequestMethod.PUT)
+	public ResponseEntity<Errors> setPropertyAsActive(@RequestBody Property property) {
+		logger.info(
+				property.getPropertyStatus() + " data comes into PropertyController addNewProperty() for processing");
+
+		Errors errors = propertyService.setPropertyAsActive(property);
+
+		return new ResponseEntity<Errors>(errors, HttpStatus.CREATED);
+
+	}
+
 }

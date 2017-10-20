@@ -24,87 +24,82 @@ public class Property {
 	private int ownerid;
 	@JsonProperty(required = true)
 	private RentalDetail rentalDetail;
-
+	private String propertyStatus;
+	
+	
+	public Property() {
+		
+	}
+	public Property(String propertyStatus) {
+				
+		this.propertyStatus = PropertyStatus.NEW.toString();
+	}
 	public String getPropertyName() {
 		return propertyName;
 	}
-
 	public void setPropertyName(String propertyName) {
 		this.propertyName = propertyName;
 	}
-
 	public String getAddress1() {
 		return address1;
 	}
-
 	public void setAddress1(String address1) {
 		this.address1 = address1;
 	}
-
 	public String getAddress2() {
 		return address2;
 	}
-
 	public void setAddress2(String address2) {
 		this.address2 = address2;
 	}
-
 	public String getCity() {
 		return city;
 	}
-
 	public void setCity(String city) {
 		this.city = city;
 	}
-
 	public String getState() {
 		return state;
 	}
-
 	public void setState(String state) {
 		this.state = state;
 	}
-
 	public String getZipCode() {
 		return zipCode;
 	}
-
 	public void setZipCode(String zipCode) {
 		this.zipCode = zipCode;
 	}
-
 	public String getOwnerFirstName() {
 		return ownerFirstName;
 	}
-
 	public void setOwnerFirstName(String ownerFirstName) {
 		this.ownerFirstName = ownerFirstName;
 	}
-
 	public String getOwnerLastName() {
 		return ownerLastName;
 	}
-
 	public void setOwnerLastName(String ownerLastName) {
 		this.ownerLastName = ownerLastName;
 	}
-
 	public int getOwnerid() {
 		return ownerid;
 	}
-
 	public void setOwnerid(int ownerid) {
 		this.ownerid = ownerid;
 	}
-
 	public RentalDetail getRentalDetail() {
 		return rentalDetail;
 	}
-
 	public void setRentalDetail(RentalDetail rentalDetail) {
 		this.rentalDetail = rentalDetail;
 	}
-
+	public String getPropertyStatus() {
+		return propertyStatus;
+	}
+	public void setPropertyStatus(String propertyStatus) {
+		this.propertyStatus = propertyStatus;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -128,8 +123,14 @@ public class Property {
 		builder.append(ownerid);
 		builder.append(", rentalDetail=");
 		builder.append(rentalDetail);
+		builder.append(", propertyStatus=");
+		builder.append(propertyStatus);
 		builder.append("]");
 		return builder.toString();
 	}
+	
+	
+	
+	
 
-}
+	}

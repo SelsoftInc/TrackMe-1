@@ -1,11 +1,8 @@
 package com.selsoft.trackme.service;
 
 import java.util.Locale;
-
 import org.springframework.mail.SimpleMailMessage;
-
 import com.selsoft.trackme.model.Errors;
-import com.selsoft.trackme.model.Tenant;
 import com.selsoft.trackme.model.User;
 
 /**
@@ -29,6 +26,4 @@ public interface UserService {
 
 	public void userLogout(String email);
 
-	
-	
 }

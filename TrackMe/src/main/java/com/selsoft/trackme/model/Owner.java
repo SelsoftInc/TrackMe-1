@@ -10,6 +10,11 @@ public class Owner {
 	private String ownerStatus;
 	private int EmailId;
 	private int ownerPhoneNumber;
+	
+
+	public Owner() {
+		
+	}
 
 	public int getOwnerId() {
 		return ownerId;

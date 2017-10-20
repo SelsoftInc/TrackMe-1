@@ -1,33 +1,18 @@
 package com.selsoft.trackme.service;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
-import java.util.UUID;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-
 import com.selsoft.trackme.dao.UserDao;
 import com.selsoft.trackme.model.Errors;
-import com.selsoft.trackme.model.GenericResponse;
 import com.selsoft.trackme.model.PasswordResetToken;
 import com.selsoft.trackme.model.User;
 import com.selsoft.trackme.model.ValidError;
@@ -200,7 +185,5 @@ public class UserServiceImpl implements UserService {
 		User user = userDao.userLogout(email);
 
 	}
-
-
 
 }

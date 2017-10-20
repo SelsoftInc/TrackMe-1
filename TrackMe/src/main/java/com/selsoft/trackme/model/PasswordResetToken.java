@@ -9,6 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document
 public class PasswordResetToken {
 
+	@SuppressWarnings("unused")
 	private static final int EXPIRATION = 20;
 
 	@Id

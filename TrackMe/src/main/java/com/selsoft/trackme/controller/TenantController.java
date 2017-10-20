@@ -1,7 +1,6 @@
 package com.selsoft.trackme.controller;
 
 import java.util.List;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -9,8 +8,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.selsoft.trackme.email.service.MailSenderService;
 import com.selsoft.trackme.model.Tenant;
 import com.selsoft.trackme.service.TenantService;
 
@@ -20,8 +17,8 @@ public class TenantController {
 
 	@Autowired
 	private TenantService tenantService;
-	@Autowired(required = true)
-	private MailSenderService mailSender;
+
+	//@Autowired(required = true)
 
 	@RequestMapping(value = "/add-tenant", method = RequestMethod.PUT)
 	public void addNewTenant(@RequestBody Tenant tenant) {
