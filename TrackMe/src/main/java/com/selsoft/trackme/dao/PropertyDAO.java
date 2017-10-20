@@ -13,7 +13,6 @@ public interface PropertyDAO {
 	
 	public Errors setPropertyAsActive(Property property);
 
-	public PropertyStatus findPropertyStatus(String propertyStatus);
 
 	
 

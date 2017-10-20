@@ -21,7 +21,7 @@ public class Property {
 	private String ownerFirstName;
 	private String ownerLastName;
 	@JsonProperty(required = true)
-	private int ownerid;
+	private int ownerId;
 	@JsonProperty(required = true)
 	private RentalDetail rentalDetail;
 	private String propertyStatus;
@@ -82,11 +82,11 @@ public class Property {
 	public void setOwnerLastName(String ownerLastName) {
 		this.ownerLastName = ownerLastName;
 	}
-	public int getOwnerid() {
-		return ownerid;
+	public int getOwnerId() {
+		return ownerId;
 	}
-	public void setOwnerid(int ownerid) {
-		this.ownerid = ownerid;
+	public void setOwnerId(int ownerId) {
+		this.ownerId = ownerId;
 	}
 	public RentalDetail getRentalDetail() {
 		return rentalDetail;
@@ -120,7 +120,7 @@ public class Property {
 		builder.append(", ownerLastName=");
 		builder.append(ownerLastName);
 		builder.append(", ownerid=");
-		builder.append(ownerid);
+		builder.append(ownerId);
 		builder.append(", rentalDetail=");
 		builder.append(rentalDetail);
 		builder.append(", propertyStatus=");

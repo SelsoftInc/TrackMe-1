@@ -10,10 +10,9 @@ public class Owner {
 	private String ownerStatus;
 	private int EmailId;
 	private int ownerPhoneNumber;
-	
 
 	public Owner() {
-		
+		this.ownerStatus = OwnerStatus.NEW.toString();
 	}
 
 	public int getOwnerId() {

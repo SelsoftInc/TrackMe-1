@@ -14,13 +14,9 @@ public class Tenant {
 	private String tenantPhoneNumber;
 	private String tenantStatus;
 
-	public Tenant(String tenantStatus) {
-
-		this.tenantStatus = TenantStatus.NEW.toString();
-
-	}
 
 	public Tenant() {
+		this.tenantStatus = TenantStatus.NEW.toString();
 
 	}
 

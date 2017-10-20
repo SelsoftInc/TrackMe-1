@@ -35,7 +35,7 @@ public class PropertyController {
 	@RequestMapping(value = "setPropertyAsActive", method = RequestMethod.PUT)
 	public ResponseEntity<Errors> setPropertyAsActive(@RequestBody Property property) {
 		logger.info(
-				property.getPropertyStatus() + " data comes into PropertyController addNewProperty() for processing");
+				property.getPropertyStatus() + " data comes into PropertyController setPropertyAsActive() for processing");
 
 		Errors errors = propertyService.setPropertyAsActive(property);
 

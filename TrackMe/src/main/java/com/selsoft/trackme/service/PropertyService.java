@@ -7,7 +7,6 @@ public interface PropertyService {
 
 	public void saveNewProperty(Property property);
 	public Errors setPropertyAsActive(Property property);
-	public Property findPropertyStatus(String status);
-
+	
 
 }

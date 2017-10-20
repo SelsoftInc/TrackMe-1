@@ -21,7 +21,7 @@ public class PropertyServiceImpl implements PropertyService {
 
 	public void saveNewProperty(Property property) {
 
-		Owner owner = propertyDAO.checkOwner(property.getOwnerid());
+		Owner owner = propertyDAO.checkOwner(property.getOwnerId());
 
 		if (owner != null) {
 			property.setOwnerFirstName(owner.getOwnerFirstName());
@@ -33,17 +33,12 @@ public class PropertyServiceImpl implements PropertyService {
 
 	@Override
 	public Errors setPropertyAsActive(Property property) {
-		return null;
 
-		// propertyDAO.setPropertyAsActive(property.getPropertyStatus());
+		 propertyDAO.setPropertyAsActive(property);
+		 return null;
 
 	}
 
-	@Override
-	public Property findPropertyStatus(String status) {
-
-		PropertyStatus proprtyStatus = propertyDAO.findPropertyStatus(status);
-		return null;
-	}
+	
 
 }
