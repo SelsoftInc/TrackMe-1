@@ -75,7 +75,7 @@ public class UserDaoImpl implements UserDao {
 
 		template.save(token);
 
-	}
+	} 
 
 	@Override
 	public void userLogout(String email) {

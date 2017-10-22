@@ -20,7 +20,7 @@ public class PropertyServiceImpl implements PropertyService {
 	private static final Logger logger = Logger.getLogger(PropertyServiceImpl.class);
 
 	public void saveNewProperty(Property property) {
-
+ 
 		Owner owner = propertyDAO.checkOwner(property.getOwnerId());
 
 		if (owner != null) {

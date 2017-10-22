@@ -12,7 +12,4 @@ public interface PropertyDAO {
 	
 	public Errors setPropertyAsActive(Property property);
 
-
-	
-
 }

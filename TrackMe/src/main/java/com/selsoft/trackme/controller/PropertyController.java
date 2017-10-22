@@ -16,7 +16,7 @@ import com.selsoft.trackme.service.PropertyService;
 @RestController
 @RequestMapping(value = "/property")
 public class PropertyController {
-
+ 
 	private static final Logger logger = Logger.getLogger(PropertyController.class);
 
 	@Autowired

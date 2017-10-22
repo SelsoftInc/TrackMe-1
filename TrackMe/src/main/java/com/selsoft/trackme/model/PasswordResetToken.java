@@ -18,7 +18,7 @@ public class PasswordResetToken {
 	@DBRef
 	private User user;
 	private Date expiryDate;
-
+ 
 	public PasswordResetToken(String token, User user, Date expiryDate) {
 		this.token = token;
 		this.user = user;

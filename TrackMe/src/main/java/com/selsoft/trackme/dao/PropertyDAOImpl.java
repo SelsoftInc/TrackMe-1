@@ -29,7 +29,7 @@ public class PropertyDAOImpl implements PropertyDAO {
 	public void saveNewProperty(Property property) {
 		template.save(property);
 	}
-
+ 
 	@Override
 	public Owner checkOwner(int ownerId) {
 		Query query = new Query(Criteria.where("ownerId").is(ownerId));

@@ -21,7 +21,7 @@ public class EmailServiceBeanConfiguration {
 
 	@Autowired(required = true)
 	private Environment environment;
-
+ 
 	@Bean(name = { "mailSender", "mailSenderReference" })
 	public JavaMailSender getMailSenderImpl() {
 		JavaMailSenderImpl mailSender = new JavaMailSenderImpl();

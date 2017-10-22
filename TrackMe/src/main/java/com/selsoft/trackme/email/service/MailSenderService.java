@@ -16,7 +16,7 @@ import com.selsoft.trackme.email.common.MailResponse;
 @Component("mailSenderService")
 @PropertySource("classpath:emailServices.properties")
 public class MailSenderService {
-
+ 
 	@Autowired(required = true)
 	private JavaMailSender mailSender;
 	@Autowired(required = true)

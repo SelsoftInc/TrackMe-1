@@ -21,7 +21,7 @@ public class OwnerController {
 
 	@SuppressWarnings("unused")
 	private static final Logger logger = Logger.getLogger(OwnerController.class);
-
+ 
 	@Autowired
 	OwnerService ownerService;
 

@@ -13,7 +13,7 @@ public class Errors {
 
 	public Errors() {
 	}
-
+ 
 	public Errors(List<ValidError> error) {
 		this.error = error;
 	}

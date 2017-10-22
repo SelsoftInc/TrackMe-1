@@ -10,7 +10,7 @@ public class Owner {
 	private String ownerStatus;
 	private int emailId;
 	private int ownerPhoneNumber;
-
+ 
 	public Owner() {
 		this.ownerStatus = OwnerStatus.NEW.toString();
 	}

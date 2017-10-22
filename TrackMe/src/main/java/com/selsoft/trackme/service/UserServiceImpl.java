@@ -203,7 +203,7 @@ public class UserServiceImpl implements UserService {
 				userDao.changeUserPassword(user, encryptPass);
 			}
 		}
-
+ 
 		ValidError passwordErrors = new ValidError("SUCSPWDUPD", "Password Updated Successfully.");
 
 		List<ValidError> list = new ArrayList<ValidError>();
