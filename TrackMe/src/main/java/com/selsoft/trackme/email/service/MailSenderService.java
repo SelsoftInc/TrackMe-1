@@ -1,37 +1,38 @@
 package com.selsoft.trackme.email.service;
 
-import java.util.List;
-import java.util.Locale;
+import javax.mail.internet.MimeMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
-import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
 
 import com.selsoft.trackme.email.common.Constants;
 import com.selsoft.trackme.email.common.MailResponse;
-import com.selsoft.trackme.model.User;
 
 @Component("mailSenderService")
 @PropertySource("classpath:emailServices.properties")
 public class MailSenderService {
 
 	@Autowired(required = true)
-	private MailSender mailSender;
+	private JavaMailSender mailSender;
 	@Autowired(required = true)
 	private Environment environment;
 
 	public MailResponse sendMail(SimpleMailMessage msg) {
 		MailResponse response = new MailResponse();
-		SimpleMailMessage message = new SimpleMailMessage();
 		try {
-			message.setFrom(environment.getProperty(Constants.USERNAME));
-			message.setTo(msg.getTo());
-			message.setSubject(msg.getSubject());
-			message.setText(msg.getText());
-			mailSender.send(message);
+
+			MimeMessage mimeMessage = mailSender.createMimeMessage();
+			MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, false, "utf-8");
+			helper.setFrom(environment.getProperty(Constants.USERNAME));
+			helper.setTo(msg.getTo());
+			helper.setSubject(msg.getSubject());
+			mimeMessage.setContent(msg.getText(), "text/html");
+			mailSender.send(mimeMessage);
 			response.setStatus("Success");
 			response.setErrorCode("0000");
 		} catch (Exception e) {

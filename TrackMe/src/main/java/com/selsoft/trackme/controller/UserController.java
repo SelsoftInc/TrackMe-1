@@ -2,7 +2,9 @@ package com.selsoft.trackme.controller;
 
 import java.util.Locale;
 import java.util.UUID;
+
 import javax.servlet.http.HttpServletRequest;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.selsoft.trackme.dto.PasswordDto;
 import com.selsoft.trackme.email.common.MailResponse;
 import com.selsoft.trackme.email.service.MailSenderService;
@@ -45,24 +48,23 @@ public class UserController {
 	private MailSenderService mailSender;
 
 	/**
-	 * This handler method is for the User Registration, This will transfer the
-	 * data to Service. The User Data will be Binded to the User Object which is
-	 * coming from the Client.
+	 * This handler method is for the User Registration, This will transfer the data
+	 * to Service. The User Data will be Binded to the User Object which is coming
+	 * from the Client.
 	 * 
 	 * @param user
-	 *            as binding object to hold the User's Registration Data from
-	 *            the Registration Form.
-	 * @return the Errors Object as JSON Object, If any Validation error occurs
-	 *         for the I/P data. ======= This handler method is for the User
-	 *         Registration, This will transfer the data to Service. The User
-	 *         Data will be Binded to the User Object which is coming from the
-	 *         Client.
+	 *            as binding object to hold the User's Registration Data from the
+	 *            Registration Form.
+	 * @return the Errors Object as JSON Object, If any Validation error occurs for
+	 *         the I/P data. ======= This handler method is for the User
+	 *         Registration, This will transfer the data to Service. The User Data
+	 *         will be Binded to the User Object which is coming from the Client.
 	 * 
 	 * @param user
-	 *            as binding object to hold the User's Registration Data from
-	 *            the Registration Form.
-	 * @return the Errors Object as JSON Object, If any Validation error occurs
-	 *         for the I/P data.
+	 *            as binding object to hold the User's Registration Data from the
+	 *            Registration Form.
+	 * @return the Errors Object as JSON Object, If any Validation error occurs for
+	 *         the I/P data.
 	 */
 	@RequestMapping(value = "/addUser", method = RequestMethod.POST)
 	public ResponseEntity<Errors> saveUser(@RequestBody User user) {
@@ -91,8 +93,7 @@ public class UserController {
 	 */
 	@RequestMapping(value = "/getUser", method = RequestMethod.GET)
 	public ResponseEntity<User> getUser() {
-		
-		
+
 		logger.info("Data retrived from UserController getUser()");
 		return new ResponseEntity<User>(new User(), HttpStatus.ACCEPTED);
 	}
@@ -116,9 +117,9 @@ public class UserController {
 
 	@RequestMapping(value = "/resetPassword", method = RequestMethod.POST)
 	@ResponseBody
-	public GenericResponse resetPassword(HttpServletRequest request, Locale locale,
-			@RequestParam("email") String userEmail) {
-		User user = userService.findUserByEmail(userEmail);
+	public ResponseEntity<MailResponse> resetPassword(HttpServletRequest request, Locale locale,
+			@RequestParam("email") String email) {
+		User user = userService.findUserByEmail(email);
 		MailResponse response = null;
 		if (user != null) {
 			String token = UUID.randomUUID().toString();
@@ -126,7 +127,7 @@ public class UserController {
 			response = mailSender
 					.sendMail(userService.constructResetTokenEmail(getAppUrl(request), locale, token, user));
 		}
-		return new GenericResponse(response.getStatus());
+		return new ResponseEntity<MailResponse>(response, HttpStatus.CREATED);
 
 	}
 
@@ -137,12 +138,13 @@ public class UserController {
 
 	@RequestMapping(value = "/savePassword", method = RequestMethod.POST)
 	@ResponseBody
-	public GenericResponse savePassword(Locale locale, PasswordDto passwordDto) {
-		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	public Errors savePassword(@RequestParam("email") String email, @RequestBody PasswordDto passwordDto) {
+		// User user = (User)
+		// SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		User user = userService.findUserByEmail(email);
 
-		userService.changeUserPassword(user, passwordDto.getPassword());
-		return new GenericResponse("Password Changed Successfully");
-
+		Errors errors = userService.changeUserPassword(user, passwordDto);
+		return errors;
 	}
 
 	/**
@@ -156,11 +158,11 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/userLogout", method = RequestMethod.GET)
-	public ResponseEntity<User> logout(@RequestParam("email") String email) {
-		userService.userLogout(email);
-		logger.info("Logout Successfully");
+	public Errors logout(@RequestParam("email") String email) {
+		Errors errors=userService.userLogout(email);
+		logger.info(email+" Logged Out Successfully");
 
-		return new ResponseEntity<User>(new User(), HttpStatus.ACCEPTED);
+		return errors;
 
 	}
 

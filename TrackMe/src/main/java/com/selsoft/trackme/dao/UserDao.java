@@ -18,9 +18,11 @@ public interface UserDao {
 
 	public User findUserByEmail(String email);
 
+	public void changeUserPassword(User user, String password);
+
 	public void saveResetPasswordToken(PasswordResetToken token);
 
-	public User userLogout(String email);
+	public void userLogout(String email);
 
 	public Errors saveUserType(User user, String userType);
 }

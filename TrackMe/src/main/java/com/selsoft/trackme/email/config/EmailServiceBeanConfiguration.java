@@ -8,7 +8,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
-import org.springframework.mail.MailSender;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
 import com.selsoft.trackme.email.common.Constants;
@@ -23,7 +23,7 @@ public class EmailServiceBeanConfiguration {
 	private Environment environment;
 
 	@Bean(name = { "mailSender", "mailSenderReference" })
-	public MailSender getMailSenderImpl() {
+	public JavaMailSender getMailSenderImpl() {
 		JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
 		mailSender.setHost(environment.getProperty(Constants.HOST));
 		mailSender.setPort(Integer.parseInt(environment.getProperty(Constants.PORT_NO)));

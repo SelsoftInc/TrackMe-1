@@ -8,7 +8,7 @@ public class Owner {
 	private String ownerFirstName;
 	private String ownerLastName;
 	private String ownerStatus;
-	private int EmailId;
+	private int emailId;
 	private int ownerPhoneNumber;
 
 	public Owner() {
@@ -48,11 +48,11 @@ public class Owner {
 	}
 
 	public int getEmailId() {
-		return EmailId;
+		return emailId;
 	}
 
 	public void setEmailId(int emailId) {
-		EmailId = emailId;
+		this.emailId = emailId;
 	}
 
 	public int getOwnerPhoneNumber() {
@@ -61,25 +61,6 @@ public class Owner {
 
 	public void setOwnerPhoneNumber(int ownerPhoneNumber) {
 		this.ownerPhoneNumber = ownerPhoneNumber;
-	}
-
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("NewOwner [ownerId=");
-		builder.append(ownerId);
-		builder.append(", ownerFirstName=");
-		builder.append(ownerFirstName);
-		builder.append(", ownerLastName=");
-		builder.append(ownerLastName);
-		builder.append(", ownerStatus=");
-		builder.append(ownerStatus);
-		builder.append(", EmailId=");
-		builder.append(EmailId);
-		builder.append(", ownerPhoneNumber=");
-		builder.append(ownerPhoneNumber);
-		builder.append("]");
-		return builder.toString();
 	}
 
 }

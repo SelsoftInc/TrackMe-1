@@ -13,7 +13,7 @@ public class PasswordResetToken {
 	private static final int EXPIRATION = 20;
 
 	@Id
-	private Long id;
+	private long id;
 	private String token;
 	@DBRef
 	private User user;
@@ -25,7 +25,7 @@ public class PasswordResetToken {
 		this.expiryDate = expiryDate;
 	}
 
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
 

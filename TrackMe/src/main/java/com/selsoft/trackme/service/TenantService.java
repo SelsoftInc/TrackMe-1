@@ -1,6 +1,7 @@
 package com.selsoft.trackme.service;
 
 import java.util.List;
+
 import com.selsoft.trackme.model.Tenant;
 
 public interface TenantService {

@@ -1,11 +1,13 @@
 package com.selsoft.trackme.dao;
 
 import java.util.List;
+
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Repository;
+
 import com.selsoft.trackme.model.Owner;
-import org.apache.log4j.Logger;
 
 @Repository
 public class OwnerDaoImpl implements OwnerDao {

@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.selsoft.trackme.model.Errors;
 import com.selsoft.trackme.model.Property;
-
 import com.selsoft.trackme.service.PropertyService;
 
 @RestController
@@ -23,7 +22,7 @@ public class PropertyController {
 	@Autowired
 	PropertyService propertyService;
 
-	@RequestMapping(value = "add-property", method = RequestMethod.PUT)
+	@RequestMapping(value = "add-property", method = RequestMethod.POST)
 	public void addNewProperty(@RequestBody Property property) {
 		logger.info(
 				property.getOwnerFirstName() + " data comes into PropertyController addNewProperty() for processing");

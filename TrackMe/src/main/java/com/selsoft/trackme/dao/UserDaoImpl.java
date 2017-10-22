@@ -1,6 +1,7 @@
 package com.selsoft.trackme.dao;
 
 import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -8,8 +9,9 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
-import com.selsoft.trackme.model.PasswordResetToken;
+
 import com.selsoft.trackme.model.Errors;
+import com.selsoft.trackme.model.PasswordResetToken;
 import com.selsoft.trackme.model.User;
 import com.selsoft.trackme.utils.Utils;
 
@@ -61,27 +63,28 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public User findUserByEmail(String email) {
+		System.out.println("Email is: " + email);
 		Query query = new Query(Criteria.where("email").is(email.toLowerCase()));
 		List<User> userExist = template.find(query, User.class);
-
+		System.out.println(userExist.get(0));
 		return userExist.get(0);
 	}
 
 	@Override
 	public void saveResetPasswordToken(PasswordResetToken token) {
 
+		template.save(token);
+
 	}
 
 	@Override
-	public User userLogout(String email) {
-		User user = new User();
-		Query query = new Query(Criteria.where("email").is(user.getEmail().toLowerCase()));
+	public void userLogout(String email) {
+		Query query = new Query(Criteria.where("email").is(email.toLowerCase()));
 		Update update = new Update();
 		update.set("loggedOn", false);
 		template.updateFirst(query, update, User.class);
 
-		logger.info("User " + user.getEmail() + " Logged out Successfully");
-		return user;
+		logger.info("User " + email + " Logged out Successfully");
 
 	}
 
@@ -119,6 +122,21 @@ public class UserDaoImpl implements UserDao {
 			}
 		}
 		return null;
+
+	}
+
+	@Override
+	public void changeUserPassword(User user, String password) {
+
+		Query query = new Query(Criteria.where("email").is(user.getEmail()));
+
+		List<User> userExist = template.find(query, User.class);
+		if (userExist.size() > 0) {
+
+			User returnedUser = userExist.get(0);
+			returnedUser.setPassword(password);
+			template.save(returnedUser);
+		}
 
 	}
 

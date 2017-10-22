@@ -3,11 +3,11 @@ package com.selsoft.trackme.email.test;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.selsoft.trackme.email.config.EmailServiceBeanConfiguration;
-import com.selsoft.trackme.email.service.MailSenderService;
-
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+import com.selsoft.trackme.email.config.EmailServiceBeanConfiguration;
+import com.selsoft.trackme.email.service.MailSenderService;
 
 public class MailServiceTest {
 	@SuppressWarnings("resource")

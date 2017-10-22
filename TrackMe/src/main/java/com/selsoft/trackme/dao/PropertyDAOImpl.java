@@ -39,7 +39,7 @@ public class PropertyDAOImpl implements PropertyDAO {
 
 	@Override
 	public Errors setPropertyAsActive(Property property) {
-		Query query = new Query(Criteria.where("OwnerId").is(property.getOwnerId()));
+		Query query = new Query(Criteria.where("PropertyId").is(property.getPropertyId()));
 		Update update = new Update();
 		update.set("propertyStatus", "ACTIVE");
 		template.updateFirst(query, update, Property.class);

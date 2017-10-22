@@ -1,7 +1,10 @@
 package com.selsoft.trackme.service;
 
 import java.util.Locale;
+
 import org.springframework.mail.SimpleMailMessage;
+
+import com.selsoft.trackme.dto.PasswordDto;
 import com.selsoft.trackme.model.Errors;
 import com.selsoft.trackme.model.User;
 
@@ -20,10 +23,10 @@ public interface UserService {
 
 	public User findUserByEmail(String userEmail);
 
-	public void changeUserPassword(User user, String password);
+	public Errors changeUserPassword(User user, PasswordDto password);
 
 	public SimpleMailMessage constructResetTokenEmail(String contextPath, Locale locale, String token, User user);
 
-	public void userLogout(String email);
+	public Errors userLogout(String email);
 
 }

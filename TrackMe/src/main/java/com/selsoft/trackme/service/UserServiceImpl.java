@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.selsoft.trackme.dao.UserDao;
+import com.selsoft.trackme.dto.PasswordDto;
 import com.selsoft.trackme.model.Errors;
 import com.selsoft.trackme.model.PasswordResetToken;
 import com.selsoft.trackme.model.User;
@@ -79,8 +80,8 @@ public class UserServiceImpl implements UserService {
 
 		} else {
 			logger.info("Email Id or Password are not valid returning Error Data");
-			ValidError validError=new ValidError("ERROR101", "Email or Password are not correct.");
-			List<ValidError> errorList=new ArrayList<>();
+			ValidError validError = new ValidError("ERROR101", "Email or Password are not correct.");
+			List<ValidError> errorList = new ArrayList<>();
 			errorList.add(validError);
 			return new Errors(errorList);
 		}
@@ -158,8 +159,8 @@ public class UserServiceImpl implements UserService {
 
 	public boolean isValidLogin(User user) {
 
-//		String encryptPwd = Utils.encryptPassword(user.getPassword());
-//		user.setPassword(encryptPwd);
+		// String encryptPwd = Utils.encryptPassword(user.getPassword());
+		// user.setPassword(encryptPwd);
 		User validUser = userDao.checkUserLogin(user);
 		if (validUser != null) {
 			return true;
@@ -172,14 +173,15 @@ public class UserServiceImpl implements UserService {
 	public SimpleMailMessage constructResetTokenEmail(String contextPath, Locale locale, String token, User user) {
 		String url = contextPath + "/user/changePassword?id=" + user.getEmail() + "&token=" + token;
 		String message = generateContent(user, token, contextPath);
-		return constructEmail("Reset Password", message + " \r\n" + url, user);
+		return constructEmail("Reset Password", message, user);
 	}
 
 	public String generateContent(User user, String token, String appUrl) {
 
 		StringBuilder builder = new StringBuilder();
-		builder.append("Hi " + user.getFirstName() + "<br> Please use below link to Reset your password.<br><a href='"
-				+ appUrl + "?token=" + token + "'>Click here to Reset Password</a><br>" + "Thanks,<br> TrackMe Inc. ");
+		builder.append("<html>Hi " + user.getFirstName()
+				+ "<br> Please use below link to Reset your password.<br><a href='" + appUrl + "?token=" + token
+				+ "'>Click here to Reset Password</a><br>" + "Thanks,<br> TrackMe Inc.</html>");
 		return builder.toString();
 	}
 
@@ -192,15 +194,31 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void changeUserPassword(User user, String password) {
-		// TODO Auto-generated method stub
+	public Errors changeUserPassword(User user, PasswordDto password) {
+		if (password.getPassword().equals(password.getConfirmPassword())) {
+			ValidError passwordErrors = validation.passwordValidation(password.getPassword());
 
+			if ("Success".equals(passwordErrors.getErrorCode())) {
+				String encryptPass = Utils.encryptPassword(password.getPassword());
+				userDao.changeUserPassword(user, encryptPass);
+			}
+		}
+
+		ValidError passwordErrors = new ValidError("SUCSPWDUPD", "Password Updated Successfully.");
+
+		List<ValidError> list = new ArrayList<ValidError>();
+		list.add(passwordErrors);
+		return new Errors(list);
 	}
 
 	@Override
-	public void userLogout(String email) {
+	public Errors userLogout(String email) {
+		userDao.userLogout(email);
+		ValidError loggedOutErrors = new ValidError("SUCSUSRLGT", "User Logged Out Successfully.");
 
-		User user = userDao.userLogout(email);
+		List<ValidError> list = new ArrayList<ValidError>();
+		list.add(loggedOutErrors);
+		return new Errors(list);
 
 	}
 
