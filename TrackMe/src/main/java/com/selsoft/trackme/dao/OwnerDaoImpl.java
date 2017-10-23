@@ -35,4 +35,10 @@ public class OwnerDaoImpl implements OwnerDao {
 		return ownerList;
 	}
 
+	@Override
+	public void checkStatus(Owner status) {
+		
+		
+	}
+
 }

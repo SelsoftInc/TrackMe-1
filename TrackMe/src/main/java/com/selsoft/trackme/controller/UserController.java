@@ -1,5 +1,7 @@
 package com.selsoft.trackme.controller;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
 
@@ -120,7 +122,7 @@ public class UserController {
   * @param email
   * @return
   */
-	@RequestMapping(value = "/resetPassword", method = RequestMethod.POST)
+	@RequestMapping(value = "/resetPassword", method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity<MailResponse> resetPassword(HttpServletRequest request, Locale locale,
 			@RequestParam("email") String email) {
@@ -163,11 +165,14 @@ public class UserController {
 	 * @return
 	 */
 
-	@RequestMapping(value = "/getRecords", method = RequestMethod.GET)
+/*	@RequestMapping(value = "/getRecords", method = RequestMethod.GET)
 	public ResponseEntity<Owner> getAllRecords() {
 		logger.info("Data retrived from OwnerController getAllRecods()");
+		
+		
+		
 		return new ResponseEntity<Owner>(new Owner(), HttpStatus.ACCEPTED);
-	}
+	}*/
 
 	
 	/**

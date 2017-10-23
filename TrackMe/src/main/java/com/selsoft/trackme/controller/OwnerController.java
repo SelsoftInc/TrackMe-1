@@ -41,13 +41,13 @@ public class OwnerController {
 
 	
 	 //------------------- save a Owners --------------------------------------------------------
-	@RequestMapping(value = "save-user", method = RequestMethod.POST)
+	@RequestMapping(value = "save-owner", method = RequestMethod.POST)
 	public void saveNewOwner(@RequestBody Owner owner) {
 		ownerService.saveNewOwner(owner);
 	}
 
 	 //------------------- gets status of an Owner --------------------------------------------------------
-	@RequestMapping(value = "status", method = RequestMethod.GET)
+	@RequestMapping(value = "owner-status", method = RequestMethod.GET)
 	public void checkStatus(@RequestParam("status") OwnerStatus status) {
 	}
 
