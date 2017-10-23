@@ -20,14 +20,21 @@ public class TenantController {
 	@Autowired
 	private TenantService tenantService;
 
-	//@Autowired(required = true)
-
+	/*
+	 *  //-------------------Add new tenants--------------------------------------------------------
+	 */
+	
+	
 	@RequestMapping(value = "/add-tenant", method = RequestMethod.PUT)
 	public void addNewTenant(@RequestBody Tenant tenant) {
 		logger.info(tenant.getTenantFirstName() + " data comes into TenantController addNewTenant() for processing");
 		tenantService.addNewTenant(tenant);
 	}
 
+	/*
+	 *  //-------------------Retrieve All tenants--------------------------------------------------------
+	 */
+	
 	@RequestMapping(value = "/get-all-tenants", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<Tenant> getAllTenants() {
 		return tenantService.getAllTenants(null);

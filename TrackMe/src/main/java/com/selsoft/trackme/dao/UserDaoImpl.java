@@ -15,11 +15,8 @@ import com.selsoft.trackme.model.PasswordResetToken;
 import com.selsoft.trackme.model.User;
 import com.selsoft.trackme.utils.Utils;
 
-/**
- * 
- * @author Sudhansu Sekhar
- *
- */
+
+
 @Repository
 public class UserDaoImpl implements UserDao {
 	private static final Logger logger = Logger.getLogger(UserDaoImpl.class);
@@ -68,16 +65,16 @@ public class UserDaoImpl implements UserDao {
 		List<User> userExist = template.find(query, User.class);
 		System.out.println(userExist.get(0));
 		return userExist.get(0);
-	}
+	                                            }
 
-	@Override
+	
 	public void saveResetPasswordToken(PasswordResetToken token) {
-
+		
 		template.save(token);
 
-	} 
+	                                         } 
 
-	@Override
+	
 	public void userLogout(String email) {
 		Query query = new Query(Criteria.where("email").is(email.toLowerCase()));
 		Update update = new Update();

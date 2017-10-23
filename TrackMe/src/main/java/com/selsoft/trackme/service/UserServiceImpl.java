@@ -37,6 +37,10 @@ public class UserServiceImpl implements UserService {
 	private static final Logger logger = Logger.getLogger(UserService.class);
 	private UserValidation validation = new UserValidation();
 
+	
+	/**
+	 * save the valid user to the user table
+	 */
 	public Errors saveUser(User user) {
 		if (isValid(user)) {
 			logger.info("User data is Valid and processing to Dao");
@@ -59,6 +63,9 @@ public class UserServiceImpl implements UserService {
 		return null;
 	}
 
+	/**
+	 * It saves user login,if it is a valid user and encrypts the password otherwise throws error message
+	 */
 	public Errors saveUserLogin(User user) {
 		if (isValidLogin(user)) {
 			logger.info("User data is Valid and processing to Dao");
@@ -88,11 +95,19 @@ public class UserServiceImpl implements UserService {
 		return null;
 	}
 
+	
+	/**
+	 * searches based on email
+	 */
 	public User findUserByEmail(String email) {
 		User user = userDao.findUserByEmail(email);
 
 		return user;
 	}
+	
+	/**
+	 * It creates a token while reseting a password
+	 */
 
 	public void createPasswordResetTokenForUser(User user, String token) {
 		Calendar time = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
@@ -100,6 +115,11 @@ public class UserServiceImpl implements UserService {
 		PasswordResetToken myToken = new PasswordResetToken(token, user, date);
 		userDao.saveResetPasswordToken(myToken);
 	}
+	/**
+	 * checks for valid user
+	 * @param user
+	 * @return
+	 */
 
 	public boolean isValid(User user) {
 
@@ -211,6 +231,10 @@ public class UserServiceImpl implements UserService {
 		return new Errors(list);
 	}
 
+	
+	/**
+	 * logged out for the valid email
+	 */
 	@Override
 	public Errors userLogout(String email) {
 		userDao.userLogout(email);

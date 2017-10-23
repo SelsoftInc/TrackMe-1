@@ -25,12 +25,20 @@ public class PropertyDAOImpl implements PropertyDAO {
 	private MongoTemplate template;
 
 	final String COLLECTION = "PROPERTY";
+	
+	/**
+	 * save new property to property table
+	 */
 
 	public void saveNewProperty(Property property) {
 		template.save(property);
 	}
  
 	@Override
+	
+	/**
+	 * It checks owner based on ownerid
+	 */
 	public Owner checkOwner(int ownerId) {
 		Query query = new Query(Criteria.where("ownerId").is(ownerId));
 		List<Owner> ownerExist = template.find(query, Owner.class);
@@ -38,6 +46,9 @@ public class PropertyDAOImpl implements PropertyDAO {
 	}
 
 	@Override
+	/**
+	 * It sets property as active
+	 */
 	public Errors setPropertyAsActive(Property property) {
 		Query query = new Query(Criteria.where("PropertyId").is(property.getPropertyId()));
 		Update update = new Update();

@@ -16,22 +16,32 @@ import com.selsoft.trackme.model.Tenant;
 @Qualifier("tanantDAO")
 public class TenantDAOImpl implements TenantDAO {
 	@SuppressWarnings("unused")
-	private static final Logger logger = Logger.getLogger(UserDaoImpl.class);
+	private static final Logger logger = Logger.getLogger(TenantDAOImpl.class);
 
 	@Autowired
 	private MongoTemplate template;
 
 	final String COLLECTION = "TENANT";
 
+	/**
+	 * saves new tenant to tenant table
+	 */
 	public void saveNewTenant(Tenant tenant) {
 		template.save(tenant);
 	}
 
+	/**
+	 * find all tenants
+	 */
 	public List<Tenant> findAll() {
 		return (List<Tenant>) template.findAll(Tenant.class);
 	}
 
 	@Override
+	
+	/**
+	 * fetchings tenants based on status
+	 */
 	public List<Tenant> fetchTenants(String status) {
 		List<Tenant> tenantList = null;
 		if (status != null) {

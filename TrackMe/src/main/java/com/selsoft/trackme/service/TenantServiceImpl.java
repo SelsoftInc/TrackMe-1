@@ -18,17 +18,28 @@ public class TenantServiceImpl implements TenantService {
 	@SuppressWarnings("unused")
 	private static final Logger logger = Logger.getLogger(TenantService.class);
 
+	
+	/**
+	 * add new tenant to the tenant table
+	 */
 	@Override
 	public void addNewTenant(Tenant tenant) {
 		tenantDAO.saveNewTenant(tenant);
 
 	}
 
+	/**
+	 * get all the tenants from the tenant table
+	 */
 	@Override
 	public List<Tenant> getAllTenants(String status) {
 		return tenantDAO.fetchTenants(status);
 	}
 
+	
+	/**
+	 * save new tenant to the table
+	 */
 	@Override
 	public List<Tenant> saveNewTenant() {
 		return tenantDAO.findAll();

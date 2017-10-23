@@ -19,6 +19,10 @@ public class PropertyServiceImpl implements PropertyService {
 	@SuppressWarnings("unused")
 	private static final Logger logger = Logger.getLogger(PropertyServiceImpl.class);
 
+	
+	/**
+	 * save the new property to property table
+	 */
 	public void saveNewProperty(Property property) {
  
 		Owner owner = propertyDAO.checkOwner(property.getOwnerId());
@@ -31,6 +35,9 @@ public class PropertyServiceImpl implements PropertyService {
 		}
 	}
 
+	/**
+	 * sets property as Active
+	 */
 	@Override
 	public Errors setPropertyAsActive(Property property) {
 

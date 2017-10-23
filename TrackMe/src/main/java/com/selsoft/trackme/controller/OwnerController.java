@@ -17,24 +17,36 @@ import com.selsoft.trackme.service.OwnerService;
 
 @RestController
 @RequestMapping(value = "/owner")
+
+/**
+ * 
+ * @author sudhansu
+ *
+ */
+
 public class OwnerController {
 
 	@SuppressWarnings("unused")
 	private static final Logger logger = Logger.getLogger(OwnerController.class);
  
 	@Autowired
-	OwnerService ownerService;
+	OwnerService ownerService; //Service which will do all data retrieval/manipulation work
 
+	
+	 //-------------------Retrieve All owners--------------------------------------------------------
 	@RequestMapping(value = "get-owners", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<Owner> getAllPropertyOwners() {
 		return ownerService.getAllPropertyOwners();
 	}
 
+	
+	 //------------------- save a Owners --------------------------------------------------------
 	@RequestMapping(value = "save-user", method = RequestMethod.POST)
 	public void saveNewOwner(@RequestBody Owner owner) {
 		ownerService.saveNewOwner(owner);
 	}
 
+	 //------------------- gets status of an Owner --------------------------------------------------------
 	@RequestMapping(value = "status", method = RequestMethod.GET)
 	public void checkStatus(@RequestParam("status") OwnerStatus status) {
 	}

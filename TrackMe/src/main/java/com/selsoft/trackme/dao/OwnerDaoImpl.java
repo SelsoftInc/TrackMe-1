@@ -19,12 +19,17 @@ public class OwnerDaoImpl implements OwnerDao {
 	private MongoTemplate template;
 
 	@Override
+	
+	/**
+	 * saves new owner in owner table
+	 */
 	public void saveNewOwner(Owner owner) {
 
 		template.save(owner);
 	}
 
 	@Override
+	 /* GET */
 	public List<Owner> getAllPropertyOwners() {
 		List<Owner> ownerList = template.findAll(Owner.class);
 		return ownerList;

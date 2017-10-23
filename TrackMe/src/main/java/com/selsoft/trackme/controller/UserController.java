@@ -86,7 +86,7 @@ public class UserController {
 	}
 
 	/**
-	 * 
+	 * This method gets all the user from the user table
 	 * @return
 	 */
 	@RequestMapping(value = "/getUser", method = RequestMethod.GET)
@@ -97,7 +97,8 @@ public class UserController {
 	}
 
 	/**
-	 * 
+	 * This method takes argument as user object,validates email and password
+	 * If it is a valid user,login otherwise throws error message
 	 * @param user
 	 * @return
 	 */
@@ -112,7 +113,13 @@ public class UserController {
 		return new ResponseEntity<Errors>(errors, HttpStatus.CREATED);
 
 	}
-
+ /**
+  * If a user has not login within 20 ms.,it shows an confirmation  mail to resets the password 
+  * @param request
+  * @param locale
+  * @param email
+  * @return
+  */
 	@RequestMapping(value = "/resetPassword", method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<MailResponse> resetPassword(HttpServletRequest request, Locale locale,
@@ -134,6 +141,12 @@ public class UserController {
 		return uri;
 	}
 
+	/**
+	 * This method saves the password of valid user with encrypted password
+	 * @param email
+	 * @param passwordDto
+	 * @return
+	 */
 	@RequestMapping(value = "/savePassword", method = RequestMethod.POST)
 	@ResponseBody
 	public Errors savePassword(@RequestParam("email") String email, @RequestBody PasswordDto passwordDto) {
@@ -146,7 +159,8 @@ public class UserController {
 	}
 
 	/**
-	 * 
+	 * This method gets all records
+	 * @return
 	 */
 
 	@RequestMapping(value = "/getRecords", method = RequestMethod.GET)
@@ -155,6 +169,12 @@ public class UserController {
 		return new ResponseEntity<Owner>(new Owner(), HttpStatus.ACCEPTED);
 	}
 
+	
+	/**
+	 * This method takes email as a parameter ,it will check for valid user,if it's then saves the user's password
+	 * @param email
+	 * @return
+	 */
 	@RequestMapping(value = "/userLogout", method = RequestMethod.GET)
 	public Errors logout(@RequestParam("email") String email) {
 		Errors errors=userService.userLogout(email);

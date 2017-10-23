@@ -15,6 +15,12 @@ import com.selsoft.trackme.pdftemplate.RentalPdf;
 import com.selsoft.trackme.service.PdfService;
 
 @RestController
+
+/**
+ * 
+ * @author selsoft
+ *
+ */
 public class PdfController {
 
 	@SuppressWarnings("unused")

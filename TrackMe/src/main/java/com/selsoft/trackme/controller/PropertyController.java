@@ -13,8 +13,15 @@ import com.selsoft.trackme.model.Errors;
 import com.selsoft.trackme.model.Property;
 import com.selsoft.trackme.service.PropertyService;
 
+
 @RestController
 @RequestMapping(value = "/property")
+
+/**
+ * 
+ * @author selsoft
+ *
+ */
 public class PropertyController {
  
 	private static final Logger logger = Logger.getLogger(PropertyController.class);
@@ -23,6 +30,10 @@ public class PropertyController {
 	PropertyService propertyService;
 
 	@RequestMapping(value = "add-property", method = RequestMethod.POST)
+	
+	/*
+	 * This method takes property object as parameter and adds new property to Property table
+	 */
 	public void addNewProperty(@RequestBody Property property) {
 		logger.info(
 				property.getOwnerFirstName() + " data comes into PropertyController addNewProperty() for processing");
@@ -30,6 +41,10 @@ public class PropertyController {
 		propertyService.saveNewProperty(property);
 
 	}
+	/*
+	 * This method sets property as Active
+	 */
+	
 
 	@RequestMapping(value = "setPropertyAsActive", method = RequestMethod.PUT)
 	public ResponseEntity<Errors> setPropertyAsActive(@RequestBody Property property) {
