@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.selsoft.trackme.model.Errors;
 import com.selsoft.trackme.model.Property;
+import com.selsoft.trackme.model.PropertyStatus;
 import com.selsoft.trackme.model.Tenant;
 import com.selsoft.trackme.service.PropertyService;
 
@@ -64,7 +65,7 @@ public class PropertyController {
 	
 	@RequestMapping(value = "getAllActiveProperties", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<Property>  getAllActiveProperties(String status) {
-		return propertyService.getAllProperties(status);
+		return propertyService.getAllProperties(PropertyStatus.ACTIVE.toString());
 	}
 	
 }

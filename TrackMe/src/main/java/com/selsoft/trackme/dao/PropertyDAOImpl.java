@@ -63,12 +63,9 @@ public class PropertyDAOImpl implements PropertyDAO {
 	public List<Property> getAllProperties(String status) {
 		
 			List<Property> propertyList = null;
-			if (status != null) {
-				propertyList = template.findAll(Property.class);
-			} else {
-				Query query = new Query(Criteria.where("status").is(status));
+			Query query = new Query(Criteria.where("propertyStatus").is(status));
 				propertyList = template.find(query, Property.class);
-			}
+			
 			return propertyList;
 		}
 

@@ -10,7 +10,6 @@ public class RentalDetail {
 	
 
 	public RentalDetail(String leaseType) {
-		super();
 		this.leaseType = LeaseType.RENT.toString();
 	}
 

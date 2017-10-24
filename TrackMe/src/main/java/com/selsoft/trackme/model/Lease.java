@@ -2,39 +2,41 @@ package com.selsoft.trackme.model;
 
 import java.util.Date;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+@Document(collection = "LEASE")
 public class Lease {
 
 	private int leaseId;
+	
+	@JsonProperty("propertyname")
 	private String propertyName;
+	@JsonProperty("ownerFirstName")
 	private String ownerFirstName;
+	@JsonProperty("ownerLastName")
 	private String ownerLastName;
+	@JsonProperty("tenantFirstName")
 	private String tenantFirstName;
+	@JsonProperty("tenantLastName")
 	private String tenantLastName;
+	@JsonProperty("additionalTenant")
 	private String additionalTenant;
+	@JsonProperty("rentalId")
 	private  int rentalId;
+	@JsonProperty("propertyId")
 	private int propertyId;
-	@JsonProperty("propertystatus")
-	private String propertyStatus;
+	@JsonProperty("leaseType")
 	private String leaseType;
+	@JsonProperty("leaseStartDate")
 	private Date leaseStartDate;
+	@JsonProperty("leaseEndDate")
 	private Date leaseEndDate;
+	@JsonProperty("tenure")
 	private double tenure;
+	@JsonProperty("propertyManagerId")
 	private int propertyManagerId;
-	
-	
-	
-	
-	
-	
-
-	public String getPropertyStatus() {
-		return propertyStatus;
-	}
-	public void setPropertyStatus(String propertyStatus) {
-		this.propertyStatus = propertyStatus;
-	}
 	public int getLeaseId() {
 		return leaseId;
 	}
@@ -119,8 +121,41 @@ public class Lease {
 	public void setPropertyManagerId(int propertyManagerId) {
 		this.propertyManagerId = propertyManagerId;
 	}
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Lease [leaseId=");
+		builder.append(leaseId);
+		builder.append(", propertyName=");
+		builder.append(propertyName);
+		builder.append(", ownerFirstName=");
+		builder.append(ownerFirstName);
+		builder.append(", ownerLastName=");
+		builder.append(ownerLastName);
+		builder.append(", tenantFirstName=");
+		builder.append(tenantFirstName);
+		builder.append(", tenantLastName=");
+		builder.append(tenantLastName);
+		builder.append(", additionalTenant=");
+		builder.append(additionalTenant);
+		builder.append(", rentalId=");
+		builder.append(rentalId);
+		builder.append(", propertyId=");
+		builder.append(propertyId);
+		builder.append(", leaseType=");
+		builder.append(leaseType);
+		builder.append(", leaseStartDate=");
+		builder.append(leaseStartDate);
+		builder.append(", leaseEndDate=");
+		builder.append(leaseEndDate);
+		builder.append(", tenure=");
+		builder.append(tenure);
+		builder.append(", propertyManagerId=");
+		builder.append(propertyManagerId);
+		builder.append("]");
+		return builder.toString();
+	}
 	
-	
-	
+		
 			
 }
