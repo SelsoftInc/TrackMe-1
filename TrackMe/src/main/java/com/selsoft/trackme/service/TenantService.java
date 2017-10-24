@@ -11,5 +11,7 @@ public interface TenantService {
 	public List<Tenant> getAllTenants(String status);
 
 	public List<Tenant> saveNewTenant();
+	
+	public List<Tenant>  getNewTenants(String status);
 
 }

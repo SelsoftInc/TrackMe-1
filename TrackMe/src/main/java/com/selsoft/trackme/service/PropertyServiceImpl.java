@@ -1,5 +1,7 @@
 package com.selsoft.trackme.service;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,6 +46,11 @@ public class PropertyServiceImpl implements PropertyService {
 		 propertyDAO.setPropertyAsActive(property);
 		 return null;
 
+	}
+
+	@Override
+	public List<Property> getAllProperties(String status) {
+		return propertyDAO.getAllProperties(status);
 	}
 
 	

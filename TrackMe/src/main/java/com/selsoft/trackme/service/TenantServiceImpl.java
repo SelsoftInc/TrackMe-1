@@ -45,4 +45,9 @@ public class TenantServiceImpl implements TenantService {
 		return tenantDAO.findAll();
 	}
 
+	@Override
+	public List<Tenant> getNewTenants(String status) {
+		return tenantDAO.fetchTenants(status);
+	}
+
 }

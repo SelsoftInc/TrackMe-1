@@ -40,7 +40,7 @@ public class TenantDAOImpl implements TenantDAO {
 	@Override
 	
 	/**
-	 * fetchings tenants based on status
+	 * fetching tenants based on status
 	 */
 	public List<Tenant> fetchTenants(String status) {
 		List<Tenant> tenantList = null;

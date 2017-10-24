@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.selsoft.trackme.model.Tenant;
 import com.selsoft.trackme.service.TenantService;
 
+
+
 @RestController
 public class TenantController {
 	private static final Logger logger = Logger.getLogger(TenantController.class);
@@ -36,8 +38,17 @@ public class TenantController {
 	 */
 	
 	@RequestMapping(value = "/get-all-tenants", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<Tenant> getAllTenants() {
-		return tenantService.getAllTenants(null);
+	public List<Tenant> getAllTenants(String status) {
+		return tenantService.getAllTenants(status);
+	}
+	
+	/*
+	 *  //-------------------Retrieve New tenants--------------------------------------------------------
+	 */
+	
+	@RequestMapping(value = "/ getNewTenants", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<Tenant>  getNewTenants(String status) {
+		return tenantService. getNewTenants(status);
 	}
 
 }

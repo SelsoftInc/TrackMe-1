@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import com.selsoft.trackme.model.Errors;
 import com.selsoft.trackme.model.Owner;
 import com.selsoft.trackme.model.Property;
+import com.selsoft.trackme.model.Tenant;
 
 @Repository
 @Qualifier("propertyDAO")
@@ -58,6 +59,28 @@ public class PropertyDAOImpl implements PropertyDAO {
 
 	}
 
+	@Override
+	public List<Property> getAllProperties(String status) {
+		
+			List<Property> propertyList = null;
+			if (status != null) {
+				propertyList = template.findAll(Property.class);
+			} else {
+				Query query = new Query(Criteria.where("status").is(status));
+				propertyList = template.find(query, Property.class);
+			}
+			return propertyList;
+		}
+
+	@Override
+	public List<Property> findAll() {
+		
+			return (List<Property>) template.findAll(Property.class);
+		}
+
+	}
+
+	
 
 
-}
+

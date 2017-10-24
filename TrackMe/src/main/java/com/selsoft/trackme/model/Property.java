@@ -35,7 +35,7 @@ public class Property {
 	
 	public Property() {
 		
-		this.propertyStatus = PropertyStatus.NEW.toString();
+		this.propertyStatus = PropertyStatus.ACTIVE.toString();
 		
 	}
 
