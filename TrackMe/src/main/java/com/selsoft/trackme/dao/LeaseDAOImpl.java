@@ -5,16 +5,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
 
+import com.selsoft.trackme.model.Errors;
 import com.selsoft.trackme.model.Lease;
 import com.selsoft.trackme.model.Property;
+import com.selsoft.trackme.model.Tenant;
 
 @Repository
 public class LeaseDAOImpl implements LeaseDAO {
 
 	@SuppressWarnings("unused")
-	private static final Logger logger = Logger.getLogger(OwnerDaoImpl.class);
+	private static final Logger logger = Logger.getLogger(LeaseDAOImpl.class);
 
 	@Autowired
 	private MongoTemplate template;
@@ -43,10 +46,36 @@ public class LeaseDAOImpl implements LeaseDAO {
 		return property.getPropertyStatus();
 	}
 
-	@Override
-	public Object priorDataValidation(Lease lease) {
-		// TODO Auto-generated method stub
-		return null;
+	
+
+	public String getTenantStatusById(int id) {
+		
+		Query query = new Query(Criteria.where("tenantId").is(id));
+		Tenant tenant = template.findOne(query, Tenant.class);
+
+		return tenant.getTenantStatus();
 	}
+
+
+
+	@Override
+	public Errors priorDataValidation(Lease lease) {
+		
+		Query query = new Query(Criteria.where("PropertyId").is(lease.getPropertyId()));
+		Update update = new Update(); update.set("propertyStatus", "ACTIVE");
+				 template.updateFirst(query, update, Property.class);
+				 
+				  Errors propertyStatus; 
+				  /*if(propertyStatus.equals("NEW")){
+				 
+				 
+				  } */
+				  return null;
+				 
+	}
+
+
+
+	
 
 }

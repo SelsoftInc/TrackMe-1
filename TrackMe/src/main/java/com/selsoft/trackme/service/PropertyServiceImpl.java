@@ -21,12 +21,11 @@ public class PropertyServiceImpl implements PropertyService {
 	@SuppressWarnings("unused")
 	private static final Logger logger = Logger.getLogger(PropertyServiceImpl.class);
 
-	
 	/**
 	 * save the new property to property table
 	 */
 	public void saveNewProperty(Property property) {
- 
+
 		Owner owner = propertyDAO.checkOwner(property.getOwnerId());
 
 		if (owner != null) {
@@ -43,8 +42,8 @@ public class PropertyServiceImpl implements PropertyService {
 	@Override
 	public Errors setPropertyAsActive(Property property) {
 
-		 propertyDAO.setPropertyAsActive(property);
-		 return null;
+		propertyDAO.setPropertyAsActive(property);
+		return null;
 
 	}
 
@@ -52,7 +51,5 @@ public class PropertyServiceImpl implements PropertyService {
 	public List<Property> getAllProperties(String status) {
 		return propertyDAO.getAllProperties(status);
 	}
-
-	
 
 }

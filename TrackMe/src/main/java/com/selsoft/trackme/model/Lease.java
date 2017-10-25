@@ -4,39 +4,26 @@ import java.util.Date;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 @Document(collection = "LEASE")
 public class Lease {
 
 	private int leaseId;
-	
-	@JsonProperty("propertyname")
 	private String propertyName;
-	@JsonProperty("ownerFirstName")
+	private int ownerId;
 	private String ownerFirstName;
-	@JsonProperty("ownerLastName")
 	private String ownerLastName;
-	@JsonProperty("tenantFirstName")
+	private int tenantId;
 	private String tenantFirstName;
-	@JsonProperty("tenantLastName")
 	private String tenantLastName;
-	@JsonProperty("additionalTenant")
 	private String additionalTenant;
-	@JsonProperty("rentalId")
-	private  int rentalId;
-	@JsonProperty("propertyId")
+	private int rentalId;
 	private int propertyId;
-	@JsonProperty("leaseType")
 	private String leaseType;
-	@JsonProperty("leaseStartDate")
 	private Date leaseStartDate;
-	@JsonProperty("leaseEndDate")
 	private Date leaseEndDate;
-	@JsonProperty("tenure")
-	private double tenure;
-	@JsonProperty("propertyManagerId")
+	private int tenure;
 	private int propertyManagerId;
+	private RentalDetail rentalDetail;
 	public int getLeaseId() {
 		return leaseId;
 	}
@@ -49,6 +36,12 @@ public class Lease {
 	public void setPropertyName(String propertyName) {
 		this.propertyName = propertyName;
 	}
+	public int getOwnerId() {
+		return ownerId;
+	}
+	public void setOwnerId(int ownerId) {
+		this.ownerId = ownerId;
+	}
 	public String getOwnerFirstName() {
 		return ownerFirstName;
 	}
@@ -60,6 +53,12 @@ public class Lease {
 	}
 	public void setOwnerLastName(String ownerLastName) {
 		this.ownerLastName = ownerLastName;
+	}
+	public int getTenantId() {
+		return tenantId;
+	}
+	public void setTenantId(int tenantId) {
+		this.tenantId = tenantId;
 	}
 	public String getTenantFirstName() {
 		return tenantFirstName;
@@ -109,10 +108,10 @@ public class Lease {
 	public void setLeaseEndDate(Date leaseEndDate) {
 		this.leaseEndDate = leaseEndDate;
 	}
-	public double getTenure() {
+	public int getTenure() {
 		return tenure;
 	}
-	public void setTenure(double tenure) {
+	public void setTenure(int tenure) {
 		this.tenure = tenure;
 	}
 	public int getPropertyManagerId() {
@@ -121,6 +120,12 @@ public class Lease {
 	public void setPropertyManagerId(int propertyManagerId) {
 		this.propertyManagerId = propertyManagerId;
 	}
+	public RentalDetail getRentalDetail() {
+		return rentalDetail;
+	}
+	public void setRentalDetail(RentalDetail rentalDetail) {
+		this.rentalDetail = rentalDetail;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -128,10 +133,14 @@ public class Lease {
 		builder.append(leaseId);
 		builder.append(", propertyName=");
 		builder.append(propertyName);
+		builder.append(", ownerId=");
+		builder.append(ownerId);
 		builder.append(", ownerFirstName=");
 		builder.append(ownerFirstName);
 		builder.append(", ownerLastName=");
 		builder.append(ownerLastName);
+		builder.append(", tenantId=");
+		builder.append(tenantId);
 		builder.append(", tenantFirstName=");
 		builder.append(tenantFirstName);
 		builder.append(", tenantLastName=");
@@ -152,10 +161,11 @@ public class Lease {
 		builder.append(tenure);
 		builder.append(", propertyManagerId=");
 		builder.append(propertyManagerId);
+		builder.append(", rentalDetail=");
+		builder.append(rentalDetail);
 		builder.append("]");
 		return builder.toString();
 	}
 	
-		
-			
+	
 }

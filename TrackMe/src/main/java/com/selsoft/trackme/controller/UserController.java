@@ -36,7 +36,9 @@ import com.selsoft.trackme.utils.UserType;
  *
  */
 
+
 @RestController
+@RequestMapping(value = "/user")
 public class UserController {
 
 	private static final Logger logger = Logger.getLogger(UserController.class);
@@ -152,8 +154,7 @@ public class UserController {
 	@RequestMapping(value = "/savePassword", method = RequestMethod.POST)
 	@ResponseBody
 	public Errors savePassword(@RequestParam("email") String email, @RequestBody PasswordDto passwordDto) {
-		// User user = (User)
-		// SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		
 		User user = userService.findUserByEmail(email);
 
 		Errors errors = userService.changeUserPassword(user, passwordDto);

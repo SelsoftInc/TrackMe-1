@@ -43,13 +43,21 @@ public class TenantDAOImpl implements TenantDAO {
 	 * fetching tenants based on status
 	 */
 	public List<Tenant> fetchTenants(String status) {
+		
 		List<Tenant> tenantList = null;
-
+		
+		if (status != null) {
+			
 		Query query = new Query(Criteria.where("tenantStatus").is(status));
 		tenantList = template.find(query, Tenant.class);
-		
+		}else{
+			
+			tenantList = template.findAll(Tenant.class);//here write query to find all data
+		}
 		
 		return tenantList;
 	}
 
+	
+	
 }

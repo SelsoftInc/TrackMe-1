@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+import org.apache.commons.lang3.StringUtils ;
 import com.selsoft.trackme.dao.UserDao;
 import com.selsoft.trackme.dto.PasswordDto;
 import com.selsoft.trackme.model.Errors;
@@ -37,7 +37,6 @@ public class UserServiceImpl implements UserService {
 	private static final Logger logger = Logger.getLogger(UserService.class);
 	private UserValidation validation = new UserValidation();
 
-	
 	/**
 	 * save the valid user to the user table
 	 */
@@ -64,7 +63,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	/**
-	 * It saves user login,if it is a valid user and encrypts the password otherwise throws error message
+	 * It saves user login,if it is a valid user and encrypts the password
+	 * otherwise throws error message
 	 */
 	public Errors saveUserLogin(User user) {
 		if (isValidLogin(user)) {
@@ -95,7 +95,6 @@ public class UserServiceImpl implements UserService {
 		return null;
 	}
 
-	
 	/**
 	 * searches based on email
 	 */
@@ -104,7 +103,7 @@ public class UserServiceImpl implements UserService {
 
 		return user;
 	}
-	
+
 	/**
 	 * It creates a token while reseting a password
 	 */
@@ -115,8 +114,10 @@ public class UserServiceImpl implements UserService {
 		PasswordResetToken myToken = new PasswordResetToken(token, user, date);
 		userDao.saveResetPasswordToken(myToken);
 	}
+
 	/**
 	 * checks for valid user
+	 * 
 	 * @param user
 	 * @return
 	 */
@@ -223,7 +224,7 @@ public class UserServiceImpl implements UserService {
 				userDao.changeUserPassword(user, encryptPass);
 			}
 		}
- 
+
 		ValidError passwordErrors = new ValidError("SUCSPWDUPD", "Password Updated Successfully.");
 
 		List<ValidError> list = new ArrayList<ValidError>();
@@ -231,7 +232,6 @@ public class UserServiceImpl implements UserService {
 		return new Errors(list);
 	}
 
-	
 	/**
 	 * logged out for the valid email
 	 */

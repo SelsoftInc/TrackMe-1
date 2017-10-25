@@ -19,14 +19,14 @@ import com.selsoft.trackme.model.Tenant;
 import com.selsoft.trackme.service.PropertyService;
 
 
-@RestController
-@RequestMapping(value = "/property")
 
 /**
  * 
  * @author selsoft
  *
  */
+@RestController
+@RequestMapping(value = "/property")
 public class PropertyController {
  
 	private static final Logger logger = Logger.getLogger(PropertyController.class);
@@ -34,7 +34,7 @@ public class PropertyController {
 	@Autowired
 	PropertyService propertyService;
 
-	@RequestMapping(value = "add-property", method = RequestMethod.POST)
+	@RequestMapping(value = "/addNewProperty", method = RequestMethod.POST)
 	
 	/*
 	 * This method takes property object as parameter and adds new property to Property table
@@ -51,7 +51,7 @@ public class PropertyController {
 	 */
 	
 
-	@RequestMapping(value = "setPropertyAsActive", method = RequestMethod.PUT)
+	@RequestMapping(value = "/setPropertyAsActive", method = RequestMethod.PUT)
 	public ResponseEntity<Errors> setPropertyAsActive(@RequestBody Property property) {
 		logger.info(
 				property.getPropertyStatus() + " data comes into PropertyController setPropertyAsActive() for processing");
@@ -63,7 +63,7 @@ public class PropertyController {
 	}
 
 	
-	@RequestMapping(value = "getAllActiveProperties", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/getAllActiveProperties", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<Property>  getAllActiveProperties(String status) {
 		return propertyService.getAllProperties(PropertyStatus.ACTIVE.toString());
 	}

@@ -60,10 +60,8 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public User findUserByEmail(String email) {
-		System.out.println("Email is: " + email);
 		Query query = new Query(Criteria.where("email").is(email.toLowerCase()));
 		List<User> userExist = template.find(query, User.class);
-		System.out.println(userExist.get(0));
 		return userExist.get(0);
 	                                            }
 
@@ -90,9 +88,9 @@ public class UserDaoImpl implements UserDao {
 
 		Query query = new Query(Criteria.where("userType").is(user.getUserType()));
 		Update update = new Update();
-		update.set(" property owner", "OWN");
-		update.set("property manager", "MGR");
-		update.set("property tenant", "TNT");
+		update.set(" propertyOwner", "OWN");
+		update.set("propertyManager", "MGR");
+		update.set("propertyTenant", "TNT");
 		template.updateFirst(query, update, User.class);
 		return null;
 
@@ -100,18 +98,14 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public User checkUserLogin(User user) {
-		System.out.println("Check User Login DAO");
 		Query query = new Query(Criteria.where("email").is(user.getEmail()));
 
 		List<User> userExist = template.find(query, User.class);
 		if (userExist.size() > 0) {
 
 			User returnedUser = userExist.get(0);
-			System.out.println(returnedUser);
 			String pass = returnedUser.getPassword();
 			String password = Utils.decryptPassword(pass);
-			System.out.println(user.getPassword());
-			System.out.println(password);
 			if (user.getPassword().equals(password)) {
 				return returnedUser;
 			} else {

@@ -18,14 +18,13 @@ public class OwnerServiceImpl implements OwnerService {
 	@SuppressWarnings("unused")
 	private static final Logger logger = Logger.getLogger(OwnerService.class);
 
-	
 	/**
 	 * save the new owner
 	 */
-	
+
 	public void saveNewOwner(Owner owner) {
-		
-		 // handler method to save/update owner
+
+		// handler method to save/update owner
 		ownerDao.saveNewOwner(owner);
 	}
 
@@ -41,7 +40,7 @@ public class OwnerServiceImpl implements OwnerService {
 	@Override
 	public void checkStatus(Owner status) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

@@ -10,12 +10,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.selsoft.trackme.model.PropertyStatus;
 import com.selsoft.trackme.model.Tenant;
+import com.selsoft.trackme.model.TenantStatus;
 import com.selsoft.trackme.service.TenantService;
 
 
 
 @RestController
+@RequestMapping(value = "/tenant")
 public class TenantController {
 	private static final Logger logger = Logger.getLogger(TenantController.class);
 
@@ -27,7 +30,7 @@ public class TenantController {
 	 */
 	
 	
-	@RequestMapping(value = "/add-tenant", method = RequestMethod.PUT)
+	@RequestMapping(value = "/addNewTenant", method = RequestMethod.PUT)
 	public void addNewTenant(@RequestBody Tenant tenant) {
 		logger.info(tenant.getTenantFirstName() + " data comes into TenantController addNewTenant() for processing");
 		tenantService.addNewTenant(tenant);
@@ -37,9 +40,9 @@ public class TenantController {
 	 *  //-------------------Retrieve All tenants--------------------------------------------------------
 	 */
 	
-	@RequestMapping(value = "/get-all-tenants", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/getAllTenants", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<Tenant> getAllTenants(String status) {
-		return tenantService.getAllTenants(status);
+		return tenantService.getAllTenants(TenantStatus.NEW.toString());
 	}
 	
 	/*

@@ -34,20 +34,20 @@ public class OwnerController {
 
 	
 	 //-------------------Retrieve All owners--------------------------------------------------------
-	@RequestMapping(value = "get-owners", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/getAllPropertyOwners", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<Owner> getAllPropertyOwners() {
 		return ownerService.getAllPropertyOwners();
 	}
 
 	
 	 //------------------- save a Owners --------------------------------------------------------
-	@RequestMapping(value = "save-owner", method = RequestMethod.POST)
+	@RequestMapping(value = "/saveNewOwner", method = RequestMethod.POST)
 	public void saveNewOwner(@RequestBody Owner owner) {
 		ownerService.saveNewOwner(owner);
 	}
 
 	 //------------------- gets status of an Owner --------------------------------------------------------
-	@RequestMapping(value = "owner-status", method = RequestMethod.GET)
+	@RequestMapping(value = "/checkStatus", method = RequestMethod.GET)
 	public void checkStatus(@RequestParam("status") OwnerStatus status) {
 	}
 

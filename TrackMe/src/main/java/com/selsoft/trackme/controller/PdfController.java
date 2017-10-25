@@ -21,6 +21,7 @@ import com.selsoft.trackme.service.PdfService;
  * @author selsoft
  *
  */
+@RequestMapping(value = "/pdf")
 public class PdfController {
 
 	@SuppressWarnings("unused")
@@ -29,7 +30,7 @@ public class PdfController {
 	@Autowired
 	private PdfService pdfService;
 
-	@RequestMapping(value = "/pdf-template", method = RequestMethod.GET)
+	@RequestMapping(value = "/pdfTemplate", method = RequestMethod.GET)
 	public Errors createPdf() {
 		Errors error = null;
 		RentalPdf rentalPdf = new RentalPdf(null, null, null, null, null);

@@ -18,7 +18,6 @@ public class TenantServiceImpl implements TenantService {
 	@SuppressWarnings("unused")
 	private static final Logger logger = Logger.getLogger(TenantService.class);
 
-	
 	/**
 	 * add new tenant to the tenant table
 	 */
@@ -36,7 +35,6 @@ public class TenantServiceImpl implements TenantService {
 		return tenantDAO.fetchTenants(status);
 	}
 
-	
 	/**
 	 * save new tenant to the table
 	 */
@@ -44,7 +42,5 @@ public class TenantServiceImpl implements TenantService {
 	public List<Tenant> saveNewTenant() {
 		return tenantDAO.findAll();
 	}
-
-	
 
 }

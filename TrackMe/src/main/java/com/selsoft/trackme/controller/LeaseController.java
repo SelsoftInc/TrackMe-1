@@ -23,7 +23,7 @@ public class LeaseController {
 	@Autowired
 	private LeaseService leaseService;
 
-	@RequestMapping(value = "/create", method = RequestMethod.POST)
+	@RequestMapping(value = "/createLease", method = RequestMethod.POST)
 	public ResponseEntity<ValidError> createLease(@RequestBody Lease lease) {
 
 		ValidError error = leaseService.priorDataValidation(lease);
