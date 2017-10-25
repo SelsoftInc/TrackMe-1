@@ -43,9 +43,9 @@ public class LeaseServiceImpl implements LeaseService {
 			return validError;
 		}
 
-		if (TenantStatus.NEW.toString().equals(getTenantStatusById(lease.getTenantId()))) {
+		if (!TenantStatus.NEW.toString().equals(getTenantStatusById(lease.getTenantId()))) {
 			ValidError validError = new ValidError("ERROR200",
-					"New property in market. Tenant cannot be assigned to this property until it is made active");
+					"Tenant cannot be assigned to this Lease until it is active");
 			return validError;
 		}
 		return null;
@@ -63,10 +63,8 @@ public class LeaseServiceImpl implements LeaseService {
 	}
 
 	@Override
-	public ValidError createLease(Lease lease) {
-		priorDataValidation(lease);
-
-		return null;
+	public void createLease(Lease lease) {
+		leaseDAO.createLease(lease);
 	}
 
 }

@@ -6,7 +6,7 @@ public class RentalDetail {
 	private int rentId;
 	private int deposit;
 	private String leaseType;
-	private Date effectivedate;
+	private Date effectiveDate;
 	public int getRentId() {
 		return rentId;
 	}
@@ -25,11 +25,11 @@ public class RentalDetail {
 	public void setLeaseType(String leaseType) {
 		this.leaseType = leaseType;
 	}
-	public Date getEffectivedate() {
-		return effectivedate;
+	public Date getEffectiveDate() {
+		return effectiveDate;
 	}
-	public void setEffectivedate(Date effectivedate) {
-		this.effectivedate = effectivedate;
+	public void setEffectiveDate(Date effectiveDate) {
+		this.effectiveDate = effectiveDate;
 	}
 	@Override
 	public String toString() {
@@ -40,12 +40,10 @@ public class RentalDetail {
 		builder.append(deposit);
 		builder.append(", leaseType=");
 		builder.append(leaseType);
-		builder.append(", effectivedate=");
-		builder.append(effectivedate);
+		builder.append(", effectiveDate=");
+		builder.append(effectiveDate);
 		builder.append("]");
 		return builder.toString();
 	}
-	
-	
 	
 }

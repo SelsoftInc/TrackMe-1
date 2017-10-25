@@ -1,23 +1,30 @@
 package com.selsoft.trackme.model;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "TENANT")
 public class Tenant {
-
+	
+	@Id
+	private int tenantId;
 	private String tenantFirstName;
-
 	private String tenantLastName;
-
 	private String tenantEmailId;
-
 	private String tenantPhoneNumber;
 	private String tenantStatus;
-
 
 	public Tenant() {
 		this.tenantStatus = TenantStatus.NEW.toString();
 
+	}
+
+	public int getTenantId() {
+		return tenantId;
+	}
+
+	public void setTenantId(int tenantId) {
+		this.tenantId = tenantId;
 	}
 
 	public String getTenantFirstName() {
@@ -63,7 +70,9 @@ public class Tenant {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("Tenant [tenantFirstName=");
+		builder.append("Tenant [tenantId=");
+		builder.append(tenantId);
+		builder.append(", tenantFirstName=");
 		builder.append(tenantFirstName);
 		builder.append(", tenantLastName=");
 		builder.append(tenantLastName);
@@ -76,5 +85,7 @@ public class Tenant {
 		builder.append("]");
 		return builder.toString();
 	}
+
+	
 
 }
