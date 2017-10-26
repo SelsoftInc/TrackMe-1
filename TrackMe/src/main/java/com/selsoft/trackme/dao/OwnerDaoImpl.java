@@ -7,12 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.selsoft.trackme.constants.TrackMeConstants;
 import com.selsoft.trackme.model.Owner;
 
 @Repository
 public class OwnerDaoImpl implements OwnerDao {
 
-	@SuppressWarnings("unused")
+	@SuppressWarnings(TrackMeConstants.UNUSED)
 	private static final Logger logger = Logger.getLogger(OwnerDaoImpl.class);
 
 	@Autowired

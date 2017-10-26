@@ -13,6 +13,8 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.apache.commons.lang3.StringUtils ;
+
+import com.selsoft.trackme.constants.ErrorConstants;
 import com.selsoft.trackme.dao.UserDao;
 import com.selsoft.trackme.dto.PasswordDto;
 import com.selsoft.trackme.model.Errors;
@@ -87,7 +89,7 @@ public class UserServiceImpl implements UserService {
 
 		} else {
 			logger.info("Email Id or Password are not valid returning Error Data");
-			ValidError validError = new ValidError("ERROR101", "Email or Password are not correct.");
+			ValidError validError = new ValidError(ErrorConstants.AUTHENTICATIONERROR, ErrorConstants.AUTHENTICATIONERROR_MESSAGE);
 			List<ValidError> errorList = new ArrayList<>();
 			errorList.add(validError);
 			return new Errors(errorList);

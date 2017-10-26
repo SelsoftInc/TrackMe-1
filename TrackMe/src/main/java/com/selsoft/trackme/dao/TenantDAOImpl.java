@@ -10,12 +10,13 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
+import com.selsoft.trackme.constants.TrackMeConstants;
 import com.selsoft.trackme.model.Tenant;
 
 @Repository
 @Qualifier("tanantDAO")
 public class TenantDAOImpl implements TenantDAO {
-	@SuppressWarnings("unused")
+	@SuppressWarnings(TrackMeConstants.UNUSED)
 	private static final Logger logger = Logger.getLogger(TenantDAOImpl.class);
 
 	@Autowired

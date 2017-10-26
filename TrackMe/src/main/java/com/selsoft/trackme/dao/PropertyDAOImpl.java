@@ -11,6 +11,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
 
+import com.selsoft.trackme.constants.TrackMeConstants;
 import com.selsoft.trackme.model.Errors;
 import com.selsoft.trackme.model.Owner;
 import com.selsoft.trackme.model.Property;
@@ -19,7 +20,7 @@ import com.selsoft.trackme.model.Tenant;
 @Repository
 @Qualifier("propertyDAO")
 public class PropertyDAOImpl implements PropertyDAO {
-	@SuppressWarnings("unused")
+	@SuppressWarnings(TrackMeConstants.UNUSED)
 	private static final Logger logger = Logger.getLogger(PropertyDAOImpl.class);
 
 	@Autowired

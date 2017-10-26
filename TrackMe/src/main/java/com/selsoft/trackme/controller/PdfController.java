@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.itextpdf.text.DocumentException;
+import com.selsoft.trackme.constants.TrackMeConstants;
 import com.selsoft.trackme.model.Errors;
 import com.selsoft.trackme.pdftemplate.RentalPdf;
 import com.selsoft.trackme.service.PdfService;
@@ -24,7 +25,7 @@ import com.selsoft.trackme.service.PdfService;
 @RequestMapping(value = "/pdf")
 public class PdfController {
 
-	@SuppressWarnings("unused")
+	@SuppressWarnings(TrackMeConstants.UNUSED)
 	private static final Logger logger = Logger.getLogger(PdfController.class);
 
 	@Autowired

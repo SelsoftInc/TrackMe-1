@@ -65,7 +65,7 @@ public class PropertyController {
 	
 	@RequestMapping(value = "/getAllActiveProperties", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<Property>  getAllActiveProperties(String status) {
-		return propertyService.getAllProperties(PropertyStatus.ACTIVE.toString());
+		return propertyService.getAllProperties(PropertyStatus.ACTIVE.getValue());
 	}
 	
 }

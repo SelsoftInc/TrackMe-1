@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.selsoft.trackme.constants.TrackMeConstants;
 import com.selsoft.trackme.model.Owner;
 import com.selsoft.trackme.model.OwnerStatus;
 import com.selsoft.trackme.service.OwnerService;
@@ -26,7 +27,7 @@ import com.selsoft.trackme.service.OwnerService;
 
 public class OwnerController {
 
-	@SuppressWarnings("unused")
+	@SuppressWarnings(TrackMeConstants.UNUSED)
 	private static final Logger logger = Logger.getLogger(OwnerController.class);
  
 	@Autowired

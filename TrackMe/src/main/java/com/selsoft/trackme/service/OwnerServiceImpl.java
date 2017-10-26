@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.selsoft.trackme.constants.TrackMeConstants;
 import com.selsoft.trackme.dao.OwnerDao;
 import com.selsoft.trackme.model.Owner;
 
@@ -15,7 +16,7 @@ public class OwnerServiceImpl implements OwnerService {
 	@Autowired
 	private OwnerDao ownerDao;
 
-	@SuppressWarnings("unused")
+	@SuppressWarnings(TrackMeConstants.UNUSED)
 	private static final Logger logger = Logger.getLogger(OwnerService.class);
 
 	/**
