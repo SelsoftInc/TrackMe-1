@@ -12,5 +12,7 @@ public interface PropertyService {
 	public Errors setPropertyAsActive(Property property);
 
 	public List<Property> getAllProperties(String status);
+	
+	String getPropertyStatusById(int id);
 
 }

@@ -2,6 +2,9 @@ package com.selsoft.trackme.service;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.convert.Property;
 import org.springframework.stereotype.Service;
 
 import com.selsoft.trackme.dao.LeaseDAO;
@@ -11,7 +14,15 @@ import com.selsoft.trackme.model.TenantStatus;
 import com.selsoft.trackme.model.ValidError;
 
 @Service("leaseService")
+@PropertySource("classpath:ErrorMsg.properties")
 public class LeaseServiceImpl implements LeaseService {
+	
+	
+	@Value("${property_error_code_101}")
+	private String propertErrorCode;
+	
+	@Value("${property_error_message_101}")
+	private String propertErrorMessage;
 
 	@Autowired
 	private LeaseDAO leaseDAO;
@@ -20,46 +31,43 @@ public class LeaseServiceImpl implements LeaseService {
 	private static final Logger logger = Logger.getLogger(LeaseServiceImpl.class);
 
 	@Override
-	public ValidError priorDataValidation(Lease lease) {
+	public ValidError validateNewLeaseData(Lease lease) {
 
-		if (PropertyStatus.NEW.toString().equals(getPropertyStatusById(lease.getPropertyId()))) {
-			ValidError validError = new ValidError("ERROR100",
-					"Property needs to be activated before assigning to a tenant");
+		String  leaseType = lease.getLeaseType();
+
+		if (PropertyStatus.NEW.getValue().equals(leaseType)) {
+			
+			ValidError validError = new ValidError(propertErrorCode,propertErrorMessage);//try to put error message and codefrom
 			return validError;
 		}
 
-		if (PropertyStatus.OCCUPIED.toString().equals(getPropertyStatusById(lease.getPropertyId()))) {
+		else if (PropertyStatus.OCCUPIED.getValue().equals(leaseType)) {
 
-			ValidError validError = new ValidError("ERROR101", "Property is occupied, cannot assign a tenant");
+			ValidError validError = new ValidError("error_code_102= 102","Property is occupied, cannot assign a tenant");
 			return validError;
 
-		}
-		if (PropertyStatus.MAINTENANCE.toString().equals(getPropertyStatusById(lease.getPropertyId()))) {
-			ValidError validError = new ValidError("ERROR102", "Property under maintenance, cannot assign a tenant");
+		} else if (PropertyStatus.MAINTENANCE.getValue().equals(leaseType)) {
+			
+			ValidError validError = new ValidError("error_code_103= 103","Property under maintenance, cannot assign a tenant");
 			return validError;
-		}
-		if (PropertyStatus.INACTIVE.toString().equals(getPropertyStatusById(lease.getPropertyId()))) {
-			ValidError validError = new ValidError("ERROR103", "Property is INACTIVE, cannot assign a tenant");
+		} else if (PropertyStatus.INACTIVE.getValue().equals(leaseType)) {
+			
+			ValidError validError = new ValidError("error_code_104= 104","Property is INACTIVE, cannot assign a tenant");
 			return validError;
+			
 		}
 
-		if (!TenantStatus.NEW.toString().equals(getTenantStatusById(lease.getTenantId()))) {
-			ValidError validError = new ValidError("ERROR200",
-					"Tenant cannot be assigned to this Lease until it is active");
+		if (!TenantStatus.NEW.equals(leaseType)) {
+			
+
+	
+			ValidError validError = new ValidError("error_code_105= 105","Tenant cannot be assigned to this Lease until it is active");
 			return validError;
+			
+			
 		}
 		return null;
 
-	}
-
-	@Override
-	public String getPropertyStatusById(int id) {
-		return leaseDAO.getPropertyStatusById(id);
-	}
-
-	@Override
-	public String getTenantStatusById(int id) {
-		return leaseDAO.getTenantStatusById(id);
 	}
 
 	@Override
@@ -68,4 +76,3 @@ public class LeaseServiceImpl implements LeaseService {
 	}
 
 }
-

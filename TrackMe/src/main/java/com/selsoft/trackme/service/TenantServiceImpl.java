@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.selsoft.trackme.dao.LeaseDAO;
 import com.selsoft.trackme.dao.TenantDAO;
 import com.selsoft.trackme.model.Tenant;
 
@@ -14,6 +15,8 @@ public class TenantServiceImpl implements TenantService {
 
 	@Autowired
 	private TenantDAO tenantDAO;
+	@Autowired
+	private LeaseDAO leaseDAO;
 
 	@SuppressWarnings("unused")
 	private static final Logger logger = Logger.getLogger(TenantService.class);
@@ -41,6 +44,10 @@ public class TenantServiceImpl implements TenantService {
 	@Override
 	public List<Tenant> saveNewTenant() {
 		return tenantDAO.findAll();
+	}
+	
+	public String getTenantStatusById(int id) {
+		return leaseDAO.getTenantStatusById(id);
 	}
 
 }

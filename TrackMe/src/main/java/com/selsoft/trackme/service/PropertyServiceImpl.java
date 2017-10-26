@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.selsoft.trackme.dao.LeaseDAO;
 import com.selsoft.trackme.dao.PropertyDAO;
 import com.selsoft.trackme.model.Errors;
 import com.selsoft.trackme.model.Owner;
@@ -17,6 +18,8 @@ public class PropertyServiceImpl implements PropertyService {
 
 	@Autowired
 	private PropertyDAO propertyDAO;
+	@Autowired
+	private LeaseDAO leaseDAO;
 
 	@SuppressWarnings("unused")
 	private static final Logger logger = Logger.getLogger(PropertyServiceImpl.class);
@@ -52,4 +55,11 @@ public class PropertyServiceImpl implements PropertyService {
 		return propertyDAO.getAllProperties(status);
 	}
 
-}
+	public String getPropertyStatusById(int id) {
+		
+			return leaseDAO.getPropertyStatusById(id);
+		}
+
+	}
+
+

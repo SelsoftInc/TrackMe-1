@@ -33,11 +33,21 @@ public class Property {
 	private String propertyStatus;
 	
 	
+	
 	public Property() {
 		
 		this.propertyStatus = PropertyStatus.ACTIVE.toString();
 		
 	}
+	
+	/*private final String value;
+	 private PropertyStatus(final String value) {
+		 this.value = value;
+		 }
+	 public String getValue() {
+		 return value; 
+		 }*/
+	
 
 
 	public int getPropertyId() {

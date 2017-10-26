@@ -9,6 +9,7 @@ public interface TenantService {
 	public void addNewTenant(Tenant tenant);
 
 	public List<Tenant> getAllTenants(String status);
+	String getTenantStatusById(int id);
 
 	public List<Tenant> saveNewTenant();
 	

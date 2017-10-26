@@ -18,6 +18,17 @@ public enum PropertyStatus {
 	
 	
 	
-	NEW, ACTIVE, OCCUPIED, MAINTENANCE, INACTIVE;//
+	NEW("NEW"), ACTIVE("ACTIVE"), OCCUPIED("OCCUPIED"), MAINTENANCE("MAINTENANCE"), INACTIVE("INACTIVE");
+	
+	private final String value;
+	 private PropertyStatus(final String value) {
+		 this.value = value;
+		 }
+	 public String getValue() {
+		 return value; 
+		 }
+	
+	
+
 
 }

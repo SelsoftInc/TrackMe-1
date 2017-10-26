@@ -2,7 +2,11 @@ package com.selsoft.trackme.model;
 
 import java.util.Date;
 
+import org.springframework.data.annotation.Id;
+
 public class RentalDetail {
+	
+	@Id
 	private int rentId;
 	private int deposit;
 	private String leaseType;

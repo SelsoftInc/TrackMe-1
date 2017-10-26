@@ -1,9 +1,12 @@
 package com.selsoft.trackme.model;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "OWNER")
 public class Owner {
+	
+	@Id
 	private int ownerId;
 	private String ownerFirstName;
 	private String ownerLastName;

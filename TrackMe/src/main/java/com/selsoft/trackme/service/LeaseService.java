@@ -5,11 +5,11 @@ import com.selsoft.trackme.model.ValidError;
 
 public interface LeaseService {
 
-	ValidError priorDataValidation(Lease lease);
+	ValidError validateNewLeaseData(Lease lease);
 
-	String getPropertyStatusById(int id);
+	//String getPropertyStatusById(int id);
 
-	String getTenantStatusById(int id);
+	//String getTenantStatusById(int id);
 
 	void createLease(Lease lease);
 

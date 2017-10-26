@@ -26,7 +26,7 @@ public class LeaseController {
 	@RequestMapping(value = "/createLease", method = RequestMethod.POST)
 	public ValidError createLease(@RequestBody Lease lease) {
 
-		ValidError error = leaseService.priorDataValidation(lease);
+		ValidError error = leaseService.validateNewLeaseData(lease);
 
 		logger.info(lease.getPropertyId() + " data comes into LeaseControllercreateLease() for processing");
 		if (error == null) {
