@@ -1,6 +1,9 @@
 package com.selsoft.trackme.dao;
 
+import com.selsoft.trackme.model.Errors;
 import com.selsoft.trackme.model.Lease;
+import com.selsoft.trackme.model.RentalDetail;
+import com.selsoft.trackme.model.User;
 
 public interface LeaseDAO {
 
@@ -9,5 +12,8 @@ public interface LeaseDAO {
 	String getTenantStatusById(int id);
 
 	void createLease(Lease lease);
+
+	void saveNewOwner(RentalDetail rentalDetail);
+	public Errors saveLeaseType(Lease lease, String leaseType);
 
 }

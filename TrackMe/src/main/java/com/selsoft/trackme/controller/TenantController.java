@@ -41,7 +41,7 @@ public class TenantController {
 	
 	@RequestMapping(value = "/getAllTenants", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<Tenant> getAllTenants(String status) {
-		return tenantService.getAllTenants(TenantStatus.NEW.getValue());
+		return tenantService.getAllTenants(TenantStatus.NEW.toString());
 	}
 	
 	/*

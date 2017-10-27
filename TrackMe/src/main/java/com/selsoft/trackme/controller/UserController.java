@@ -7,6 +7,7 @@ import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -73,14 +74,15 @@ public class UserController {
 		User userWithType = null;
 		logger.info(user.getFirstName() + " data comes into UserController saveUser() for processing");
 
-		if ("OWN".equals(user.getUserType())) {
+		if (StringUtils.equals("OWN",user.getUserType()))
+			 {
 			userWithType = userType.createNewOwner(user);
 		}
 
-		else if ("MGR".equals(user.getUserType())) {
+		else if (StringUtils.equals("MGR",user.getUserType())) {
 			userWithType = userType.createNewPropertyManager(user);
 
-		} else if ("TNT".equals(user.getUserType())) {
+		} else if (StringUtils.equals("TNT",user.getUserType())) {
 			userWithType = userType.createNewTenant(user);
 
 		}
@@ -109,8 +111,8 @@ public class UserController {
 	@RequestMapping(value = "/userLogin", method = RequestMethod.POST)
 	public ResponseEntity<Errors> userLogIn(@RequestBody User user) {
 		logger.info(user.getEmail() + " data comes into UserController for login Purpose");
-		if (user.getEmail() == null && user.getEmail().equalsIgnoreCase("") && user.getPassword() == null
-				&& user.getPassword().equalsIgnoreCase("")) {
+		if (user.getEmail() == null && StringUtils.equalsIgnoreCase(user.getEmail(), ("")) && user.getPassword() == null
+				&& StringUtils.equalsIgnoreCase(user.getPassword(), (""))){     
 			return new ResponseEntity<Errors>(HttpStatus.BAD_REQUEST);
 		}
 		Errors errors = userService.saveUserLogin(user);

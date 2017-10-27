@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.apache.commons.lang3.StringUtils ;
+import org.apache.commons.lang3.StringUtils;
 
 import com.selsoft.trackme.constants.ErrorConstants;
 import com.selsoft.trackme.dao.UserDao;
@@ -89,7 +89,8 @@ public class UserServiceImpl implements UserService {
 
 		} else {
 			logger.info("Email Id or Password are not valid returning Error Data");
-			ValidError validError = new ValidError(ErrorConstants.AUTHENTICATIONERROR, ErrorConstants.AUTHENTICATIONERROR_MESSAGE);
+			ValidError validError = new ValidError(ErrorConstants.AUTHENTICATIONERROR,
+					ErrorConstants.AUTHENTICATIONERROR_MESSAGE);
 			List<ValidError> errorList = new ArrayList<>();
 			errorList.add(validError);
 			return new Errors(errorList);
@@ -135,8 +136,9 @@ public class UserServiceImpl implements UserService {
 		ValidError emailErrors = validation.emailValidation(email);
 		ValidError passwordErrors = validation.passwordValidation(password);
 
-		if ("Success".equals(nameErrors.getErrorCode()) && "Success".equals(emailErrors.getErrorCode())
-				&& "Success".equals(passwordErrors.getErrorCode())) {
+		if (StringUtils.equals("Success", nameErrors.getErrorCode())
+				&& StringUtils.equals("Success", emailErrors.getErrorCode())
+				&& StringUtils.equals("Success", passwordErrors.getErrorCode())) {
 			return true;
 		} else {
 			return false;
@@ -173,7 +175,8 @@ public class UserServiceImpl implements UserService {
 		ValidError emailErrors = validation.emailValidation(email);
 		ValidError passwordErrors = validation.passwordValidation(password);
 
-		if ("Success".equals(emailErrors.getErrorCode()) && "Success".equals(passwordErrors.getErrorCode())) {
+		if (StringUtils.equals("Success", emailErrors.getErrorCode())
+				&& StringUtils.equals("Success", passwordErrors.getErrorCode())) {
 			return true;
 		} else {
 			return false;
@@ -218,16 +221,16 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public Errors changeUserPassword(User user, PasswordDto password) {
-		if (password.getPassword().equals(password.getConfirmPassword())) {
+		if (StringUtils.equals(password.getPassword(), password.getConfirmPassword())) {
 			ValidError passwordErrors = validation.passwordValidation(password.getPassword());
 
-			if ("Success".equals(passwordErrors.getErrorCode())) {
+			if (StringUtils.equals("Success", passwordErrors.getErrorCode())) {
 				String encryptPass = Utils.encryptPassword(password.getPassword());
 				userDao.changeUserPassword(user, encryptPass);
 			}
 		}
 
-		ValidError passwordErrors = new ValidError("SUCSPWDUPD", "Password Updated Successfully.");
+		ValidError passwordErrors = new ValidError("SUCCESSUPDATEPASSWORD107", "SUCCESSUPDATEPASSWORD107_MESSAGE");
 
 		List<ValidError> list = new ArrayList<ValidError>();
 		list.add(passwordErrors);
@@ -240,7 +243,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public Errors userLogout(String email) {
 		userDao.userLogout(email);
-		ValidError loggedOutErrors = new ValidError("SUCSUSRLGT", "User Logged Out Successfully.");
+		ValidError loggedOutErrors = new ValidError("SUCCESSLOGOUT108", "SUCCESSLOGOUT108");
 
 		List<ValidError> list = new ArrayList<ValidError>();
 		list.add(loggedOutErrors);

@@ -2,6 +2,7 @@ package com.selsoft.trackme.dao;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -106,7 +107,7 @@ public class UserDaoImpl implements UserDao {
 			User returnedUser = userExist.get(0);
 			String pass = returnedUser.getPassword();
 			String password = Utils.decryptPassword(pass);
-			if (user.getPassword().equals(password)) {
+			if (StringUtils.equals(user.getPassword(), password)) {
 				return returnedUser;
 			} else {
 				return null;

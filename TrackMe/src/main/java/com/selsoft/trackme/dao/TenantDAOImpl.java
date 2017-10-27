@@ -53,7 +53,7 @@ public class TenantDAOImpl implements TenantDAO {
 		tenantList = template.find(query, Tenant.class);
 		}else{
 			
-			tenantList = template.findAll(Tenant.class);//here write query to find all data
+			tenantList = template.findAll(Tenant.class);
 		}
 		
 		return tenantList;

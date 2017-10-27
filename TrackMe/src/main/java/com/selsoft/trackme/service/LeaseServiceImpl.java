@@ -13,6 +13,7 @@ import com.selsoft.trackme.constants.TrackMeConstants;
 import com.selsoft.trackme.dao.LeaseDAO;
 import com.selsoft.trackme.model.Lease;
 import com.selsoft.trackme.model.PropertyStatus;
+import com.selsoft.trackme.model.RentalDetail;
 import com.selsoft.trackme.model.TenantStatus;
 import com.selsoft.trackme.model.ValidError;
 
@@ -72,6 +73,11 @@ public class LeaseServiceImpl implements LeaseService {
 	@Override
 	public void createLease(Lease lease) {
 		leaseDAO.createLease(lease);
+	}
+
+	@Override
+	public void saveRentalDetail(RentalDetail rentalDetail) {
+		leaseDAO.saveNewOwner(rentalDetail);
 	}
 
 }

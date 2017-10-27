@@ -5,16 +5,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
 
+import com.selsoft.trackme.constants.TrackMeConstants;
+import com.selsoft.trackme.model.Errors;
 import com.selsoft.trackme.model.Lease;
 import com.selsoft.trackme.model.Property;
+import com.selsoft.trackme.model.RentalDetail;
 import com.selsoft.trackme.model.Tenant;
 
 @Repository
 public class LeaseDAOImpl implements LeaseDAO {
 
-	@SuppressWarnings("unused")
+	@SuppressWarnings(TrackMeConstants.UNUSED)
 	private static final Logger logger = Logger.getLogger(LeaseDAOImpl.class);
 
 	@Autowired
@@ -40,5 +44,25 @@ public class LeaseDAOImpl implements LeaseDAO {
 	public void createLease(Lease lease) {
 		template.save(lease);
 	}
+
+	@Override
+	public void saveNewOwner(RentalDetail rentalDetail) {
+		template.save(rentalDetail);
+	}
+
+	@Override
+	public Errors saveLeaseType(Lease lease, String leaseType) {
+		
+
+			Query query = new Query(Criteria.where("leaseType").is(lease.getLeaseType()));
+			Update update = new Update();
+			update.set("LeaseType ", "RENT");
+			update.set("LeaseType", "LEASE");
+			update.set("LeaseType", "BOTH");
+			template.updateFirst(query, update, Lease.class);
+			return null;
+
+		}
+
 
 }
