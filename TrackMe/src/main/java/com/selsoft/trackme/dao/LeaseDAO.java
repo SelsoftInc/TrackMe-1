@@ -13,7 +13,7 @@ public interface LeaseDAO {
 
 	void createLease(Lease lease);
 
-	void saveNewOwner(RentalDetail rentalDetail);
+	void saveRentalDetail(RentalDetail rentalDetail,int propertyId);
 	public Errors saveLeaseType(Lease lease, String leaseType);
 
 }

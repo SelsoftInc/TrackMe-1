@@ -2,6 +2,7 @@ package com.selsoft.trackme.dao;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -24,6 +25,10 @@ public class LeaseDAOImpl implements LeaseDAO {
 	@Autowired
 	private MongoTemplate template;
 	
+	@Autowired
+	@Qualifier("propertyDAO")
+	private PropertyDAO propertyDao;
+
 	@Override
 	public String getPropertyStatusById(int id) {
 		Query query = new Query(Criteria.where("propertyId").is(id));
@@ -46,23 +51,23 @@ public class LeaseDAOImpl implements LeaseDAO {
 	}
 
 	@Override
-	public void saveNewOwner(RentalDetail rentalDetail) {
+	public void saveRentalDetail(RentalDetail rentalDetail, int propertyId) {
 		template.save(rentalDetail);
+		propertyDao.updateProperty(rentalDetail, propertyId);
+
 	}
 
 	@Override
 	public Errors saveLeaseType(Lease lease, String leaseType) {
-		
 
-			Query query = new Query(Criteria.where("leaseType").is(lease.getLeaseType()));
-			Update update = new Update();
-			update.set("LeaseType ", "RENT");
-			update.set("LeaseType", "LEASE");
-			update.set("LeaseType", "BOTH");
-			template.updateFirst(query, update, Lease.class);
-			return null;
+		Query query = new Query(Criteria.where("leaseType").is(lease.getLeaseType()));
+		Update update = new Update();
+		update.set("LeaseType ", "RENT");
+		update.set("LeaseType", "LEASE");
+		update.set("LeaseType", "BOTH");
+		template.updateFirst(query, update, Lease.class);
+		return null;
 
-		}
-
+	}
 
 }

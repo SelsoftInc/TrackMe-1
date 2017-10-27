@@ -7,12 +7,12 @@ import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.apache.commons.lang3.StringUtils;
 
 import com.selsoft.trackme.constants.ErrorConstants;
 import com.selsoft.trackme.dao.UserDao;
@@ -42,31 +42,31 @@ public class UserServiceImpl implements UserService {
 	/**
 	 * save the valid user to the user table
 	 */
+
 	public Errors saveUser(User user) {
-		if (isValid(user)) {
+		Errors errors = validateNewUser(user);
+		List<ValidError> err = errors.getError();
+		int count = 0;
+		for (ValidError vError : err) {
+			if (StringUtils.equals("Success", vError.getErrorCode())) {
+				count++;
+			}
+		}
+		if (count == 3) {
 			logger.info("User data is Valid and processing to Dao");
-
 			String encryptPass = Utils.encryptPassword(user.getPassword());
-
 			user.setPassword(encryptPass);
 			userDao.saveUser(user);
-
-			/*
-			 * if(usertype.equals("MGR")){
-			 * 
-			 * }
-			 */
-
 		} else {
 			logger.info("User data is not Valid returning Error Data");
-			return getError(user);
 		}
-		return null;
+		return errors;
+
 	}
 
 	/**
-	 * It saves user login,if it is a valid user and encrypts the password
-	 * otherwise throws error message
+	 * It saves user login,if it is a valid user and encrypts the password otherwise
+	 * throws error message
 	 */
 	public Errors saveUserLogin(User user) {
 		if (isValidLogin(user)) {
@@ -125,7 +125,7 @@ public class UserServiceImpl implements UserService {
 	 * @return
 	 */
 
-	public boolean isValid(User user) {
+	public Errors validateNewUser(User user) {
 
 		String firstName = user.getFirstName();
 		String lastName = user.getLastName();
@@ -135,36 +135,13 @@ public class UserServiceImpl implements UserService {
 		ValidError nameErrors = validation.nameValidation(firstName, lastName);
 		ValidError emailErrors = validation.emailValidation(email);
 		ValidError passwordErrors = validation.passwordValidation(password);
-
-		if (StringUtils.equals("Success", nameErrors.getErrorCode())
-				&& StringUtils.equals("Success", emailErrors.getErrorCode())
-				&& StringUtils.equals("Success", passwordErrors.getErrorCode())) {
-			return true;
-		} else {
-			return false;
-		}
-
-	}
-
-	public Errors getError(User user) {
-		String firstName = user.getFirstName();
-		String lastName = user.getLastName();
-		String email = user.getEmail();
-		String password = user.getPassword();
-
-		ValidError nameErrors = validation.nameValidation(firstName, lastName);
-		ValidError emailErrors = validation.emailValidation(email);
-		ValidError passwordErrors = validation.passwordValidation(password);
-
-		List<ValidError> list = new ArrayList<ValidError>();
-		list.add(nameErrors);
-		list.add(emailErrors);
-		list.add(passwordErrors);
-
+		List<ValidError> errorList = new ArrayList<ValidError>();
+		errorList.add(nameErrors);
+		errorList.add(emailErrors);
+		errorList.add(passwordErrors);
 		Errors errors = new Errors();
-		errors.setError(list);
+		errors.setError(errorList);
 		return errors;
-
 	}
 
 	public boolean isValidUser(User user) {

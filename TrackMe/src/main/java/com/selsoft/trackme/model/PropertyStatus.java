@@ -15,9 +15,6 @@ public enum PropertyStatus {
      *INACTIVE - Currently inactive in market due to some reason   
 	  
 	 */
-	
-	
-	
 	NEW("NEW"), ACTIVE("ACTIVE"), OCCUPIED("OCCUPIED"), MAINTENANCE("MAINTENANCE"), INACTIVE("INACTIVE");
 	
 	private final String value;

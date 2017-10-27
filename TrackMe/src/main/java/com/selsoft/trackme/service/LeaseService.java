@@ -11,6 +11,6 @@ public interface LeaseService {
 
 	void createLease(Lease lease);
 
-	void saveRentalDetail(RentalDetail rentalDetail);
+	void saveRentalDetail(RentalDetail rentalDetail,String propertyId);
 
 }

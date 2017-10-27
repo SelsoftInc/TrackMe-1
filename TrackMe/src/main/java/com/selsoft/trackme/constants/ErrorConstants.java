@@ -16,6 +16,10 @@ public class ErrorConstants {
 	public static final String ERROR105 = "error105";
 	public static final String ERRROR105_MESSAGE = "Tenant cannot be assigned to this Lease until it is active";
 
+	public static final String ERROR109 = "error109";
+	public static final String ERRROR109_MESSAGE = "Cann't possible to create a lease";
+
+	
 	public static final String SUCCESS106 = "success106";
 	public static final String SUCCESS106_MESSAGE = "Property is ACTIVE";
 

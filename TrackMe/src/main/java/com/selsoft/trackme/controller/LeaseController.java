@@ -8,8 +8,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.selsoft.trackme.constants.ErrorConstants;
 import com.selsoft.trackme.model.Errors;
 import com.selsoft.trackme.model.Lease;
 import com.selsoft.trackme.model.LeaseType;
@@ -40,7 +42,7 @@ public class LeaseController {
 		logger.info(lease.getPropertyId() + " data comes into LeaseControllercreateLease() for processing");
 		if (error == null) {
 			leaseService.createLease(lease);
-			error=new ValidError("SUCCESS106", "SUCCESS106_MESSAGE");
+			error=new ValidError(ErrorConstants.ERROR109, ErrorConstants.ERRROR109_MESSAGE);
 		}
 		return error;
 
@@ -49,11 +51,11 @@ public class LeaseController {
 	
 	 //------------------- save RentalDetail --------------------------------------------------------
 		@RequestMapping(value = "/saveRentalDetail", method = RequestMethod.PUT)
-		public void  saveRentalDetail(@RequestBody RentalDetail rentalDetail) {
+		public void  saveRentalDetail(@RequestBody RentalDetail rentalDetail,@RequestParam("pId") String propertyId) {
 			
-			 Property property=new Property();
-			Lease leaseWithType = null;
-			logger.info(property.getPropertyId() +" data comes into UserController saveUser() for processing");
+			 
+			/*Lease leaseWithType = null;
+			logger.info(property.getPropertyId() +" data comes into LeaseController saveRentalDetail() for processing");
 
 			if (StringUtils.equals("RENT", rentalDetail.getLeaseType())) {
 				//leaseWithType = leaseType.getValue();
@@ -65,9 +67,9 @@ public class LeaseController {
 			                     }
 			else if (StringUtils.equals("BOTH", rentalDetail.getLeaseType())) {
 				//leaseWithType = leaseType.BOTH.getValue();
-			}
+			}*/
 			
-			leaseService. saveRentalDetail(rentalDetail);
+			leaseService. saveRentalDetail(rentalDetail, propertyId);
 		}
 
 }

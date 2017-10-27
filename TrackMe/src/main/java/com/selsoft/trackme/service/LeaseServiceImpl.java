@@ -20,9 +20,7 @@ import com.selsoft.trackme.model.ValidError;
 @Service("leaseService")
 @PropertySource("classpath:ErrorMsg.properties")
 public class LeaseServiceImpl implements LeaseService {
-	
-	
-	
+
 	@Autowired
 	private LeaseDAO leaseDAO;
 
@@ -32,39 +30,40 @@ public class LeaseServiceImpl implements LeaseService {
 	@Override
 	public ValidError validateNewLeaseData(Lease lease) {
 
-		String  leaseType = lease.getLeaseType();
+		String leaseType = lease.getLeaseType();
 
-		 
-			if(StringUtils.equals(PropertyStatus.NEW.getValue(),leaseType)) {
-			
-			ValidError validError = new ValidError(ErrorConstants.ERROR101,ErrorConstants.ERROR101_MESSAGE);//try to put error message and codefrom
+		if (StringUtils.equals(PropertyStatus.NEW.getValue(), leaseType)) {
+
+			ValidError validError = new ValidError(ErrorConstants.ERROR101, ErrorConstants.ERROR101_MESSAGE);// try to
+																												// put
+																												// error
+																												// message
+																												// and
+																												// codefrom
 			return validError;
 		}
 
-		else if (StringUtils.equals(PropertyStatus.OCCUPIED.getValue(),leaseType)) {
+		else if (StringUtils.equals(PropertyStatus.OCCUPIED.getValue(), leaseType)) {
 
-			ValidError validError = new ValidError(ErrorConstants.ERROR102,ErrorConstants.ERROR102_MESSAGEessage);
+			ValidError validError = new ValidError(ErrorConstants.ERROR102, ErrorConstants.ERROR102_MESSAGEessage);
 			return validError;
 
-		} else if (StringUtils.equals(PropertyStatus.OCCUPIED.getValue(),leaseType)) {
-			
-			ValidError validError = new ValidError(ErrorConstants.ERROR103,ErrorConstants.ERROR103_MESSAGE);
+		} else if (StringUtils.equals(PropertyStatus.OCCUPIED.getValue(), leaseType)) {
+
+			ValidError validError = new ValidError(ErrorConstants.ERROR103, ErrorConstants.ERROR103_MESSAGE);
 			return validError;
-		} else if (StringUtils.equals(PropertyStatus.INACTIVE.getValue(),leaseType)) {
-			
-			ValidError validError = new ValidError(ErrorConstants.ERROR104,ErrorConstants.Error104_Message);
+		} else if (StringUtils.equals(PropertyStatus.INACTIVE.getValue(), leaseType)) {
+
+			ValidError validError = new ValidError(ErrorConstants.ERROR104, ErrorConstants.Error104_Message);
 			return validError;
-			
+
 		}
 
-		if (StringUtils.equals(TenantStatus.NEW.getValue(),leaseType)) {
-			
+		if (StringUtils.equals(TenantStatus.NEW.getValue(), leaseType)) {
 
-	
-			ValidError validError = new ValidError(ErrorConstants.ERROR105,ErrorConstants.ERRROR105_MESSAGE);
+			ValidError validError = new ValidError(ErrorConstants.ERROR105, ErrorConstants.ERRROR105_MESSAGE);
 			return validError;
-			
-			
+
 		}
 		return null;
 
@@ -76,8 +75,9 @@ public class LeaseServiceImpl implements LeaseService {
 	}
 
 	@Override
-	public void saveRentalDetail(RentalDetail rentalDetail) {
-		leaseDAO.saveNewOwner(rentalDetail);
+	public void saveRentalDetail(RentalDetail rentalDetail, String propertyId) {
+		int propId = Integer.parseInt(propertyId);
+		leaseDAO.saveRentalDetail(rentalDetail, propId);
 	}
 
 }
