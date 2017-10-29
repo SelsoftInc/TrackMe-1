@@ -57,17 +57,6 @@ public class LeaseDAOImpl implements LeaseDAO {
 
 	}
 
-	@Override
-	public Errors saveLeaseType(Lease lease, String leaseType) {
-
-		Query query = new Query(Criteria.where("leaseType").is(lease.getLeaseType()));
-		Update update = new Update();
-		update.set("LeaseType ", "RENT");
-		update.set("LeaseType", "LEASE");
-		update.set("LeaseType", "BOTH");
-		template.updateFirst(query, update, Lease.class);
-		return null;
-
-	}
+	
 
 }

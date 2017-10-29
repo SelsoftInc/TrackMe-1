@@ -12,5 +12,9 @@ public interface LeaseService {
 	void createLease(Lease lease);
 
 	void saveRentalDetail(RentalDetail rentalDetail,String propertyId);
+	
+	//ValidError validateNewRentalData(RentalDetail rentalDetail);
+	
+	//boolean validateEffectiveDate(RentalDetail rentalDetail, String propertyId);
 
 }

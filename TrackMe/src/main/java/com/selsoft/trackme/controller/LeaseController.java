@@ -53,23 +53,9 @@ public class LeaseController {
 		@RequestMapping(value = "/saveRentalDetail", method = RequestMethod.PUT)
 		public void  saveRentalDetail(@RequestBody RentalDetail rentalDetail,@RequestParam("pId") String propertyId) {
 			
-			 
-			/*Lease leaseWithType = null;
-			logger.info(property.getPropertyId() +" data comes into LeaseController saveRentalDetail() for processing");
-
-			if (StringUtils.equals("RENT", rentalDetail.getLeaseType())) {
-				//leaseWithType = leaseType.getValue();
-			}
-
-			else if (StringUtils.equals("LEASE", rentalDetail.getLeaseType())) {
-				//leaseWithType = leaseType.BOTH.getValue();
-
-			                     }
-			else if (StringUtils.equals("BOTH", rentalDetail.getLeaseType())) {
-				//leaseWithType = leaseType.BOTH.getValue();
-			}*/
-			
-			leaseService. saveRentalDetail(rentalDetail, propertyId);
+			//ValidError validError = leaseService.validateNewRentalData(rentalDetail);
 		}
+			
+			
 
 }

@@ -30,25 +30,24 @@ public class LeaseServiceImpl implements LeaseService {
 	@Override
 	public ValidError validateNewLeaseData(Lease lease) {
 
-		String leaseType = lease.getLeaseType();
+		String leaseType = lease.getLeaseType(); // RENT, LEASE, BOTH
 
 		if (StringUtils.equals(PropertyStatus.NEW.getValue(), leaseType)) {
 
-			ValidError validError = new ValidError(ErrorConstants.ERROR101, ErrorConstants.ERROR101_MESSAGE);// try to
-																												// put
-																												// error
-																												// message
-																												// and
-																												// codefrom
+			ValidError validError = new ValidError(ErrorConstants.ERROR101, ErrorConstants.ERROR101_MESSAGE);
 			return validError;
 		}
 
-		else if (StringUtils.equals(PropertyStatus.OCCUPIED.getValue(), leaseType)) {
+		else if (StringUtils.equals(PropertyStatus.ACTIVE.getValue(), leaseType)) {
 
 			ValidError validError = new ValidError(ErrorConstants.ERROR102, ErrorConstants.ERROR102_MESSAGEessage);
 			return validError;
 
 		} else if (StringUtils.equals(PropertyStatus.OCCUPIED.getValue(), leaseType)) {
+
+			ValidError validError = new ValidError(ErrorConstants.ERROR103, ErrorConstants.ERROR103_MESSAGE);
+			return validError;
+		}else if (StringUtils.equals(PropertyStatus.MAINTENANCE.getValue(), leaseType)) {
 
 			ValidError validError = new ValidError(ErrorConstants.ERROR103, ErrorConstants.ERROR103_MESSAGE);
 			return validError;
@@ -77,7 +76,48 @@ public class LeaseServiceImpl implements LeaseService {
 	@Override
 	public void saveRentalDetail(RentalDetail rentalDetail, String propertyId) {
 		int propId = Integer.parseInt(propertyId);
+		
+		
 		leaseDAO.saveRentalDetail(rentalDetail, propId);
 	}
 
+	/*@Override
+	public ValidError validateNewRentalData(RentalDetail rentalDetail) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean validateEffectiveDate(RentalDetail rentalDetail, String propertyId) {
+		// TODO Auto-generated method stub
+		return false;
+	}*/
+
+	/*@Override
+	public ValidError validateNewRentalData(RentalDetail rentalDetail) {
+		// TODO Auto-generated method stub
+		
+			Lease leaseWithType = null;
+			String leaseType = rentalDetail.getLeaseType();
+			logger.info(property.getPropertyId() +" data comes into LeaseController saveRentalDetail() for processing");
+
+			if (StringUtils.equals("RENT", leaseType)) {
+				ValidError validError = new ValidError(ErrorConstants.ERROR102, ErrorConstants.ERROR102_MESSAGEessage);
+				return validError;
+
+			}
+
+			else if (StringUtils.equals("LEASE", leaseType)) {
+				ValidError validError = new ValidError(ErrorConstants.ERROR102, ErrorConstants.ERROR102_MESSAGEessage);
+				return validError;
+
+			                     }
+			else if (StringUtils.equals("BOTH", leaseType)) {
+				ValidError validError = new ValidError(ErrorConstants.ERROR102, ErrorConstants.ERROR102_MESSAGEessage);
+				return validError;
+
+			}
+		return null;
+	}
+*/
 }
