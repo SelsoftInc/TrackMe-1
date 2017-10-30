@@ -1,6 +1,6 @@
 package com.selsoft.trackme.model;
 
-import java.util.Date;
+import java.sql.Date;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;

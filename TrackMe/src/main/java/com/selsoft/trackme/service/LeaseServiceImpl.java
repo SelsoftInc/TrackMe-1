@@ -1,19 +1,19 @@
 package com.selsoft.trackme.service;
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.core.convert.Property;
 import org.springframework.stereotype.Service;
 
 import com.selsoft.trackme.constants.ErrorConstants;
 import com.selsoft.trackme.constants.TrackMeConstants;
 import com.selsoft.trackme.dao.LeaseDAO;
 import com.selsoft.trackme.model.Lease;
+import com.selsoft.trackme.model.Property;
 import com.selsoft.trackme.model.PropertyStatus;
 import com.selsoft.trackme.model.RentalDetail;
 import com.selsoft.trackme.model.TenantStatus;
@@ -107,14 +107,23 @@ public class LeaseServiceImpl implements LeaseService {
 	}
 
 	@Override
-	public List<com.selsoft.trackme.model.Property> getAllRentalDetails(String propertyId) {
+	public List<Property> getAllRentalDetails(Integer propertyId) {
 
 		return leaseDAO.fetchLeases(propertyId);
 	}
 
-	@Override
-	public List<com.selsoft.trackme.model.Property> getRentalDetail(String propertyId, Date date) {
-		return leaseDAO.getRentalDetail(propertyId, date);
+	public RentalDetail getRentalDetail(Integer propertyId,Date inputDate) {
+		return leaseDAO.getRentalDetail(propertyId, inputDate);
 	}
+
+	@Override
+	public RentalDetail getRentalDetail(Integer propertyId, java.util.Date inputDate) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+
+	
 
 }

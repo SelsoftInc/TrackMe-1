@@ -1,5 +1,7 @@
 package com.selsoft.trackme.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -54,23 +56,19 @@ public class LeaseController {
 			
 			
 		}
-		/*	
-		@RequestMapping(value = "/ getAllRentalDetails ", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-		public List<RentalDetail>  getAllRentalDetails (String propertyId) {
-			return leaseService. getAllRentalDetails(propertyId);
-		}
-		*/
 		
 		
-		@RequestMapping(value = "/getAllRentalDetails/property/{property} ", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-		  public List<Property>  getAllRentalDetails (@PathVariable("property") String propertyId){
+		@RequestMapping(value = "getAllRentalDetails/propertyid/{property}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+		  public List<Property>  getAllRentalDetails (@PathVariable("property") Integer propertyId){
 			return leaseService. getAllRentalDetails(propertyId);
 		}
 			
 		
-		@RequestMapping(value = "/ getRentalDetail", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-		public List<Property>  getRentalDetail(String propertyId,Date effectiveDate) {
-			return leaseService. getRentalDetail(propertyId,effectiveDate);
+		@RequestMapping(value = "getRentalDetail/propertyid/{property}/effectiveDate/{date}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+		public RentalDetail  getRentalDetail(@PathVariable("property") Integer propertyId,@PathVariable("date") Date inputDate) throws ParseException {
+			
+			
+			return  leaseService. getRentalDetail(propertyId,inputDate); 
 		}
 		
 		

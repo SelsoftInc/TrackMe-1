@@ -1,8 +1,9 @@
 package com.selsoft.trackme.dao;
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -62,12 +63,11 @@ public class LeaseDAOImpl implements LeaseDAO {
 	}
 
 	@Override
-	public List<Property> fetchLeases(String propertyId) {
+	public List<Property> fetchLeases(Integer propertyId) {
 		List<Property> propertyList = null;
 
 		if (propertyId != null) {
 
-			propertyList = template.findAll(Property.class);
 			Query query = new Query(Criteria.where("propertyId").is(propertyId));
 			propertyList = template.find(query, Property.class);
 		} else {
@@ -79,28 +79,38 @@ public class LeaseDAOImpl implements LeaseDAO {
 	}
 
 	@Override
-	public List<Property> getRentalDetail(String propertyId, Date effectiveDate) {
-
-		List<Property> rentalDetailList = null;
+	public RentalDetail getRentalDetail(Integer propertyId, Date inputDate) {
+		
+		RentalDetail rentalDetail =null;
 
 		if (propertyId != null) {
 
+			
 			Query query = new Query(Criteria.where("propertyId").is(propertyId));
-			Update update = new Update();
+			//rentalDetail = template.findOne(query, Property.class);
 			
-			//update.set("Effective Date", effectiveDate.getEffectiveDate());
-
-			template.updateFirst(query, update, Property.class);
-
-			//logger.info("Effective Date " + rentalDetailList.ge.getEmail() + " last access time " + rentalDetailList.getLastAccessed());
+			//java.sql.Date date=rentalDetailList.getRentalDetail().getInputDate();
 			
 			
+			//if(date.equals(inputDate)) {
+								
+		
+			//logger.info("Effective Date " + date + " EffectiveDate comes into LeaseController getRentalDetailr() for processing");
+			
+						
 		} else {
-
-			rentalDetailList = template.findAll(Property.class);
+			//RentalDetail rentalDetail=new RentalDetail();
+			//rentalDetail.set
+			template.save(rentalDetail);
+			//rentalDetailList = template.findAll(Property.class);
 		}
 
-		return rentalDetailList;
+		
+		//return rentalDetailList;
+	//}
+		return null;
 	}
 
+	
 }
+

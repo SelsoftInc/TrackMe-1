@@ -19,8 +19,8 @@ public interface LeaseService {
 	
 	ValidError validateNewRentalData(RentalDetail rentalDetail);
 	
-	List<Property> getAllRentalDetails(String propertyId);
+	List<Property> getAllRentalDetails(Integer propertyId);
 
-	List<Property> getRentalDetail(String propertyId, Date date);
+	RentalDetail getRentalDetail(Integer propertyId,Date  inputDate);
 
 }
