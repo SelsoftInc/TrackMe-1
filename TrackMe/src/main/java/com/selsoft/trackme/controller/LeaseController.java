@@ -1,10 +1,12 @@
 package com.selsoft.trackme.controller;
 
-import org.apache.commons.lang3.StringUtils;
+import java.util.Date;
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -12,16 +14,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.selsoft.trackme.constants.ErrorConstants;
-import com.selsoft.trackme.model.Errors;
 import com.selsoft.trackme.model.Lease;
-import com.selsoft.trackme.model.LeaseType;
-import com.selsoft.trackme.model.Owner;
 import com.selsoft.trackme.model.Property;
 import com.selsoft.trackme.model.RentalDetail;
-import com.selsoft.trackme.model.User;
 import com.selsoft.trackme.model.ValidError;
 import com.selsoft.trackme.service.LeaseService;
-import com.selsoft.trackme.utils.UserType;
 
 @RestController
 @RequestMapping(value = "/lease")
@@ -53,9 +50,28 @@ public class LeaseController {
 		@RequestMapping(value = "/saveRentalDetail", method = RequestMethod.PUT)
 		public void  saveRentalDetail(@RequestBody RentalDetail rentalDetail,@RequestParam("pId") String propertyId) {
 			
-			//ValidError validError = leaseService.validateNewRentalData(rentalDetail);
+			ValidError validError = leaseService.validateNewRentalData(rentalDetail);
+			
+			
+		}
+		/*	
+		@RequestMapping(value = "/ getAllRentalDetails ", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+		public List<RentalDetail>  getAllRentalDetails (String propertyId) {
+			return leaseService. getAllRentalDetails(propertyId);
+		}
+		*/
+		
+		
+		@RequestMapping(value = "/getAllRentalDetails/property/{property} ", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+		  public List<Property>  getAllRentalDetails (@PathVariable("property") String propertyId){
+			return leaseService. getAllRentalDetails(propertyId);
 		}
 			
-			
-
+		
+		@RequestMapping(value = "/ getRentalDetail", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+		public List<Property>  getRentalDetail(String propertyId,Date effectiveDate) {
+			return leaseService. getRentalDetail(propertyId,effectiveDate);
+		}
+		
+		
 }

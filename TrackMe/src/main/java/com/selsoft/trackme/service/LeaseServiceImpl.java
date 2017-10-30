@@ -1,9 +1,11 @@
 package com.selsoft.trackme.service;
 
+import java.util.Date;
+import java.util.List;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.convert.Property;
 import org.springframework.stereotype.Service;
@@ -47,7 +49,7 @@ public class LeaseServiceImpl implements LeaseService {
 
 			ValidError validError = new ValidError(ErrorConstants.ERROR103, ErrorConstants.ERROR103_MESSAGE);
 			return validError;
-		}else if (StringUtils.equals(PropertyStatus.MAINTENANCE.getValue(), leaseType)) {
+		} else if (StringUtils.equals(PropertyStatus.MAINTENANCE.getValue(), leaseType)) {
 
 			ValidError validError = new ValidError(ErrorConstants.ERROR103, ErrorConstants.ERROR103_MESSAGE);
 			return validError;
@@ -76,48 +78,43 @@ public class LeaseServiceImpl implements LeaseService {
 	@Override
 	public void saveRentalDetail(RentalDetail rentalDetail, String propertyId) {
 		int propId = Integer.parseInt(propertyId);
-		
-		
+
 		leaseDAO.saveRentalDetail(rentalDetail, propId);
 	}
 
-	/*@Override
+	@Override
 	public ValidError validateNewRentalData(RentalDetail rentalDetail) {
-		// TODO Auto-generated method stub
+
+		String leaseType = rentalDetail.getLeaseType();
+		logger.info(rentalDetail.getLeaseType() + " data comes into LeaseController saveRentalDetail() for processing");
+
+		if (StringUtils.equals("RENT", leaseType)) {
+			ValidError validError = new ValidError(ErrorConstants.ERROR106, ErrorConstants.ERRROR106_MESSAGE);
+			return validError;
+
+		}
+
+		else if (StringUtils.equals("LEASE", leaseType)) {
+			ValidError validError = new ValidError(ErrorConstants.ERROR107, ErrorConstants.ERRROR107_MESSAGE);
+			return validError;
+
+		} else if (StringUtils.equals("BOTH", leaseType)) {
+			ValidError validError = new ValidError(ErrorConstants.ERROR108, ErrorConstants.ERRROR108_MESSAGE);
+			return validError;
+
+		}
 		return null;
 	}
 
 	@Override
-	public boolean validateEffectiveDate(RentalDetail rentalDetail, String propertyId) {
-		// TODO Auto-generated method stub
-		return false;
-	}*/
+	public List<com.selsoft.trackme.model.Property> getAllRentalDetails(String propertyId) {
 
-	/*@Override
-	public ValidError validateNewRentalData(RentalDetail rentalDetail) {
-		// TODO Auto-generated method stub
-		
-			Lease leaseWithType = null;
-			String leaseType = rentalDetail.getLeaseType();
-			logger.info(property.getPropertyId() +" data comes into LeaseController saveRentalDetail() for processing");
-
-			if (StringUtils.equals("RENT", leaseType)) {
-				ValidError validError = new ValidError(ErrorConstants.ERROR102, ErrorConstants.ERROR102_MESSAGEessage);
-				return validError;
-
-			}
-
-			else if (StringUtils.equals("LEASE", leaseType)) {
-				ValidError validError = new ValidError(ErrorConstants.ERROR102, ErrorConstants.ERROR102_MESSAGEessage);
-				return validError;
-
-			                     }
-			else if (StringUtils.equals("BOTH", leaseType)) {
-				ValidError validError = new ValidError(ErrorConstants.ERROR102, ErrorConstants.ERROR102_MESSAGEessage);
-				return validError;
-
-			}
-		return null;
+		return leaseDAO.fetchLeases(propertyId);
 	}
-*/
+
+	@Override
+	public List<com.selsoft.trackme.model.Property> getRentalDetail(String propertyId, Date date) {
+		return leaseDAO.getRentalDetail(propertyId, date);
+	}
+
 }

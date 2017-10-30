@@ -15,6 +15,16 @@ public class ErrorConstants {
 	public static final String AUTHENTICATIONERROR_MESSAGE = "Email or Password are not correct.";
 	public static final String ERROR105 = "error105";
 	public static final String ERRROR105_MESSAGE = "Tenant cannot be assigned to this Lease until it is active";
+	
+	public static final String ERROR106  = "error106";
+	public static final String ERRROR106_MESSAGE = "LeaseType should be RENT";
+	
+	public static final String ERROR107 = "error107";
+	public static final String ERRROR107_MESSAGE = "LeaseType should be LEASE";
+	
+	public static final String ERROR108 = "error108";
+	public static final String ERRROR108_MESSAGE = "LeaseType should be BOTH";
+	
 
 	public static final String ERROR109 = "error109";
 	public static final String ERRROR109_MESSAGE = "Cann't possible to create a lease";

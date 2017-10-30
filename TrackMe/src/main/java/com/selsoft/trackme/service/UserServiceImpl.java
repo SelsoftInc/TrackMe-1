@@ -84,7 +84,7 @@ public class UserServiceImpl implements UserService {
 				user.setLastAccessed(date.toString());
 				userDao.saveUserLogin(user);
 			} catch (Exception e) {
-				// throw custom seception
+				// throw custom exception
 			}
 
 		} else {

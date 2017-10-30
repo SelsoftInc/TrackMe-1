@@ -1,6 +1,10 @@
 package com.selsoft.trackme.service;
 
+import java.util.Date;
+import java.util.List;
+
 import com.selsoft.trackme.model.Lease;
+import com.selsoft.trackme.model.Property;
 import com.selsoft.trackme.model.RentalDetail;
 import com.selsoft.trackme.model.ValidError;
 
@@ -13,8 +17,10 @@ public interface LeaseService {
 
 	void saveRentalDetail(RentalDetail rentalDetail,String propertyId);
 	
-	//ValidError validateNewRentalData(RentalDetail rentalDetail);
+	ValidError validateNewRentalData(RentalDetail rentalDetail);
 	
-	//boolean validateEffectiveDate(RentalDetail rentalDetail, String propertyId);
+	List<Property> getAllRentalDetails(String propertyId);
+
+	List<Property> getRentalDetail(String propertyId, Date date);
 
 }

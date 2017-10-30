@@ -1,5 +1,8 @@
 package com.selsoft.trackme.dao;
 
+import java.util.Date;
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -15,6 +18,7 @@ import com.selsoft.trackme.model.Lease;
 import com.selsoft.trackme.model.Property;
 import com.selsoft.trackme.model.RentalDetail;
 import com.selsoft.trackme.model.Tenant;
+import com.selsoft.trackme.model.User;
 
 @Repository
 public class LeaseDAOImpl implements LeaseDAO {
@@ -24,7 +28,7 @@ public class LeaseDAOImpl implements LeaseDAO {
 
 	@Autowired
 	private MongoTemplate template;
-	
+
 	@Autowired
 	@Qualifier("propertyDAO")
 	private PropertyDAO propertyDao;
@@ -57,6 +61,46 @@ public class LeaseDAOImpl implements LeaseDAO {
 
 	}
 
-	
+	@Override
+	public List<Property> fetchLeases(String propertyId) {
+		List<Property> propertyList = null;
+
+		if (propertyId != null) {
+
+			propertyList = template.findAll(Property.class);
+			Query query = new Query(Criteria.where("propertyId").is(propertyId));
+			propertyList = template.find(query, Property.class);
+		} else {
+
+			propertyList = template.findAll(Property.class);
+		}
+
+		return propertyList;
+	}
+
+	@Override
+	public List<Property> getRentalDetail(String propertyId, Date effectiveDate) {
+
+		List<Property> rentalDetailList = null;
+
+		if (propertyId != null) {
+
+			Query query = new Query(Criteria.where("propertyId").is(propertyId));
+			Update update = new Update();
+			
+			//update.set("Effective Date", effectiveDate.getEffectiveDate());
+
+			template.updateFirst(query, update, Property.class);
+
+			//logger.info("Effective Date " + rentalDetailList.ge.getEmail() + " last access time " + rentalDetailList.getLastAccessed());
+			
+			
+		} else {
+
+			rentalDetailList = template.findAll(Property.class);
+		}
+
+		return rentalDetailList;
+	}
 
 }
