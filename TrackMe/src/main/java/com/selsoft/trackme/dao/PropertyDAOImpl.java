@@ -33,7 +33,7 @@ public class PropertyDAOImpl implements PropertyDAO {
 	/**
 	 * save new property to property table
 	 */
-
+	@Override
 	public void saveNewProperty(Property property) {
 		template.save(property);
 		template.save(property.getRentalDetail());

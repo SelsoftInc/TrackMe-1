@@ -65,6 +65,8 @@ public class LeaseDAOImpl implements LeaseDAO {
 	@Override
 	public List<Property> fetchLeases(Integer propertyId) {
 		List<Property> propertyList = null;
+		
+		
 
 		if (propertyId != null) {
 
@@ -79,7 +81,7 @@ public class LeaseDAOImpl implements LeaseDAO {
 	}
 
 	@Override
-	public RentalDetail getRentalDetail(Integer propertyId, Date inputDate) {
+	public RentalDetail getRentalDetail(Integer propertyId, String inputDate) {
 		
 		RentalDetail rentalDetail =null;
 
@@ -87,27 +89,18 @@ public class LeaseDAOImpl implements LeaseDAO {
 
 			
 			Query query = new Query(Criteria.where("propertyId").is(propertyId));
-			//rentalDetail = template.findOne(query, Property.class);
+		      Property property = template.findOne(query, Property.class);
 			
-			//java.sql.Date date=rentalDetailList.getRentalDetail().getInputDate();
+			java.sql.Date date=property.getRentalDetail().getEffectiveDate();
 			
 			
-			//if(date.equals(inputDate)) {
-								
-		
-			//logger.info("Effective Date " + date + " EffectiveDate comes into LeaseController getRentalDetailr() for processing");
-			
-						
 		} else {
-			//RentalDetail rentalDetail=new RentalDetail();
-			//rentalDetail.set
+			
 			template.save(rentalDetail);
-			//rentalDetailList = template.findAll(Property.class);
+			
 		}
 
 		
-		//return rentalDetailList;
-	//}
 		return null;
 	}
 

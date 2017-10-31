@@ -19,7 +19,7 @@ public interface LeaseDAO {
 
 	List<Property> fetchLeases(Integer propertyId);
 
-	RentalDetail getRentalDetail(Integer propertyId,Date inputDate);
+	RentalDetail getRentalDetail(Integer propertyId,String inputDate);
 
 	
 }

@@ -21,6 +21,6 @@ public interface LeaseService {
 	
 	List<Property> getAllRentalDetails(Integer propertyId);
 
-	RentalDetail getRentalDetail(Integer propertyId,Date  inputDate);
+	RentalDetail getRentalDetail(Integer propertyId,String  inputDate);
 
 }

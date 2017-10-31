@@ -2,9 +2,6 @@ package com.selsoft.trackme.model;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Document(collection = "PROPERTY")
 public class Property {
@@ -28,12 +25,6 @@ public class Property {
 
 	private RentalDetail rentalDetail;
 	private String propertyStatus;
-
-	public Property() {
-
-		this.propertyStatus = PropertyStatus.ACTIVE.toString();
-
-	}
 
 	public int getPropertyId() {
 		return propertyId;
@@ -133,11 +124,33 @@ public class Property {
 
 	@Override
 	public String toString() {
-		return "Property [propertyId=" + propertyId + ", propertyName=" + propertyName + ", address1=" + address1
-				+ ", address2=" + address2 + ", city=" + city + ", state=" + state + ", zipCode=" + zipCode
-				+ ", ownerFirstName=" + ownerFirstName + ", ownerLastName=" + ownerLastName + ", ownerId=" + ownerId
-				+ ", rentalDetail=" + rentalDetail + ", propertyStatus=" + propertyStatus + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("Property [propertyId=");
+		builder.append(propertyId);
+		builder.append(", propertyName=");
+		builder.append(propertyName);
+		builder.append(", address1=");
+		builder.append(address1);
+		builder.append(", address2=");
+		builder.append(address2);
+		builder.append(", city=");
+		builder.append(city);
+		builder.append(", state=");
+		builder.append(state);
+		builder.append(", zipCode=");
+		builder.append(zipCode);
+		builder.append(", ownerFirstName=");
+		builder.append(ownerFirstName);
+		builder.append(", ownerLastName=");
+		builder.append(ownerLastName);
+		builder.append(", ownerId=");
+		builder.append(ownerId);
+		builder.append(", rentalDetail=");
+		builder.append(rentalDetail);
+		builder.append(", propertyStatus=");
+		builder.append(propertyStatus);
+		builder.append("]");
+		return builder.toString();
 	}
 
 }
-	

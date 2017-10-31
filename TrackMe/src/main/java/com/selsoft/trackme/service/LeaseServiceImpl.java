@@ -112,16 +112,11 @@ public class LeaseServiceImpl implements LeaseService {
 		return leaseDAO.fetchLeases(propertyId);
 	}
 
-	public RentalDetail getRentalDetail(Integer propertyId,Date inputDate) {
+	public RentalDetail getRentalDetail(Integer propertyId,String inputDate) {
 		return leaseDAO.getRentalDetail(propertyId, inputDate);
 	}
 
-	@Override
-	public RentalDetail getRentalDetail(Integer propertyId, java.util.Date inputDate) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	
 	
 
 	

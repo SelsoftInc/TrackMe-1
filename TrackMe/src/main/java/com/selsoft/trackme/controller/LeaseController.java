@@ -65,7 +65,7 @@ public class LeaseController {
 			
 		
 		@RequestMapping(value = "getRentalDetail/propertyid/{property}/effectiveDate/{date}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-		public RentalDetail  getRentalDetail(@PathVariable("property") Integer propertyId,@PathVariable("date") Date inputDate) throws ParseException {
+		public RentalDetail  getRentalDetail(@PathVariable("property") Integer propertyId,@PathVariable("date") String inputDate) throws ParseException {
 			
 			
 			return  leaseService. getRentalDetail(propertyId,inputDate); 
