@@ -1,10 +1,9 @@
 package com.selsoft.trackme.dao;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 import com.selsoft.trackme.model.Lease;
-import com.selsoft.trackme.model.Property;
 import com.selsoft.trackme.model.RentalDetail;
 
 public interface LeaseDAO {
@@ -17,9 +16,9 @@ public interface LeaseDAO {
 
 	void saveRentalDetail(RentalDetail rentalDetail,int propertyId);
 
-	List<Property> fetchLeases(Integer propertyId);
+	List<RentalDetail> getAllRentalDetails(Integer propertyId);
 
-	RentalDetail getRentalDetail(Integer propertyId,String inputDate);
+	RentalDetail getRentalDetail(Integer propertyId, Date inputDate) ;
 
 	
 }

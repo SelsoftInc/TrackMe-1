@@ -28,7 +28,7 @@ public class LeaseController {
 
 	private static final Logger logger = Logger.getLogger(LeaseController.class);
 
-	//private static LeaseType leaseType = new LeaseType();
+	// private static LeaseType leaseType = new LeaseType();
 
 	@Autowired
 	private LeaseService leaseService;
@@ -41,35 +41,31 @@ public class LeaseController {
 		logger.info(lease.getPropertyId() + " data comes into LeaseControllercreateLease() for processing");
 		if (error == null) {
 			leaseService.createLease(lease);
-			error=new ValidError(ErrorConstants.ERROR109, ErrorConstants.ERRROR109_MESSAGE);
+			error = new ValidError(ErrorConstants.ERROR109, ErrorConstants.ERRROR109_MESSAGE);
 		}
 		return error;
 
 	}
-	
-	
-	 //------------------- save RentalDetail --------------------------------------------------------
-		@RequestMapping(value = "/saveRentalDetail", method = RequestMethod.PUT)
-		public void  saveRentalDetail(@RequestBody RentalDetail rentalDetail,@RequestParam("pId") String propertyId) {
-			
-			ValidError validError = leaseService.validateNewRentalData(rentalDetail);
-			
-			
-		}
-		
-		
-		@RequestMapping(value = "getAllRentalDetails/propertyid/{property}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-		  public List<Property>  getAllRentalDetails (@PathVariable("property") Integer propertyId){
-			return leaseService. getAllRentalDetails(propertyId);
-		}
-			
-		
-		@RequestMapping(value = "getRentalDetail/propertyid/{property}/effectiveDate/{date}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-		public RentalDetail  getRentalDetail(@PathVariable("property") Integer propertyId,@PathVariable("date") String inputDate) throws ParseException {
-			
-			
-			return  leaseService. getRentalDetail(propertyId,inputDate); 
-		}
-		
-		
+
+	// ------------------- save RentalDetail
+	// --------------------------------------------------------
+	@RequestMapping(value = "/saveRentalDetail", method = RequestMethod.PUT)
+	public void saveRentalDetail(@RequestBody RentalDetail rentalDetail, @RequestParam("pId") String propertyId) {
+
+		ValidError validError = leaseService.validateNewRentalData(rentalDetail);
+
+	}
+
+	@RequestMapping(value = "getAllRentalDetails/{propertyId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<RentalDetail> getAllRentalDetails(@PathVariable("propertyId") Integer propertyId) {
+		return leaseService.getAllRentalDetails(propertyId);
+	}
+
+	@RequestMapping(value = "getRentalDetail/{propertyId}/{effectiveDate}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public RentalDetail getRentalDetail(@PathVariable("propertyId") Integer propertyId,
+			@PathVariable("effectiveDate") String inputDate){
+
+		return leaseService.getRentalDetail(propertyId, inputDate);
+	}
+
 }

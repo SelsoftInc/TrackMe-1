@@ -1,25 +1,23 @@
 package com.selsoft.trackme.dao;
 
-import java.sql.Date;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
 
 import com.selsoft.trackme.constants.TrackMeConstants;
-import com.selsoft.trackme.model.Errors;
 import com.selsoft.trackme.model.Lease;
 import com.selsoft.trackme.model.Property;
 import com.selsoft.trackme.model.RentalDetail;
 import com.selsoft.trackme.model.Tenant;
-import com.selsoft.trackme.model.User;
 
 @Repository
 public class LeaseDAOImpl implements LeaseDAO {
@@ -63,47 +61,51 @@ public class LeaseDAOImpl implements LeaseDAO {
 	}
 
 	@Override
-	public List<Property> fetchLeases(Integer propertyId) {
-		List<Property> propertyList = null;
-		
-		
+	public List<RentalDetail> getAllRentalDetails(Integer propertyId) {
+		List<RentalDetail> rentalDetailList = null;
 
 		if (propertyId != null) {
 
 			Query query = new Query(Criteria.where("propertyId").is(propertyId));
-			propertyList = template.find(query, Property.class);
+			rentalDetailList = template.find(query, RentalDetail.class);
 		} else {
 
-			propertyList = template.findAll(Property.class);
+			rentalDetailList = template.findAll(RentalDetail.class);
 		}
 
-		return propertyList;
+		return rentalDetailList;
 	}
 
 	@Override
-	public RentalDetail getRentalDetail(Integer propertyId, String inputDate) {
-		
-		RentalDetail rentalDetail =null;
+	public RentalDetail getRentalDetail(Integer propertyId, Date inputDate) {
+
+		RentalDetail rentalDetail = null;
 
 		if (propertyId != null) {
 
-			
 			Query query = new Query(Criteria.where("propertyId").is(propertyId));
-		      Property property = template.findOne(query, Property.class);
-			
-			java.sql.Date date=property.getRentalDetail().getEffectiveDate();
-			
-			
+			Property property = template.findOne(query, Property.class);
+			Date date = property.getRentalDetail().getEffectiveDate();
+
+			Timestamp timestamp1 = new Timestamp(date.getTime());
+			Timestamp timestamp2 = new Timestamp(inputDate.getTime());
+
+			/*
+			 * SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); Date date1 =
+			 * sdf.parse(date); Date date2 = sdf.parse(date1);
+			 */
+			if (inputDate.compareTo(date) < 0) {
+				logger.info(" input date is most recently used date");
+
+			}
+
 		} else {
-			
+
 			template.save(rentalDetail);
-			
+
 		}
 
-		
 		return null;
 	}
 
-	
 }
-

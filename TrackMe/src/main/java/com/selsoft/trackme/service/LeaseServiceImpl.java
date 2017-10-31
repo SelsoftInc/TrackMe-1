@@ -1,6 +1,8 @@
 package com.selsoft.trackme.service;
 
-import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -13,7 +15,6 @@ import com.selsoft.trackme.constants.ErrorConstants;
 import com.selsoft.trackme.constants.TrackMeConstants;
 import com.selsoft.trackme.dao.LeaseDAO;
 import com.selsoft.trackme.model.Lease;
-import com.selsoft.trackme.model.Property;
 import com.selsoft.trackme.model.PropertyStatus;
 import com.selsoft.trackme.model.RentalDetail;
 import com.selsoft.trackme.model.TenantStatus;
@@ -78,7 +79,7 @@ public class LeaseServiceImpl implements LeaseService {
 	@Override
 	public void saveRentalDetail(RentalDetail rentalDetail, String propertyId) {
 		int propId = Integer.parseInt(propertyId);
-
+		rentalDetail.setProperytId(propId);
 		leaseDAO.saveRentalDetail(rentalDetail, propId);
 	}
 
@@ -107,18 +108,22 @@ public class LeaseServiceImpl implements LeaseService {
 	}
 
 	@Override
-	public List<Property> getAllRentalDetails(Integer propertyId) {
+	public List<RentalDetail> getAllRentalDetails(Integer propertyId) {
 
-		return leaseDAO.fetchLeases(propertyId);
+		return leaseDAO.getAllRentalDetails(propertyId);
 	}
 
-	public RentalDetail getRentalDetail(Integer propertyId,String inputDate) {
-		return leaseDAO.getRentalDetail(propertyId, inputDate);
+	@Override
+	public RentalDetail getRentalDetail(Integer propertyId, String inputDate) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Date date = null;
+		try {
+			date = sdf.parse(inputDate);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return leaseDAO.getRentalDetail(propertyId, date);
 	}
-
-	
-	
-
-	
 
 }

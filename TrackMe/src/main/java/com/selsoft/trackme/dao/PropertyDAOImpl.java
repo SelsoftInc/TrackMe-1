@@ -83,6 +83,7 @@ public class PropertyDAOImpl implements PropertyDAO {
 	public void updateProperty(RentalDetail rentalDetail, int propertyId) {
 		Query query = new Query(Criteria.where("propertyId").is(propertyId));
 		Update update = new Update();
+		rentalDetail.setProperytId(propertyId);
 		update.set("rentalDetail", rentalDetail);
 		template.updateFirst(query, update, Property.class);
 	}

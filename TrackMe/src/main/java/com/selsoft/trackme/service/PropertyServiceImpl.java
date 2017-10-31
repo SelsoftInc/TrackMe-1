@@ -35,6 +35,7 @@ public class PropertyServiceImpl implements PropertyService {
 		if (owner != null) {
 			property.setOwnerFirstName(owner.getOwnerFirstName());
 			property.setOwnerLastName(owner.getOwnerLastName());
+			property.getRentalDetail().setProperytId(property.getPropertyId());
 			propertyDAO.saveNewProperty(property);
 
 		}

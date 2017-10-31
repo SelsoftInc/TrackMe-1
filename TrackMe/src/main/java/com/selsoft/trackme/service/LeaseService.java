@@ -1,5 +1,6 @@
 package com.selsoft.trackme.service;
 
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
@@ -12,15 +13,14 @@ public interface LeaseService {
 
 	ValidError validateNewLeaseData(Lease lease);
 
-
 	void createLease(Lease lease);
 
-	void saveRentalDetail(RentalDetail rentalDetail,String propertyId);
-	
-	ValidError validateNewRentalData(RentalDetail rentalDetail);
-	
-	List<Property> getAllRentalDetails(Integer propertyId);
+	void saveRentalDetail(RentalDetail rentalDetail, String propertyId);
 
-	RentalDetail getRentalDetail(Integer propertyId,String  inputDate);
+	ValidError validateNewRentalData(RentalDetail rentalDetail);
+
+	List<RentalDetail> getAllRentalDetails(Integer propertyId);
+
+	RentalDetail getRentalDetail(Integer propertyId, String inputDate);
 
 }

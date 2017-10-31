@@ -1,6 +1,7 @@
 package com.selsoft.trackme.model;
 
-import java.sql.Date;
+
+import java.util.Date;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -9,6 +10,7 @@ public class RentalDetail {
 	
 	@Id
 	private int rentId;
+	private int propertyId;
 	private int propertyRent;
 	private int deposit;
 	private String leaseType;
@@ -18,6 +20,12 @@ public class RentalDetail {
 	}
 	public void setRentId(int rentId) {
 		this.rentId = rentId;
+	}
+	public int getPropertyId() {
+		return propertyId;
+	}
+	public void setProperytId(int propertyId) {
+		this.propertyId = propertyId;
 	}
 	public int getPropertyRent() {
 		return propertyRent;
@@ -48,6 +56,8 @@ public class RentalDetail {
 		StringBuilder builder = new StringBuilder();
 		builder.append("RentalDetail [rentId=");
 		builder.append(rentId);
+		builder.append(", PropertId=");
+		builder.append(propertyId);
 		builder.append(", propertyRent=");
 		builder.append(propertyRent);
 		builder.append(", deposit=");
@@ -59,6 +69,5 @@ public class RentalDetail {
 		builder.append("]");
 		return builder.toString();
 	}
-	
 	
 }
