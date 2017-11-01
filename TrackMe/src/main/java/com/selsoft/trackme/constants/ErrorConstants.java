@@ -1,6 +1,10 @@
 package com.selsoft.trackme.constants;
 
-public class ErrorConstants {
+import java.io.Serializable;
+
+public class ErrorConstants implements Serializable{
+	
+	private static final long serialVersionUID = -6847182370248213611L;
 
 	public static final String ERROR101 = "error101";
 	public static final String ERROR101_MESSAGE = "Property needs to be activated before assigning to a tenant";

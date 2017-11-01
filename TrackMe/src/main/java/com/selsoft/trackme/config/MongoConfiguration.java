@@ -19,11 +19,11 @@ public class MongoConfiguration {
 
 	@Bean
 	public Mongo mongo() throws Exception {
-		return new MongoClient("localhost");
+		return new MongoClient("MongoConfig.MONGO_HOST");
 	}
 
 	@Bean
 	public MongoTemplate mongoTemplate() throws Exception {
-		return new MongoTemplate(mongo(), "TrackMe");
+		return new MongoTemplate(mongo(), "MongoConfig.MONGO_DB");
 	}
 }

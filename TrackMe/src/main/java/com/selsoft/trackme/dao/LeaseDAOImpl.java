@@ -1,6 +1,7 @@
 package com.selsoft.trackme.dao;
 
 import java.sql.Timestamp;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -13,6 +14,7 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
+import com.mongodb.BasicDBObject;
 import com.selsoft.trackme.constants.TrackMeConstants;
 import com.selsoft.trackme.model.Lease;
 import com.selsoft.trackme.model.Property;
@@ -90,14 +92,45 @@ public class LeaseDAOImpl implements LeaseDAO {
 			Timestamp timestamp1 = new Timestamp(date.getTime());
 			Timestamp timestamp2 = new Timestamp(inputDate.getTime());
 
-			/*
-			 * SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); Date date1 =
-			 * sdf.parse(date); Date date2 = sdf.parse(date1);
-			 */
-			if (inputDate.compareTo(date) < 0) {
+			//ObjectId.getTimestamp();
+			
+		/*	
+			try
+		    {
+		        SimpleDateFormat sdf = new SimpleDateFormat(timestamp2);
+		        if (sdf.format(sdf.parse(timestamp1)).equals(timestamp1))
+		            return rentalDetail;
+		    }
+		    catch (ParseException pe) {}
+
+		    return null;
+		}
+			
+			db.example.insert({"inputDate":new Date()});
+			Date now = new Date();
+
+			BasicDBObject timeNow = new BasicDBObject("date", now);
+			example.insert(timeNow);
+			
+			BasicDBObject query = new BasicDBObect();
+			 BasicDBObject update = new BasicDBObject("$currentDate",
+			     new BasicDBObject("date", true));
+			 
+			 query.put("date", new Date());
+			 String serialize = JSON.serialize(query);
+			     db.example.insert({"date":ISODate("2016-03-03T08:00:00.000")});
+			 );
+
+			 example.update(query,update,true,false);
+			 
+			 DBObject object = new BasicDBObject();
+			 object.put("date", new Date());
+			 String serialize = JSON.serialize(object)*/;
+			
+				if (timestamp2.compareTo(timestamp1) < 0) {
 				logger.info(" input date is most recently used date");
 
-			}
+			                      }
 
 		} else {
 
