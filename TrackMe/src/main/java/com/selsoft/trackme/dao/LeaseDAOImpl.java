@@ -88,7 +88,7 @@ public class LeaseDAOImpl implements LeaseDAO {
 		query.with(new Sort(Sort.Direction.DESC, "effectiveDate"));
 
 		List<RentalDetail> rentalDetailList = template.find(query, RentalDetail.class);
-		logger.info("RECENT RETAL DETAIL: "+rentalDetailList.get(0));
+		logger.info("RECENT RENTAL DETAIL: "+rentalDetailList.get(0));
 		
 //		try {
 //		Timestamp currentTimestamp = new Timestamp(inputDate.getTime());

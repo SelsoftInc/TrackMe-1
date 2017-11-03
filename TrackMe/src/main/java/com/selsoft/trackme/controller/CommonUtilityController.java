@@ -22,12 +22,12 @@ public class CommonUtilityController {
 	private CommonUtilityService commonUtilityService;
 
 	@RequestMapping(value = "getCommonData", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<CommonUtility> getCommonData(@PathVariable("code") Integer code) {
-		return commonUtilityService.getCommonData(code);
+	public List<CommonUtility> getCommonData() {
+		return commonUtilityService.getCommonData();
 	}
 
 	@RequestMapping(value = "getAllCombinationData", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<CommonUtility> getAllCombinationData(@PathVariable("module") Integer module,@PathVariable("submodule ") Integer submodule,@PathVariable("code") Integer code) {
+	public List<CommonUtility> getAllCombinationData(@PathVariable("module") String[]  module,@PathVariable("submodule ") String[] submodule,@PathVariable("code") String[] code) {
 		return commonUtilityService.getAllCombinationData(module,submodule,code);
 	}
 

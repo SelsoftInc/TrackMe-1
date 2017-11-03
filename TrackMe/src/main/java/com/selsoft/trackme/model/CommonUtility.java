@@ -6,9 +6,8 @@ public class CommonUtility {
 	
 	private String module;
 	private String submodule;
-	@Id
-	private int code;
-	private int value;
+	private String code;
+	private String value;
 	public String getModule() {
 		return module;
 	}
@@ -21,16 +20,16 @@ public class CommonUtility {
 	public void setSubmodule(String submodule) {
 		this.submodule = submodule;
 	}
-	public int getCode() {
+	public String getCode() {
 		return code;
 	}
-	public void setCode(int code) {
+	public void setCode(String code) {
 		this.code = code;
 	}
-	public int getValue() {
+	public String getValue() {
 		return value;
 	}
-	public void setValue(int value) {
+	public void setValue(String value) {
 		this.value = value;
 	}
 	@Override
