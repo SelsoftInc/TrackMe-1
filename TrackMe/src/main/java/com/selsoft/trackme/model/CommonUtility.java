@@ -1,7 +1,8 @@
 package com.selsoft.trackme.model;
 
 import org.springframework.data.annotation.Id;
-
+import org.springframework.data.mongodb.core.mapping.Document;
+@Document(collection = "COMMONUTILITY")
 public class CommonUtility {
 	
 	private String module;

@@ -8,7 +8,6 @@ import com.selsoft.trackme.model.ValidError;
 public interface TransactionService {
 	
 	public void saveTransaction(Transaction transaction);
-	
-	ValidError validateNewTransactionData(Transaction transaction);
+	public ValidError validateTransactionData(Transaction transaction);
 }
 

@@ -1,6 +1,5 @@
 package com.selsoft.trackme.config;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -24,23 +23,19 @@ import com.mongodb.MongoClient;
 
 @Configuration
 @ComponentScan(basePackages = { "com.selsoft.trackme.*" })
-@PropertySource("classpath:Mongoconfig.properties")
+@PropertySource("classpath:MongoConfig.properties")
 public class MongoConfiguration {
 	@Autowired
 	private Environment env;
 
-	
-	String mongodbUrl = env.getProperty("mongodb.url");
-	String defaultDb = env.getProperty("mongodb.db");
-
-	
 	@Bean
 	public Mongo mongo() throws Exception {
-		return new MongoClient("mongodbUrl");
+		return new MongoClient(env.getRequiredProperty("mongodb.url"));
 	}
 
+	
 	@Bean
 	public MongoTemplate mongoTemplate() throws Exception {
-		return new MongoTemplate(mongo(), "defaultDb");
+		return new MongoTemplate(mongo(), env.getRequiredProperty("mongodb.db"));
 	}
 }

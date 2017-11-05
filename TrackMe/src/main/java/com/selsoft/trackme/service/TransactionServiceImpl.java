@@ -30,7 +30,7 @@ public class TransactionServiceImpl implements TransactionService{
 	
 
 	@Override
-	public ValidError validateNewTransactionData(Transaction transaction) {
+	public ValidError validateTransactionData(Transaction transaction) {
 		String transactionType = transaction.getTransactionType();
 		logger.info(transaction.getTransactionType() + " data comes into LeaseController saveTransaction() for processing");
 
@@ -51,6 +51,11 @@ public class TransactionServiceImpl implements TransactionService{
 		}
 				return null;
 	}
+
+
+
+
+	
 
 	
 		

@@ -6,8 +6,7 @@ import com.selsoft.trackme.model.CommonUtility;
 
 public interface CommonUtilityService {
 
-	List<CommonUtility> getCommonData();
+	List<CommonUtility> getCommonData(CommonUtility commonUtility);
 
-	List<CommonUtility> getAllCombinationData(String[] module, String[] submodule, String[] code);
 
 }

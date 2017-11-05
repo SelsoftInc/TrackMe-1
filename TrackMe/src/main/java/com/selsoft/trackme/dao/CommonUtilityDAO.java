@@ -6,8 +6,6 @@ import com.selsoft.trackme.model.CommonUtility;
 
 public interface CommonUtilityDAO {
 
-	List<CommonUtility> getCommonData();
-
-	public List<CommonUtility> getAllCombinationData(String[] module, String[] submodule, String[] code);
+	List<CommonUtility> getCommonData( CommonUtility commonUtility);
 
 }
