@@ -25,7 +25,6 @@ import com.selsoft.user.model.User;
 import com.selsoft.user.service.UserService;
 import com.selsoft.user.utils.UserType;
 
-
 /**
  * This is the UserController for the User Registration, Login and Retriving
  * User Information. This Controller class has Handler methods for the User
@@ -48,29 +47,27 @@ public class UserController {
 	private MailSenderService mailSender;
 
 	/**
-	 * This handler method is for the User Registration, This will transfer the
-	 * data to Service. The User Data will be Binded to the User Object which is
-	 * coming from the Client.
+	 * This handler method is for the User Registration, This will transfer the data
+	 * to Service. The User Data will be Binded to the User Object which is coming
+	 * from the Client.
 	 * 
 	 * @param user
-	 *            as binding object to hold the User's Registration Data from
-	 *            the Registration Form.
-	 * @return the Errors Object as JSON Object, If any Validation error occurs
-	 *         for the I/P data. ======= This handler method is for the User
-	 *         Registration, This will transfer the data to Service. The User
-	 *         Data will be Binded to the User Object which is coming from the
-	 *         Client.
+	 *            as binding object to hold the User's Registration Data from the
+	 *            Registration Form.
+	 * @return the Errors Object as JSON Object, If any Validation error occurs for
+	 *         the I/P data. ======= This handler method is for the User
+	 *         Registration, This will transfer the data to Service. The User Data
+	 *         will be Binded to the User Object which is coming from the Client.
 	 * 
 	 * @param user
-	 *            as binding object to hold the User's Registration Data from
-	 *            the Registration Form.
-	 * @return the Errors Object as JSON Object, If any Validation error occurs
-	 *         for the I/P data.
+	 *            as binding object to hold the User's Registration Data from the
+	 *            Registration Form.
+	 * @return the Errors Object as JSON Object, If any Validation error occurs for
+	 *         the I/P data.
 	 */
 	@RequestMapping(value = "/addUser", method = RequestMethod.POST)
 	public ResponseEntity<Object> saveUser(@RequestBody User user) {
-		User userWithType =user;
-		Object responce=null;
+		User userWithType = null;
 		logger.info(user.getFirstName() + " data comes into UserController saveUser() for processing");
 
 		if (StringUtils.equals("OWN", user.getUserType())) {
@@ -84,9 +81,9 @@ public class UserController {
 			userWithType = userType.createNewTenant(user);
 
 		}
-		responce = userService.saveUser(userWithType);
+		Object errors = userService.saveUser(userWithType);
 
-		return new ResponseEntity<Object>(responce, HttpStatus.CREATED);
+		return new ResponseEntity<Object>(errors, HttpStatus.CREATED);
 	}
 
 	/**
@@ -102,28 +99,27 @@ public class UserController {
 	}
 
 	/**
-	 * This method takes argument as user object,validates email and password If
-	 * it is a valid user,login otherwise throws error message
+	 * This method takes argument as user object,validates email and password If it
+	 * is a valid user,login otherwise throws error message
 	 * 
 	 * @param user
 	 * @return
 	 */
 	@RequestMapping(value = "/userLogin", method = RequestMethod.POST)
 	public ResponseEntity<Object> userLogIn(@RequestBody User user) {
-		Object response=null;
 		logger.info(user.getEmail() + " data comes into UserController for login Purpose");
 		if (user.getEmail() == null && StringUtils.equalsIgnoreCase(user.getEmail(), ("")) && user.getPassword() == null
 				&& StringUtils.equalsIgnoreCase(user.getPassword(), (""))) {
 			return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
 		}
-		response = userService.saveUserLogin(user);
+		Object response = userService.userLogin(user);
 		return new ResponseEntity<Object>(response, HttpStatus.CREATED);
 
 	}
 
 	/**
-	 * If a user has not login within 20 ms.,it shows an confirmation mail to
-	 * resets the password
+	 * If a user has not login within 20 ms.,it shows an confirmation mail to resets
+	 * the password
 	 * 
 	 * @param request
 	 * @param locale
@@ -169,24 +165,8 @@ public class UserController {
 	}
 
 	/**
-	 * This method gets all records
-	 * 
-	 * @return
-	 */
-
-	/*
-	 * @RequestMapping(value = "/getRecords", method = RequestMethod.GET) public
-	 * ResponseEntity<Owner> getAllRecords() {
-	 * logger.info("Data retrived from OwnerController getAllRecods()");
-	 * 
-	 * 
-	 * 
-	 * return new ResponseEntity<Owner>(new Owner(), HttpStatus.ACCEPTED); }
-	 */
-
-	/**
-	 * This method takes email as a parameter ,it will check for valid user,if
-	 * it's then saves the user's password
+	 * This method takes email as a parameter ,it will check for valid user,if it's
+	 * then saves the user's password
 	 * 
 	 * @param email
 	 * @return

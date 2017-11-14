@@ -17,10 +17,12 @@ import org.springframework.transaction.annotation.Transactional;
 import com.selsoft.user.constants.ErrorConstants;
 import com.selsoft.user.dao.UserDao;
 import com.selsoft.user.dto.PasswordDto;
+import com.selsoft.user.dto.UserDto;
 import com.selsoft.user.model.Errors;
 import com.selsoft.user.model.PasswordResetToken;
 import com.selsoft.user.model.User;
 import com.selsoft.user.model.ValidError;
+import com.selsoft.user.utils.UserConstants;
 import com.selsoft.user.utils.Utils;
 import com.selsoft.user.validation.UserValidation;
 
@@ -44,15 +46,11 @@ public class UserServiceImpl implements UserService {
 	 */
 
 	public Object saveUser(User user) {
-		Object response=null;
-		List<ValidError> err=null;
-		try{
 		Errors errors = validateNewUser(user);
-		err = errors.getError();
-		//err=(List<ValidError>) response;
+		List<ValidError> err = errors.getError();
 		int count = 0;
 		for (ValidError vError : err) {
-			if (StringUtils.equals("Success", vError.getErrorCode())) {
+			if (StringUtils.equals(UserConstants.SUCCESS, vError.getErrorCode())) {
 				count++;
 			}
 		}
@@ -61,16 +59,11 @@ public class UserServiceImpl implements UserService {
 			String encryptPass = Utils.encryptPassword(user.getPassword());
 			user.setPassword(encryptPass);
 			userDao.saveUser(user);
+			return null;
 		} else {
 			logger.info("User data is not Valid returning Error Data");
+			return errors;
 		}
-		}catch(Exception ex){
-			ex.getMessage();
-		}
-		if(err!=null && !err.isEmpty()){
-			response=err;
-		}
-		return response;
 
 	}
 
@@ -78,10 +71,10 @@ public class UserServiceImpl implements UserService {
 	 * It saves user login,if it is a valid user and encrypts the password otherwise
 	 * throws error message
 	 */
-	public Object saveUserLogin(User user) {
+	public Object userLogin(User user) {
+		UserDto userDto = null;
 		if (isValidLogin(user)) {
 			logger.info("User data is Valid and processing to Dao");
-
 			String password = user.getPassword();
 			try {
 				// encrypting the password seeing to User object
@@ -92,20 +85,19 @@ public class UserServiceImpl implements UserService {
 				Calendar time = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
 				Date date = time.getTime();
 				user.setLastAccessed(date.toString());
-				userDao.saveUserLogin(user);
+				userDto = userDao.userLogin(user);
 			} catch (Exception e) {
-				// throw custom exception
+				logger.error("Unable to validate the User Login", e);
 			}
-
 		} else {
-			logger.info("Email Id or Password are not valid returning Error Data");
+			logger.info("Email Id or Password are not valid");
 			ValidError validError = new ValidError(ErrorConstants.AUTHENTICATIONERROR,
 					ErrorConstants.AUTHENTICATIONERROR_MESSAGE);
 			List<ValidError> errorList = new ArrayList<>();
 			errorList.add(validError);
 			return new Errors(errorList);
 		}
-		return null;
+		return userDto;
 	}
 
 	/**

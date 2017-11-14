@@ -1,5 +1,6 @@
 package com.selsoft.user.dao;
 
+import com.selsoft.user.dto.UserDto;
 import com.selsoft.user.model.Errors;
 import com.selsoft.user.model.PasswordResetToken;
 import com.selsoft.user.model.User;
@@ -12,7 +13,7 @@ import com.selsoft.user.model.User;
 public interface UserDao {
 	public void saveUser(User user);
 
-	public void saveUserLogin(User user);
+	public UserDto userLogin(User user);
 
 	public User checkUserLogin(User user);
 

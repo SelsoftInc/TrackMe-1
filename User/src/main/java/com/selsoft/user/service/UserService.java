@@ -17,7 +17,7 @@ public interface UserService {
 
 	public Object saveUser(User user);
 
-	public Object saveUserLogin(User user);
+	public Object userLogin(User user);
 
 	public void createPasswordResetTokenForUser(User user, String token);
 

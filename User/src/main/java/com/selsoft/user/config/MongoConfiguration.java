@@ -34,19 +34,20 @@ public class MongoConfiguration {
 	private Environment env;
 
 	@Bean
-	/*public Mongo mongo() throws Exception {
-		return new MongoClient(env.getRequiredProperty("mongodb.url"));
-	}*/
+	/*
+	 * public Mongo mongo() throws Exception { return new
+	 * MongoClient(env.getRequiredProperty("mongodb.url")); }
+	 */
 	public Mongo mongo() throws Exception {
-		MongoCredential mongoCredential = MongoCredential.createCredential(env.getRequiredProperty("mongodb.username"), 
-												env.getRequiredProperty("mongodb.authenticationDatabase"), 
-												env.getRequiredProperty("mongodb.password").toCharArray());
+		MongoCredential mongoCredential = MongoCredential.createCredential(env.getRequiredProperty("mongodb.username"),
+				env.getRequiredProperty("mongodb.authenticationDatabase"),
+				env.getRequiredProperty("mongodb.password").toCharArray());
 		ServerAddress mongoServerAddress = new ServerAddress(env.getRequiredProperty("mongodb.url"));
 		List<MongoCredential> mongoCredentialList = new ArrayList<MongoCredential>();
 		mongoCredentialList.add(mongoCredential);
 		return new MongoClient(mongoServerAddress, mongoCredentialList);
 	}
-	
+
 	@Bean
 	public MongoTemplate mongoTemplate() throws Exception {
 		return new MongoTemplate(mongo(), env.getRequiredProperty("mongodb.db"));

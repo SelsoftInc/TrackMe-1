@@ -6,20 +6,20 @@ public class UserType {
 
 	public User createNewOwner(User user) {
 
-		user.setUserType("OWN");
+		user.setUserType(UserConstants.OWNER);
 
 		return user;
 
 	}
 
 	public User createNewPropertyManager(User user) {
-		user.setUserType("MGR");
+		user.setUserType(UserConstants.MANAGER);
 
 		return user;
 	}
 
 	public User createNewTenant(User user) {
-		user.setUserType("TNT");
+		user.setUserType(UserConstants.TENANT);
 
 		return user;
 	}

@@ -11,13 +11,11 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
 
+import com.selsoft.user.dto.UserDto;
 import com.selsoft.user.model.Errors;
 import com.selsoft.user.model.PasswordResetToken;
 import com.selsoft.user.model.User;
 import com.selsoft.user.utils.Utils;
-
-
-
 
 @Repository
 public class UserDaoImpl implements UserDao {
@@ -47,17 +45,24 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public void saveUserLogin(User user) {
+	public UserDto userLogin(User user) {
 
 		Query query = new Query(Criteria.where("email").is(user.getEmail().toLowerCase()));
 		Update update = new Update();
 		update.set("loggedOn", user.isLoggedOn());
 		update.set("lastAccessed", user.getLastAccessed());
-
 		template.updateFirst(query, update, User.class);
 
+		User returnedUser = template.findOne(query, User.class);
+		UserDto userDto = new UserDto();
+		userDto.setEmail(returnedUser.getEmail());
+		userDto.setFirstName(returnedUser.getFirstName());
+		userDto.setLastName(returnedUser.getLastName());
+		userDto.setLastAccessed(returnedUser.getLastAccessed());
+		userDto.setLoggedOn(returnedUser.isLoggedOn());
+		userDto.setUserType(returnedUser.getUserType());
 		logger.info("User Email " + user.getEmail() + " last access time " + user.getLastAccessed());
-
+		return userDto;
 	}
 
 	@Override
@@ -65,16 +70,14 @@ public class UserDaoImpl implements UserDao {
 		Query query = new Query(Criteria.where("email").is(email.toLowerCase()));
 		List<User> userExist = template.find(query, User.class);
 		return userExist.get(0);
-	                                            }
+	}
 
-	
 	public void saveResetPasswordToken(PasswordResetToken token) {
-		
+
 		template.save(token);
 
-	                                         } 
+	}
 
-	
 	public void userLogout(String email) {
 		Query query = new Query(Criteria.where("email").is(email.toLowerCase()));
 		Update update = new Update();
