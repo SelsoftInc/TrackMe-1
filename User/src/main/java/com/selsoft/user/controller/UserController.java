@@ -1,7 +1,5 @@
 package com.selsoft.user.controller;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
 
@@ -70,8 +68,9 @@ public class UserController {
 	 *         for the I/P data.
 	 */
 	@RequestMapping(value = "/addUser", method = RequestMethod.POST)
-	public ResponseEntity<Errors> saveUser(@RequestBody User user) {
-		User userWithType = null;
+	public ResponseEntity<Object> saveUser(@RequestBody User user) {
+		User userWithType =user;
+		Object responce=null;
 		logger.info(user.getFirstName() + " data comes into UserController saveUser() for processing");
 
 		if (StringUtils.equals("OWN", user.getUserType())) {
@@ -85,9 +84,9 @@ public class UserController {
 			userWithType = userType.createNewTenant(user);
 
 		}
-		Errors errors = userService.saveUser(userWithType);
+		responce = userService.saveUser(userWithType);
 
-		return new ResponseEntity<Errors>(errors, HttpStatus.CREATED);
+		return new ResponseEntity<Object>(responce, HttpStatus.CREATED);
 	}
 
 	/**
@@ -110,14 +109,15 @@ public class UserController {
 	 * @return
 	 */
 	@RequestMapping(value = "/userLogin", method = RequestMethod.POST)
-	public ResponseEntity<Errors> userLogIn(@RequestBody User user) {
+	public ResponseEntity<Object> userLogIn(@RequestBody User user) {
+		Object response=null;
 		logger.info(user.getEmail() + " data comes into UserController for login Purpose");
 		if (user.getEmail() == null && StringUtils.equalsIgnoreCase(user.getEmail(), ("")) && user.getPassword() == null
 				&& StringUtils.equalsIgnoreCase(user.getPassword(), (""))) {
-			return new ResponseEntity<Errors>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
 		}
-		Errors errors = userService.saveUserLogin(user);
-		return new ResponseEntity<Errors>(errors, HttpStatus.CREATED);
+		response = userService.saveUserLogin(user);
+		return new ResponseEntity<Object>(response, HttpStatus.CREATED);
 
 	}
 

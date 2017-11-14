@@ -4,7 +4,7 @@ import java.util.Locale;
 
 import org.springframework.mail.SimpleMailMessage;
 
-import com.selsoft.trackme.dto.PasswordDto;
+import com.selsoft.user.dto.PasswordDto;
 import com.selsoft.user.model.Errors;
 import com.selsoft.user.model.User;
 
@@ -15,9 +15,9 @@ import com.selsoft.user.model.User;
  */
 public interface UserService {
 
-	public Errors saveUser(User user);
+	public Object saveUser(User user);
 
-	public Errors saveUserLogin(User user);
+	public Object saveUserLogin(User user);
 
 	public void createPasswordResetTokenForUser(User user, String token);
 

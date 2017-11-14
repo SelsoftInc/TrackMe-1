@@ -14,9 +14,9 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.selsoft.trackme.constants.ErrorConstants;
-import com.selsoft.trackme.dao.UserDao;
-import com.selsoft.trackme.dto.PasswordDto;
+import com.selsoft.user.constants.ErrorConstants;
+import com.selsoft.user.dao.UserDao;
+import com.selsoft.user.dto.PasswordDto;
 import com.selsoft.user.model.Errors;
 import com.selsoft.user.model.PasswordResetToken;
 import com.selsoft.user.model.User;
@@ -43,9 +43,13 @@ public class UserServiceImpl implements UserService {
 	 * save the valid user to the user table
 	 */
 
-	public Errors saveUser(User user) {
+	public Object saveUser(User user) {
+		Object response=null;
+		List<ValidError> err=null;
+		try{
 		Errors errors = validateNewUser(user);
-		List<ValidError> err = errors.getError();
+		err = errors.getError();
+		//err=(List<ValidError>) response;
 		int count = 0;
 		for (ValidError vError : err) {
 			if (StringUtils.equals("Success", vError.getErrorCode())) {
@@ -60,7 +64,13 @@ public class UserServiceImpl implements UserService {
 		} else {
 			logger.info("User data is not Valid returning Error Data");
 		}
-		return errors;
+		}catch(Exception ex){
+			ex.getMessage();
+		}
+		if(err!=null && !err.isEmpty()){
+			response=err;
+		}
+		return response;
 
 	}
 
@@ -68,7 +78,7 @@ public class UserServiceImpl implements UserService {
 	 * It saves user login,if it is a valid user and encrypts the password otherwise
 	 * throws error message
 	 */
-	public Errors saveUserLogin(User user) {
+	public Object saveUserLogin(User user) {
 		if (isValidLogin(user)) {
 			logger.info("User data is Valid and processing to Dao");
 
