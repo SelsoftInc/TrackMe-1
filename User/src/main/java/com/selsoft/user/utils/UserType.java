@@ -1,5 +1,6 @@
 package com.selsoft.user.utils;
 
+import com.selsoft.user.constants.UserConstants;
 import com.selsoft.user.model.User;
 
 public class UserType {

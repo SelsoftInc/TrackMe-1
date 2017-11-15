@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.selsoft.user.constants.ErrorConstants;
+import com.selsoft.user.constants.UserConstants;
 import com.selsoft.user.dao.UserDao;
 import com.selsoft.user.dto.PasswordDto;
 import com.selsoft.user.dto.UserDto;
@@ -22,7 +23,6 @@ import com.selsoft.user.model.Errors;
 import com.selsoft.user.model.PasswordResetToken;
 import com.selsoft.user.model.User;
 import com.selsoft.user.model.ValidError;
-import com.selsoft.user.utils.UserConstants;
 import com.selsoft.user.utils.Utils;
 import com.selsoft.user.validation.UserValidation;
 
