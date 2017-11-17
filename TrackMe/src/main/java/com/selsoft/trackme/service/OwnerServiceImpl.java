@@ -38,10 +38,12 @@ public class OwnerServiceImpl implements OwnerService {
 
 	}
 
-	@Override
-	public void checkStatus(Owner status) {
-		// TODO Auto-generated method stub
 
+	@Override
+	public List<Owner> checkStatus(String status) {
+		
+		 return ownerDao.checkStatus(status);
+		
 	}
 
 }

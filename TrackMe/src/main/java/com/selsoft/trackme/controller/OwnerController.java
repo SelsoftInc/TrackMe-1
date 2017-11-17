@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -48,8 +49,10 @@ public class OwnerController {
 	}
 
 	 //------------------- gets status of an Owner --------------------------------------------------------
-	@RequestMapping(value = "/checkStatus", method = RequestMethod.GET)
-	public void checkStatus(@RequestParam("status") OwnerStatus status) {
+	@RequestMapping(value = "/checkStatus/{status}", method = RequestMethod.GET)
+	public List<Owner> checkStatus(@PathVariable("status") String status) {
+		
+		return ownerService.checkStatus(status);
 	}
 
 }
