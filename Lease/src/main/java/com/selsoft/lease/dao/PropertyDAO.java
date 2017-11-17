@@ -1,11 +1,12 @@
-package com.selsoft.trackme.dao;
+package com.selsoft.lease.dao;
 
 import java.util.List;
 
-import com.selsoft.trackme.model.Errors;
-import com.selsoft.trackme.model.Owner;
-import com.selsoft.trackme.model.Property;
-import com.selsoft.trackme.model.RentalDetail;
+import com.selsoft.lease.model.Errors;
+import com.selsoft.lease.model.Owner;
+import com.selsoft.lease.model.Property;
+import com.selsoft.lease.model.RentalDetail;
+
 
 
 public interface PropertyDAO {

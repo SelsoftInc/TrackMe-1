@@ -23,6 +23,7 @@ import com.selsoft.lease.model.Property;
 import com.selsoft.lease.model.RentalDetail;
 import com.selsoft.lease.model.Tenant;
 
+
 @Repository
 public class LeaseDAOImpl implements LeaseDAO {
 
