@@ -1,5 +1,7 @@
 package com.selsoft.user.controller;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
 
@@ -17,13 +19,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.selsoft.user.constants.Constants;
+import com.selsoft.user.dao.UserDao;
 import com.selsoft.user.dto.PasswordDto;
 import com.selsoft.user.email.common.MailResponse;
 import com.selsoft.user.email.service.MailSenderService;
 import com.selsoft.user.model.Errors;
 import com.selsoft.user.model.User;
 import com.selsoft.user.service.UserService;
+import com.selsoft.user.utils.JWTYUtil;
+import com.selsoft.user.utils.ResponseModel;
 import com.selsoft.user.utils.UserType;
+
 
 /**
  * This is the UserController for the User Registration, Login and Retriving
@@ -97,6 +104,16 @@ public class UserController {
 		logger.info("Data retrived from UserController getUser()");
 		return new ResponseEntity<User>(new User(), HttpStatus.ACCEPTED);
 	}
+	
+	
+	public ResponseModel test() {
+		return new ResponseModel(200, "API is Working with POST", Constants.SUCCESS, null, null, null);
+	}
+
+	public ResponseModel test1() {
+		return new ResponseModel(200, "API is Working with POST", Constants.SUCCESS, null, null, null);
+	}
+
 
 	/**
 	 * This method takes argument as user object,validates email and password If it
@@ -107,13 +124,29 @@ public class UserController {
 	 */
 	@RequestMapping(value = "/userLogin", method = RequestMethod.POST)
 	public ResponseEntity<Object> userLogIn(@RequestBody User user) {
-		logger.info(user.getEmail() + " data comes into UserController for login Purpose");
+		/*logger.info(user.getEmail() + " data comes into UserController for login Purpose");
 		if (user.getEmail() == null && StringUtils.equalsIgnoreCase(user.getEmail(), ("")) && user.getPassword() == null
 				&& StringUtils.equalsIgnoreCase(user.getPassword(), (""))) {
 			return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
 		}
 		Object response = userService.userLogin(user);
 		return new ResponseEntity<Object>(response, HttpStatus.CREATED);
+		*/
+		//user = UserDao.userLogin(user.getEmail(), user.getFirstName());
+		if (user != null) {
+			String token = new JWTYUtil().createJWT(user);
+			List<User> list = new ArrayList<User>();
+			list.add(user);
+			if (token != null) {
+				return new ResponseEntity(null);
+			} else {
+				return new ResponseEntity(null);
+			}
+		}
+		return new ResponseEntity(null);
+		
+		
+		
 
 	}
 
@@ -179,5 +212,21 @@ public class UserController {
 		return errors;
 
 	}
+	
+	
+	
+	/*public ResponseModel userVerifiToken(@HeaderParam("token") String myToken) {
+		if (myToken != null) {
+			String userId = new JWTYUtil().parseJWT(myToken);
+			if (userId != null && !userId.equals("0")) {
+				return new ResponseModel(161, "Token Verified", Constants.SUCCESS, null, userId, null);
+			} else {
+				return new ResponseModel(161, "Token  Verification Failed", Constants.FAILURE, null, null, null);
+			}
+		}
+		return new ResponseModel(161, "Token  Is Missing", Constants.FAILURE, null, null, null);
+
+	}
+*/
 
 }
