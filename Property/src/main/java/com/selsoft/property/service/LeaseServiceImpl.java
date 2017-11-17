@@ -20,6 +20,8 @@ import com.selsoft.property.model.RentalDetail;
 import com.selsoft.property.model.TenantStatus;
 import com.selsoft.property.model.ValidError;
 
+
+
 @Service("leaseService")
 @PropertySource("classpath:ErrorMsg.properties")
 public class LeaseServiceImpl implements LeaseService {
@@ -120,7 +122,7 @@ public class LeaseServiceImpl implements LeaseService {
 		try {
 			date = sdf.parse(inputDate);
 		} catch (ParseException e) {
-
+			
 			e.printStackTrace();
 		}
 		return leaseDAO.getRentalDetail(propertyId, date);
