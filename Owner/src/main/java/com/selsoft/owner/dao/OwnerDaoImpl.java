@@ -5,6 +5,8 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
 import com.selsoft.owner.constants.TrackMeConstants;
@@ -20,7 +22,7 @@ public class OwnerDaoImpl implements OwnerDao {
 	private MongoTemplate template;
 
 	@Override
-	
+
 	/**
 	 * saves new owner in owner table
 	 */
@@ -30,16 +32,19 @@ public class OwnerDaoImpl implements OwnerDao {
 	}
 
 	@Override
-	 /* GET */
+	/* GET */
 	public List<Owner> getAllPropertyOwners() {
 		List<Owner> ownerList = template.findAll(Owner.class);
 		return ownerList;
 	}
 
-	@Override
-	public void checkStatus(Owner status) {
-		
-		
+	public List<Owner> checkStatus(String status) {
+
+		List<Owner> ownerList = null;
+		Query query = new Query(Criteria.where("ownerStatus").is(status));
+		ownerList = template.find(query, Owner.class);
+		return ownerList;
+
 	}
 
 }

@@ -1,5 +1,6 @@
 package com.selsoft.owner.service;
 
+
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.selsoft.owner.constants.TrackMeConstants;
 import com.selsoft.owner.dao.OwnerDao;
 import com.selsoft.owner.model.Owner;
+
 
 @Service
 public class OwnerServiceImpl implements OwnerService {
@@ -38,10 +40,12 @@ public class OwnerServiceImpl implements OwnerService {
 
 	}
 
-	@Override
-	public void checkStatus(Owner status) {
-		// TODO Auto-generated method stub
 
+	@Override
+	public List<Owner> checkStatus(String status) {
+		
+		 return ownerDao.checkStatus(status);
+		
 	}
 
 }

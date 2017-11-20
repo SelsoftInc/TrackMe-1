@@ -10,6 +10,7 @@ public interface OwnerDao {
 
 	public List<Owner> getAllPropertyOwners();
 
-	public void checkStatus(Owner status);
+	public List<Owner> checkStatus(String status);
+
 
 }
