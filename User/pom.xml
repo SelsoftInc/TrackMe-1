@@ -57,14 +57,13 @@
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-core -->
-		<dependency>
+		<!-- <dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-core</artifactId>
 			<version>3.2.0.RELEASE</version>
 		</dependency>
+		 -->
 		<!-- https://mvnrepository.com/artifact/org.springframework/spring-tx -->
-
-
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context-support</artifactId>

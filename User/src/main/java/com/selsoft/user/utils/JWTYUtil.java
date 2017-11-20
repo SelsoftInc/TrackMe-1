@@ -15,7 +15,9 @@ import javax.crypto.spec.SecretKeySpec;
 import javax.xml.bind.DatatypeConverter;
 
 import com.selsoft.user.constants.Constants;
+import com.selsoft.user.controller.UserController;
 import com.selsoft.user.model.User;
+import org.apache.log4j.Logger;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
@@ -24,7 +26,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 
 public class JWTYUtil {
 	
-	
+	private static final Logger logger = Logger.getLogger(UserController.class);
 	private SecretKey saveSecretKey() {
 		SecretKey secretKey = null;
 		KeyStore ks = null;
@@ -52,7 +54,7 @@ public class JWTYUtil {
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
-		System.out.println("Save Secret Key  " + Base64.getEncoder().encodeToString(secretKey.getEncoded()));
+		logger.info("Save Secret Key  " + Base64.getEncoder().encodeToString(secretKey.getEncoded()));
 		return secretKey;
 	}
 
@@ -117,5 +119,8 @@ public class JWTYUtil {
 		}
 	}
 
+	
+	
+	
 }
 
