@@ -10,14 +10,15 @@ import com.selsoft.trackme.constants.TrackMeConstants;
 import com.selsoft.trackme.dao.OwnerDao;
 import com.selsoft.trackme.model.Owner;
 
-@Service
+
+@Service("OwnerService")
 public class OwnerServiceImpl implements OwnerService {
 
 	@Autowired
 	private OwnerDao ownerDao;
 
 	@SuppressWarnings(TrackMeConstants.UNUSED)
-	private static final Logger logger = Logger.getLogger(OwnerService.class);
+	private static final Logger logger = Logger.getLogger(OwnerServiceImpl.class);
 
 	/**
 	 * save the new owner
@@ -32,14 +33,12 @@ public class OwnerServiceImpl implements OwnerService {
 	/**
 	 * gets all the property owners from owner table
 	 */
-	@Override
 	public List<Owner> getAllPropertyOwners() {
 		return ownerDao.getAllPropertyOwners();
 
 	}
 
 
-	@Override
 	public List<Owner> checkStatus(String status) {
 		
 		 return ownerDao.checkStatus(status);

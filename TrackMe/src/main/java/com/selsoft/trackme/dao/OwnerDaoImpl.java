@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -11,8 +12,12 @@ import org.springframework.stereotype.Repository;
 
 import com.selsoft.trackme.constants.TrackMeConstants;
 import com.selsoft.trackme.model.Owner;
+import com.selsoft.trackme.model.Property;
+
+
 
 @Repository
+@Qualifier("OwnerDao")
 public class OwnerDaoImpl implements OwnerDao {
 
 	@SuppressWarnings(TrackMeConstants.UNUSED)
@@ -31,10 +36,12 @@ public class OwnerDaoImpl implements OwnerDao {
 		template.save(owner);
 	}
 
-	@Override
+	
 	 /* GET */
 	public List<Owner> getAllPropertyOwners() {
-		List<Owner> ownerList = template.findAll(Owner.class);
+		
+		List<Owner> ownerList = null;
+		 ownerList = template.findAll(Owner.class);
 		return ownerList;
 	}
 
