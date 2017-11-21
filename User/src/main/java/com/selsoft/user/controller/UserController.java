@@ -124,15 +124,15 @@ public class UserController {
 	 */
 	@RequestMapping(value = "/userLogin", method = RequestMethod.POST)
 	public ResponseEntity<Object> userLogIn(@RequestBody User user) {
-		/*logger.info(user.getEmail() + " data comes into UserController for login Purpose");
+		logger.info(user.getEmail() + " data comes into UserController for login Purpose");
 		if (user.getEmail() == null && StringUtils.equalsIgnoreCase(user.getEmail(), ("")) && user.getPassword() == null
 				&& StringUtils.equalsIgnoreCase(user.getPassword(), (""))) {
 			return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
 		}
 		Object response = userService.userLogin(user);
 		return new ResponseEntity<Object>(response, HttpStatus.CREATED);
-		*/
-		//user = UserDao.userLogin(user.getEmail(), user.getFirstName());
+		
+		user = UserDao.userLogin(user.getEmail(), user.getFirstName());
 		if (user != null) {
 			String token = new JWTYUtil().createJWT(user);
 			List<User> list = new ArrayList<User>();
@@ -215,7 +215,7 @@ public class UserController {
 	
 	
 	
-	/*public ResponseModel userVerifiToken(@HeaderParam("token") String myToken) {
+	public ResponseModel userVerifiToken(@HeaderParam("token") String myToken) {
 		if (myToken != null) {
 			String userId = new JWTYUtil().parseJWT(myToken);
 			if (userId != null && !userId.equals("0")) {
@@ -227,6 +227,6 @@ public class UserController {
 		return new ResponseModel(161, "Token  Is Missing", Constants.FAILURE, null, null, null);
 
 	}
-*/
+
 
 }

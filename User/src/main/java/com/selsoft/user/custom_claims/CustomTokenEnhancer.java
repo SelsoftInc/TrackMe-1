@@ -1,7 +1,4 @@
-/*package com.selsoft.user.custom_claims;
-
-import java.util.HashMap;
-import java.util.Map;
+package com.selsoft.user.custom_claims;
 
 public class CustomTokenEnhancer implements TokenEnhancer {
     @Override
@@ -13,4 +10,4 @@ public class CustomTokenEnhancer implements TokenEnhancer {
         ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(additionalInfo);
         return accessToken;
     }
-}*/
+}
