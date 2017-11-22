@@ -11,5 +11,6 @@ public class AuthorizationServerApplication extends SpringBootServletInitializer
         SpringApplication.run(AuthorizationServerApplication.class, args);
     }
     
+    
 
 }

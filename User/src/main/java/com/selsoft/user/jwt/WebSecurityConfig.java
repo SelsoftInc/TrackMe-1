@@ -42,5 +42,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		// @formatter:on
     }
     
+    
 
 }

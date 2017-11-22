@@ -150,5 +150,6 @@ public class OAuth2AuthorizationServerConfig extends AuthorizationServerConfigur
         return new JdbcTokenStore(dataSource());
     }
     
+    
 
 }
