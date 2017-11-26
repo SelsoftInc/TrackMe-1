@@ -71,7 +71,7 @@ public class UserServiceImpl implements UserService {
 	 * It saves user login,if it is a valid user and encrypts the password otherwise
 	 * throws error message
 	 */
-	public Object userLogin(User user) {
+	public Object saveUserLogin(User user) {
 		UserDto userDto = null;
 		if (isValidLogin(user)) {
 			logger.info("User data is Valid and processing to Dao");

@@ -1,7 +1,5 @@
 package com.selsoft.user.dto;
 
-import org.springframework.data.annotation.Id;
-
 public class UserDto {
 	
 	private String firstName;
