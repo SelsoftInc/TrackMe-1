@@ -1,8 +1,4 @@
-package com.selsoft.user.jwt;
-
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.web.support.SpringBootServletInitializer;
+/*package com.selsoft.user.jwt;
 
 @SpringBootApplication
 public class AuthorizationServerApplication extends SpringBootServletInitializer {
@@ -13,4 +9,4 @@ public class AuthorizationServerApplication extends SpringBootServletInitializer
     
     
 
-}
+}*/

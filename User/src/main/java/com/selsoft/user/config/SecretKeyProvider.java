@@ -6,7 +6,6 @@ import java.nio.file.Files;
 
 import org.springframework.stereotype.Component;
 
-import com.itextpdf.text.pdf.parser.clipper.Paths;
 
 @Component
 public class SecretKeyProvider {
