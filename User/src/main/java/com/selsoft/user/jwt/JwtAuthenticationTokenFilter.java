@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 
@@ -19,8 +20,10 @@ import io.jsonwebtoken.JwtException;
 /**
  * Filter that orchestrates authentication by using supplied JWT token
  *
- * @author pascal alma
+ * @author Sudhansu Sekhar
  */
+
+@PropertySource(value = {"classpath:application.properties"})
 public class JwtAuthenticationTokenFilter extends AbstractAuthenticationProcessingFilter {
 
     @Value("${header}")

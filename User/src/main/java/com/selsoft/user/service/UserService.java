@@ -29,4 +29,6 @@ public interface UserService {
 
 	public Errors userLogout(String email);
 
+	//public void signInAsGuest(User user);
+
 }

@@ -99,6 +99,46 @@ public class UserController {
 		return new ResponseEntity<User>(new User(), HttpStatus.ACCEPTED);
 	}
 
+	
+	/*@RequestMapping(value="/signUp", method=RequestMethod.POST, produces="application/json", consumes="application/json")
+	@ResponseBody
+	public User newUserSignUp(HttpServletRequest request, @RequestBody User user) {
+		logger.info("Inside UserController.newUserSignUp");
+		if(user == null) return null;
+		
+		List<Error> errorList = new ArrayList<Error>();
+		
+		if(StringUtils.isBlank(user.getFirstName()) ||
+				StringUtils.isBlank(user.getLastName()) ||
+				((StringUtils.isBlank(user.getEmail()) || StringUtils.isBlank(user.getPassword())) && 
+					StringUtils.isBlank(user.getGToken()))) {
+			Error error = new Error(ErrorConstants.INVALID_USER_DATA, ErrorConstants.INVALID_USER_DATA_ERROR_MESSAGE);
+			errorList.add(error);
+			user.setErrors(errorList);
+		} else if(StringUtils.isBlank(user.getGToken()) && 
+				(StringUtils.length(user.getPassword()) < 8 || StringUtils.length(user.getPassword()) > 20)) {
+			Error error = new Error(ErrorConstants.INVALID_USER_DATA, ErrorConstants.PASSWORDS_LENGTH_ERROR);
+			errorList.add(error);
+			user.setErrors(errorList);
+		} else {
+			String fullUrl = request.getRequestURL().toString();
+			fullUrl = StringUtils.substring(fullUrl, 0, fullUrl.lastIndexOf("/"));
+			userService.saveNewUser(user, fullUrl);
+		}
+		return user;
+	}
+	*/
+	/*
+	@RequestMapping(value="/guestUserSignUp", method=RequestMethod.POST, produces="application/json")
+	@ResponseBody
+	public User guestUserSignUp(@RequestBody User user) {
+		logger.info("Inside UserController.guestUserSignUp");
+		if(user == null) return null;
+		userService.signInAsGuest(user);
+		return user;
+	}
+	*/
+	
 	/**
 	 * This method takes argument as user object,validates email and password If it
 	 * is a valid user,login otherwise throws error message
@@ -139,6 +179,9 @@ public class UserController {
 			response = mailSender
 					.sendMail(userService.constructResetTokenEmail(getAppUrl(request), locale, token, user));
 		}
+		
+		
+		
 		return new ResponseEntity<MailResponse>(response, HttpStatus.CREATED);
 
 	}

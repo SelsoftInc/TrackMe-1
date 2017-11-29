@@ -45,7 +45,7 @@ public class JwtAuthenticationProvider extends AbstractUserDetailsAuthentication
 	protected UserDetails retrieveUser(String username, UsernamePasswordAuthenticationToken authentication) {
 		JwtAuthenticationToken jwtAuthenticationToken = (JwtAuthenticationToken) authentication;
 		String token = jwtAuthenticationToken.getToken();
-
+		//var token=jwt.sign(member,app.get('superSecret'),{ expiresInMinutes:40 }); 
 		JwtUserDto parsedUser = jwtTokenValidator.parseToken(token);
 
 		if (parsedUser == null) {
