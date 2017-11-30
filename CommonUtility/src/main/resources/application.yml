@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: CommonUtility-microservice
+
+server:
+  port: 8087
+
+eureka:
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://localhost:8080/eureka/
+  instance:
+    hostname: localhost
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 60000
