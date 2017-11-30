@@ -5,10 +5,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
+import javax.lang.model.element.Element;
+
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Element;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -74,7 +75,7 @@ public class PdfBilling {
 		document.add(table3);
 
 		// step 4
-		document.add(getHead(new StringBuilder("<div><b>Account Activity</b></div>")));
+		//document.add(getHead(new StringBuilder("<div><b>Account Activity</b></div>")));
 		PdfPTable table = getTable(rentalPdf.getActivityList());
 		PdfPTable table2 = getFootTable(company, statement, customer);
 
@@ -94,7 +95,7 @@ public class PdfBilling {
 
 		StringBuilder builder = new StringBuilder();
 		builder.append("<div align=\"center\"><b>REMITANCE</b></div>");
-		document.add(getHead(builder));
+		//document.add(getHead(builder));
 		document.add(table2);
 
 		/*
@@ -595,8 +596,9 @@ public class PdfBilling {
 		XMLWorker worker = new XMLWorker(css, true);
 		XMLParser p = new XMLParser(worker);
 		p.parse(new ByteArrayInputStream(sb.toString().getBytes()));
+		return null;
 
-		return elements.get(0);
+		//return elements.get(0);
 
 	}
 

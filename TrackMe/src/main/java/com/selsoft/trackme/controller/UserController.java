@@ -109,16 +109,17 @@ public class UserController {
 	 * @return
 	 */
 	@RequestMapping(value = "/userLogin", method = RequestMethod.POST)
-	public ResponseEntity<Errors> userLogIn(@RequestBody User user) {
+	public ResponseEntity<Object> saveUserLogin(@RequestBody User user) {
 		logger.info(user.getEmail() + " data comes into UserController for login Purpose");
 		if (user.getEmail() == null && StringUtils.equalsIgnoreCase(user.getEmail(), ("")) && user.getPassword() == null
-				&& StringUtils.equalsIgnoreCase(user.getPassword(), (""))){     
-			return new ResponseEntity<Errors>(HttpStatus.BAD_REQUEST);
+				&& StringUtils.equalsIgnoreCase(user.getPassword(), (""))) {
+			return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
 		}
-		Errors errors = userService.saveUserLogin(user);
-		return new ResponseEntity<Errors>(errors, HttpStatus.CREATED);
+		Object errors = userService.saveUserLogin(user);
+		return new ResponseEntity<Object>(errors, HttpStatus.CREATED);
 
 	}
+
  /**
   * If a user has not login within 20 ms.,it shows an confirmation  mail to resets the password 
   * @param request
