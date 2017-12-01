@@ -3,6 +3,8 @@ package com.selsoft.trackme.config;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
 import org.springframework.context.annotation.ComponentScan;
 
 /**
@@ -12,6 +14,8 @@ import org.springframework.context.annotation.ComponentScan;
  */
 @SpringBootApplication
 @EnableAutoConfiguration
+@EnableEurekaServer
+@EnableDiscoveryClient
 @ComponentScan(basePackages="com.selsoft")
 public class TrackMeStarter extends SpringApplication {
 	
