@@ -19,8 +19,7 @@ public class JwtTokenValidator {
 
 
 
-    //@Value("${jwt.secret}")
-    @Value("mySecret")
+    @Value("${jwt.secret}")
     private String secret;
 
     /**
