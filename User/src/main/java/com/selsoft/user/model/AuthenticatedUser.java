@@ -9,68 +9,83 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * Holds the info for a authenticated user (Principal)
+ * 
  * @author pascal alma
  */
 public class AuthenticatedUser implements UserDetails {
 
-    private final Long id;
-    private final String username;
-    private final String token;
-    private final Collection<? extends GrantedAuthority> authorities;
+	private final Long id;
+	private final String username;
+	private final String token;
+	private final Long iat;
+	private final Long exp;
+	private final Collection<? extends GrantedAuthority> authorities;
 
-    public AuthenticatedUser(Long id, String username, String token, Collection<? extends GrantedAuthority> authorities) {
-        this.id = id;
-        this.username = username;
-        this.token = token;
-        this.authorities = authorities;
-    }
+	public AuthenticatedUser(Long id, String username, String token, Long iat, Long exp,
+			Collection<? extends GrantedAuthority> authorities) {
+		super();
+		this.id = id;
+		this.username = username;
+		this.token = token;
+		this.iat = iat;
+		this.exp = exp;
+		this.authorities = authorities;
+	}
 
-    @JsonIgnore
-    public Long getId() {
-        return id;
-    }
+	@JsonIgnore
+	public Long getId() {
+		return id;
+	}
 
-    @Override
-    public String getUsername() {
-        return username;
-    }
+	@Override
+	public String getUsername() {
+		return username;
+	}
 
-    @Override
-    @JsonIgnore
-    public boolean isAccountNonExpired() {
-        return true;
-    }
+	@Override
+	@JsonIgnore
+	public boolean isAccountNonExpired() {
+		return true;
+	}
 
-    @Override
-    @JsonIgnore
-    public boolean isAccountNonLocked() {
-        return true;
-    }
+	@Override
+	@JsonIgnore
+	public boolean isAccountNonLocked() {
+		return true;
+	}
 
-    @Override
-    @JsonIgnore
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
+	@Override
+	@JsonIgnore
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
 
-    @Override
-    @JsonIgnore
-    public boolean isEnabled() {
-        return true;
-    }
+	@Override
+	@JsonIgnore
+	public boolean isEnabled() {
+		return true;
+	}
 
-    public String getToken() {
-        return token;
-    }
+	public String getToken() {
+		return token;
+	}
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return authorities;
-    }
+	public Long getIat() {
+		return iat;
+	}
 
-    @Override
-    public String getPassword() {
-        return null;
-    }
+	public Long getExp() {
+		return exp;
+	}
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return authorities;
+	}
+
+	@Override
+	public String getPassword() {
+		return null;
+	}
 
 }

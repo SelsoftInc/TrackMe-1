@@ -35,7 +35,7 @@ public class JwtAuthenticationProvider extends AbstractUserDetailsAuthentication
 	public boolean supports(Class<?> authentication) {
 		return (JwtAuthenticationToken.class.isAssignableFrom(authentication));
 	}
-
+	
 	@Override
 	protected void additionalAuthenticationChecks(UserDetails userDetails,
 			UsernamePasswordAuthenticationToken authentication) {
@@ -54,7 +54,7 @@ public class JwtAuthenticationProvider extends AbstractUserDetailsAuthentication
 
 		List<GrantedAuthority> authorityList = AuthorityUtils.commaSeparatedStringToAuthorityList(parsedUser.getRole());
 
-		return new AuthenticatedUser(parsedUser.getId(), parsedUser.getUsername(), token, authorityList);
+		return new AuthenticatedUser(parsedUser.getId(), parsedUser.getUsername(), token, parsedUser.getIat(), parsedUser.getExp(), authorityList);
 	}
 
 }

@@ -7,33 +7,54 @@ package com.selsoft.user.dto;
  */
 public class JwtUserDto {
 
-    private Long id;
+	private Long id;
 
-    private String username;
+	private String username;
 
-    private String role;
+	private String role;
 
-    public Long getId() {
-        return id;
-    }
+	private Long iat;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	private Long exp;
 
-    public String getUsername() {
-        return username;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public String getRole() {
-        return role;
-    }
+	public String getUsername() {
+		return username;
+	}
 
-    public void setRole(String role) {
-        this.role = role;
-    }
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
+	public Long getIat() {
+		return iat;
+	}
+
+	public void setIat(Long iat) {
+		this.iat = iat;
+	}
+
+	public Long getExp() {
+		return exp;
+	}
+
+	public void setExp(Long exp) {
+		this.exp = exp;
+	}
+
 }
