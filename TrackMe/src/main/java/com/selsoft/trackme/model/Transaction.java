@@ -1,13 +1,15 @@
 package com.selsoft.trackme.model;
 
+import java.io.InputStream;
 import java.util.Date;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.web.multipart.MultipartFile;
 
 @Document(collection = "TRANSACTION")
 public class Transaction {
-	
+
 	@Id
 	private long transactionId;
 	private long propertyId;
@@ -22,84 +24,120 @@ public class Transaction {
 	private Date paidOn;
 	private String transactionDesc;
 	private String category;
+	private InputStream file;
+
 	public long getTransactionId() {
 		return transactionId;
 	}
+
 	public void setTransactionId(long transactionId) {
 		this.transactionId = transactionId;
 	}
+
 	public long getPropertyId() {
 		return propertyId;
 	}
+
 	public void setPropertyId(long propertyId) {
 		this.propertyId = propertyId;
 	}
+
 	public long getOwnerId() {
 		return ownerId;
 	}
+
 	public void setOwnerId(long ownerId) {
 		this.ownerId = ownerId;
 	}
+
 	public long getTenantId() {
 		return tenantId;
 	}
+
 	public void setTenantId(long tenantId) {
 		this.tenantId = tenantId;
 	}
+
 	public long getPropertyManagerId() {
 		return propertyManagerId;
 	}
+
 	public void setPropertyManagerId(long propertyManagerId) {
 		this.propertyManagerId = propertyManagerId;
 	}
+
 	public double getAmount() {
 		return amount;
 	}
+
 	public void setAmount(double amount) {
 		this.amount = amount;
 	}
+
 	public String getTransactionType() {
 		return transactionType;
 	}
+
 	public void setTransactionType(String transactionType) {
 		this.transactionType = transactionType;
 	}
+
 	public String getPaidBy() {
 		return paidBy;
 	}
+
 	public void setPaidBy(String paidBy) {
 		this.paidBy = paidBy;
 	}
+
 	public int getPaidById() {
 		return paidById;
 	}
+
 	public void setPaidById(int paidById) {
 		this.paidById = paidById;
 	}
+
 	public String getPaymentMode() {
 		return paymentMode;
 	}
+
 	public void setPaymentMode(String paymentMode) {
 		this.paymentMode = paymentMode;
 	}
+
 	public Date getPaidOn() {
 		return paidOn;
 	}
+
 	public void setPaidOn(Date paidOn) {
 		this.paidOn = paidOn;
 	}
+
 	public String getTransactionDesc() {
 		return transactionDesc;
 	}
+
 	public void setTransactionDesc(String transactionDesc) {
 		this.transactionDesc = transactionDesc;
 	}
+
 	public String getCategory() {
 		return category;
 	}
+
 	public void setCategory(String category) {
 		this.category = category;
 	}
+
+	public InputStream getFile() {
+		return file;
+	}
+
+	public void setFile(InputStream file) {
+		this.file = file;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -129,10 +167,10 @@ public class Transaction {
 		builder.append(transactionDesc);
 		builder.append(", category=");
 		builder.append(category);
+		builder.append(", file=");
+		builder.append(file);
 		builder.append("]");
 		return builder.toString();
 	}
-	
-			 
-	 
+
 }
