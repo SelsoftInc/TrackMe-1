@@ -1,13 +1,13 @@
 package com.selsoft.trackme.service;
 
-import com.selsoft.trackme.model.Owner;
-import com.selsoft.trackme.model.RentalDetail;
+import java.util.List;
+
 import com.selsoft.trackme.model.Transaction;
-import com.selsoft.trackme.model.ValidError;
 
 public interface TransactionService {
-	
-	public void saveTransaction(Transaction transaction);
-	public ValidError validateTransactionData(Transaction transaction);
-}
 
+	public void saveTransaction(Transaction transaction);
+
+	public List<Transaction> getTransaction(long transactionId);
+
+}

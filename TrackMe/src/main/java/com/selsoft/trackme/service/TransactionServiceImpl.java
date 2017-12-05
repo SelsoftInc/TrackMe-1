@@ -1,5 +1,7 @@
 package com.selsoft.trackme.service;
 
+import java.util.List;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,7 +57,11 @@ public class TransactionServiceImpl implements TransactionService{
 
 
 
-	
+	@Override
+	public List<Transaction> getTransaction(long transactionId) {
+		
+		return transactionDAO.getTransaction(transactionId);
+	}
 
 	
 		
