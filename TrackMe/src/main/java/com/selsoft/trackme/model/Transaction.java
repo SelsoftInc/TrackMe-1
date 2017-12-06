@@ -1,6 +1,7 @@
 package com.selsoft.trackme.model;
 
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.Date;
 
 import org.springframework.data.annotation.Id;
@@ -24,7 +25,7 @@ public class Transaction {
 	private Date paidOn;
 	private String transactionDesc;
 	private String category;
-	private InputStream file;
+	private byte[] file;
 
 	public long getTransactionId() {
 		return transactionId;
@@ -130,47 +131,23 @@ public class Transaction {
 		this.category = category;
 	}
 
-	public InputStream getFile() {
+	public byte[] getFile() {
 		return file;
 	}
 
-	public void setFile(InputStream file) {
+	public void setFile(byte[] file) {
 		this.file = file;
 	}
 
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("Transaction [transactionId=");
-		builder.append(transactionId);
-		builder.append(", propertyId=");
-		builder.append(propertyId);
-		builder.append(", ownerId=");
-		builder.append(ownerId);
-		builder.append(", tenantId=");
-		builder.append(tenantId);
-		builder.append(", propertyManagerId=");
-		builder.append(propertyManagerId);
-		builder.append(", amount=");
-		builder.append(amount);
-		builder.append(", transactionType=");
-		builder.append(transactionType);
-		builder.append(", paidBy=");
-		builder.append(paidBy);
-		builder.append(", paidById=");
-		builder.append(paidById);
-		builder.append(", paymentMode=");
-		builder.append(paymentMode);
-		builder.append(", paidOn=");
-		builder.append(paidOn);
-		builder.append(", transactionDesc=");
-		builder.append(transactionDesc);
-		builder.append(", category=");
-		builder.append(category);
-		builder.append(", file=");
-		builder.append(file);
-		builder.append("]");
-		return builder.toString();
+		return "Transaction [transactionId=" + transactionId + ", propertyId=" + propertyId + ", ownerId=" + ownerId
+				+ ", tenantId=" + tenantId + ", propertyManagerId=" + propertyManagerId + ", amount=" + amount
+				+ ", transactionType=" + transactionType + ", paidBy=" + paidBy + ", paidById=" + paidById
+				+ ", paymentMode=" + paymentMode + ", paidOn=" + paidOn + ", transactionDesc=" + transactionDesc
+				+ ", category=" + category + ", file=" + Arrays.toString(file) + "]";
 	}
+
+	
 
 }

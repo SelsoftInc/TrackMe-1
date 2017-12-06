@@ -16,7 +16,7 @@ import org.springframework.context.annotation.ComponentScan;
  */
 @SpringBootApplication
 @EnableAutoConfiguration
-@ComponentScan(basePackages="com.selsoft")
+@ComponentScan(basePackages="com.selsoft.trackme")
 public class TrackMeStarter extends SpringApplication {
 	
 	private int maxUploadSizeInMb = 2 * 1024 * 1024; // 2MB
@@ -27,22 +27,6 @@ public class TrackMeStarter extends SpringApplication {
 		SpringApplication.run(TrackMeStarter.class);
 	}
 	
-	 //Tomcat large file upload connection reset
-    
-    @Bean
-    public TomcatEmbeddedServletContainerFactory tomcatEmbedded() {
-
-        TomcatEmbeddedServletContainerFactory tomcat = new TomcatEmbeddedServletContainerFactory();
-
-        tomcat.addConnectorCustomizers((TomcatConnectorCustomizer) connector -> {
-            if ((connector.getProtocolHandler() instanceof AbstractHttp11Protocol<?>)) {
-                //-1 means unlimited
-                ((AbstractHttp11Protocol<?>) connector.getProtocolHandler()).setMaxSwallowSize(-1);
-            }
-        });
-
-        return tomcat;
-
     }
 
-}
+

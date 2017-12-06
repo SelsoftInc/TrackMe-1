@@ -9,5 +9,6 @@ public interface TransactionDAO {
 
 	public void saveTransaction(Transaction transaction);
 	List<Transaction> getTransaction( long transactionId);
+	public List<Transaction> getTransactionsForProperty(int propertyId);
 
 }

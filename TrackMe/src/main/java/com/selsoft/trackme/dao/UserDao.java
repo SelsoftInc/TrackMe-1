@@ -1,18 +1,20 @@
 package com.selsoft.trackme.dao;
 
+import com.selsoft.trackme.dto.UserDto;
 import com.selsoft.trackme.model.Errors;
 import com.selsoft.trackme.model.PasswordResetToken;
 import com.selsoft.trackme.model.User;
+
 
 /**
  * 
  * @author Sudhansu Sekhar
  *
- */ 
+ */
 public interface UserDao {
 	public void saveUser(User user);
 
-	public void saveUserLogin(User user);
+	public UserDto userLogin(User user);
 
 	public User checkUserLogin(User user);
 

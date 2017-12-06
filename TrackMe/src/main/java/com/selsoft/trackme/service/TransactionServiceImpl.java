@@ -63,6 +63,14 @@ public class TransactionServiceImpl implements TransactionService{
 		return transactionDAO.getTransaction(transactionId);
 	}
 
+
+
+
+	@Override
+	public List<Transaction> getTransactionsForProperty(int propertyId) {
+		return transactionDAO.getTransactionsForProperty(propertyId);
+	}
+
 	
 		
 }

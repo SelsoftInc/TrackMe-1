@@ -1,7 +1,6 @@
 package com.selsoft.trackme.controller;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.security.Principal;
 import java.util.Locale;
 import java.util.UUID;
 
@@ -11,6 +10,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,7 +23,6 @@ import com.selsoft.trackme.dto.PasswordDto;
 import com.selsoft.trackme.email.common.MailResponse;
 import com.selsoft.trackme.email.service.MailSenderService;
 import com.selsoft.trackme.model.Errors;
-import com.selsoft.trackme.model.Owner;
 import com.selsoft.trackme.model.User;
 import com.selsoft.trackme.service.UserService;
 import com.selsoft.trackme.utils.UserType;
@@ -36,7 +35,6 @@ import com.selsoft.trackme.utils.UserType;
  * @author Sudhansu Sekhar
  *
  */
-
 
 @RestController
 @RequestMapping(value = "/user")
@@ -70,29 +68,29 @@ public class UserController {
 	 *         the I/P data.
 	 */
 	@RequestMapping(value = "/addUser", method = RequestMethod.POST)
-	public ResponseEntity<Errors> saveUser(@RequestBody User user) {
+	public ResponseEntity<Object> saveUser(@RequestBody User user) {
 		User userWithType = null;
 		logger.info(user.getFirstName() + " data comes into UserController saveUser() for processing");
 
-		if (StringUtils.equals("OWN",user.getUserType()))
-			 {
+		if (StringUtils.equals("OWN", user.getUserType())) {
 			userWithType = userType.createNewOwner(user);
 		}
 
-		else if (StringUtils.equals("MGR",user.getUserType())) {
+		else if (StringUtils.equals("MGR", user.getUserType())) {
 			userWithType = userType.createNewPropertyManager(user);
 
-		} else if (StringUtils.equals("TNT",user.getUserType())) {
+		} else if (StringUtils.equals("TNT", user.getUserType())) {
 			userWithType = userType.createNewTenant(user);
 
 		}
-		Errors errors = userService.saveUser(userWithType);
+		Object errors = userService.saveUser(userWithType);
 
-		return new ResponseEntity<Errors>(errors, HttpStatus.CREATED);
+		return new ResponseEntity<Object>(errors, HttpStatus.CREATED);
 	}
 
 	/**
 	 * This method gets all the user from the user table
+	 * 
 	 * @return
 	 */
 	@RequestMapping(value = "/getUser", method = RequestMethod.GET)
@@ -102,9 +100,11 @@ public class UserController {
 		return new ResponseEntity<User>(new User(), HttpStatus.ACCEPTED);
 	}
 
-	/**
-	 * This method takes argument as user object,validates email and password
-	 * If it is a valid user,login otherwise throws error message
+	
+	 /**
+	 * This method takes argument as user object,validates email and password If it
+	 * is a valid user,login otherwise throws error message
+	 * 
 	 * @param user
 	 * @return
 	 */
@@ -120,13 +120,15 @@ public class UserController {
 
 	}
 
- /**
-  * If a user has not login within 20 ms.,it shows an confirmation  mail to resets the password 
-  * @param request
-  * @param locale
-  * @param email
-  * @return
-  */
+	/**
+	 * If a user has not login within 20 ms.,it shows an confirmation mail to resets
+	 * the password
+	 * 
+	 * @param request
+	 * @param locale
+	 * @param email
+	 * @return
+	 */
 	@RequestMapping(value = "/resetPassword", method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity<MailResponse> resetPassword(HttpServletRequest request, Locale locale,
@@ -139,6 +141,9 @@ public class UserController {
 			response = mailSender
 					.sendMail(userService.constructResetTokenEmail(getAppUrl(request), locale, token, user));
 		}
+		
+		
+		
 		return new ResponseEntity<MailResponse>(response, HttpStatus.CREATED);
 
 	}
@@ -150,6 +155,7 @@ public class UserController {
 
 	/**
 	 * This method saves the password of valid user with encrypted password
+	 * 
 	 * @param email
 	 * @param passwordDto
 	 * @return
@@ -157,7 +163,7 @@ public class UserController {
 	@RequestMapping(value = "/savePassword", method = RequestMethod.POST)
 	@ResponseBody
 	public Errors savePassword(@RequestParam("email") String email, @RequestBody PasswordDto passwordDto) {
-		
+
 		User user = userService.findUserByEmail(email);
 
 		Errors errors = userService.changeUserPassword(user, passwordDto);
@@ -165,32 +171,24 @@ public class UserController {
 	}
 
 	/**
-	 * This method gets all records
-	 * @return
-	 */
-
-/*	@RequestMapping(value = "/getRecords", method = RequestMethod.GET)
-	public ResponseEntity<Owner> getAllRecords() {
-		logger.info("Data retrived from OwnerController getAllRecods()");
-		
-		
-		
-		return new ResponseEntity<Owner>(new Owner(), HttpStatus.ACCEPTED);
-	}*/
-
-	
-	/**
-	 * This method takes email as a parameter ,it will check for valid user,if it's then saves the user's password
+	 * This method takes email as a parameter ,it will check for valid user,if it's
+	 * then saves the user's password
+	 * 
 	 * @param email
 	 * @return
 	 */
 	@RequestMapping(value = "/userLogout", method = RequestMethod.GET)
 	public Errors logout(@RequestParam("email") String email) {
-		Errors errors=userService.userLogout(email);
-		logger.info(email+" Logged Out Successfully");
+		Errors errors = userService.userLogout(email);
+		logger.info(email + " Logged Out Successfully");
 
 		return errors;
 
 	}
+	
+    @RequestMapping(value = {"/user", "/me"}, method = RequestMethod.POST,produces=MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> user(Principal principal) {
+        return ResponseEntity.ok(principal);
+    }
 
 }

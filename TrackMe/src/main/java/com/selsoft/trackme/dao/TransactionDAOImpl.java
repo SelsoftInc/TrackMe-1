@@ -25,7 +25,12 @@ public class TransactionDAOImpl implements TransactionDAO {
 
 	@Override
 	public void saveTransaction(Transaction transaction) {
+		try{
 		template.save(transaction);
+		}catch(Exception e){
+			e.printStackTrace();
+			
+		}
 	}
 
 	@Override
@@ -35,6 +40,23 @@ public class TransactionDAOImpl implements TransactionDAO {
 		 if (transactionId != 0) {
 
 		Query query = new Query(Criteria.where("transactionId").is(transactionId));
+		transactionList = template.find(query, Transaction.class);
+		 }
+		 else{
+
+		transactionList = template.findAll(Transaction.class);
+		 }
+
+		return transactionList;
+	}
+
+	@Override
+	public List<Transaction> getTransactionsForProperty(int propertyId) {
+		List<Transaction> transactionList = null;
+
+		 if (propertyId != 0) {
+
+		Query query = new Query(Criteria.where("propertyId").is(propertyId));
 		transactionList = template.find(query, Transaction.class);
 		 }
 		 else{

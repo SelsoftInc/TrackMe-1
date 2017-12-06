@@ -13,4 +13,6 @@ public interface TransactionService {
 
 	public ValidError validateTransactionData(Transaction transaction);
 
+	public List<Transaction> getTransactionsForProperty(int propertyId);
+
 }
