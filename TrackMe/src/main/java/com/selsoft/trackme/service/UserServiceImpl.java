@@ -46,27 +46,27 @@ public class UserServiceImpl implements UserService {
 	 */
 
 	public Object saveUser(User user) {
-		Errors errors = validateNewUser(user);
-		List<ValidError> err = errors.getError();
-		int count = 0;
-		for (ValidError vError : err) {
-			if (StringUtils.equals(UserConstants.SUCCESS, vError.getErrorCode())) {
-				count++;
-			}
-		}
-		if (count == 3) {
-			logger.info("User data is Valid and processing to Dao");
-			String encryptPass = Utils.encryptPassword(user.getPassword());
-			user.setPassword(encryptPass);
-			userDao.saveUser(user);
-			return null;
-		} else {
-			logger.info("User data is not Valid returning Error Data");
-			return errors;
-		}
+		  Errors errors = validateNewUser(user);
+		  List<ValidError> err = errors.getError();
+		  int count = 0;
+		  for (ValidError vError : err) {
+		   if (StringUtils.equals(UserConstants.SUCCESS, vError.getErrorCode())) {
+		    count++;
+		   }
+		  }
+		  if (count == 3) {
+		   logger.info("User data is Valid and processing to Dao");
+		   String encryptPass = Utils.encryptPassword(user.getPassword());
+		   user.setPassword(encryptPass);
+		   userDao.saveUser(user);
+		   
+		   return user;
+		  } else {
+		   logger.info("User data is not Valid returning Error Data");
+		   return errors;
+		  }
 
-	}
-
+		 }
 	/**
 	 * It saves user login,if it is a valid user and encrypts the password otherwise
 	 * throws error message

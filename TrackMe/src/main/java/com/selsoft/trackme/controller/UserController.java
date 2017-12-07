@@ -83,9 +83,9 @@ public class UserController {
 			userWithType = userType.createNewTenant(user);
 
 		}
-		Object errors = userService.saveUser(userWithType);
+		Object response = userService.saveUser(userWithType);
 
-		return new ResponseEntity<Object>(errors, HttpStatus.CREATED);
+		return new ResponseEntity<Object>(response, HttpStatus.CREATED);
 	}
 
 	/**
