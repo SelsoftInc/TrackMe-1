@@ -1,5 +1,6 @@
 package com.selsoft.trackme.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -16,7 +17,7 @@ import com.selsoft.trackme.model.ValidError;
 
 @Service
 @Transactional
-public class TransactionServiceImpl implements TransactionService{
+public class  TransactionServiceImpl implements TransactionService{
 	
 	@Autowired
 	private TransactionDAO  transactionDAO;
@@ -27,9 +28,6 @@ public class TransactionServiceImpl implements TransactionService{
 	public void saveTransaction(Transaction transaction) {
 		transactionDAO.saveTransaction(transaction);
 	}
-
-	
-	
 
 	@Override
 	public ValidError validateTransactionData(Transaction transaction) {
@@ -54,21 +52,15 @@ public class TransactionServiceImpl implements TransactionService{
 				return null;
 	}
 
-
-
-
 	@Override
-	public List<Transaction> getTransaction(long transactionId) {
+	public List<Transaction> getTransaction(int transactionId) {
 		
 		return transactionDAO.getTransaction(transactionId);
 	}
 
-
-
-
 	@Override
-	public List<Transaction> getTransactionsForProperty(int propertyId) {
-		return transactionDAO.getTransactionsForProperty(propertyId);
+	public List<Transaction> getTransactionsForProperty(int propertyId, Date fromDate, Date toDate) {
+		return transactionDAO.getTransactionsForProperty(propertyId,fromDate,toDate);
 	}
 
 	

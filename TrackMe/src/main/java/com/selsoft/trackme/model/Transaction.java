@@ -12,8 +12,8 @@ import org.springframework.web.multipart.MultipartFile;
 public class Transaction {
 
 	@Id
-	private long transactionId;
-	private long propertyId;
+	private int transactionId;
+	private int propertyId;
 	private long ownerId;
 	private long tenantId;
 	private long propertyManagerId;
@@ -27,19 +27,19 @@ public class Transaction {
 	private String category;
 	private byte[] file;
 
-	public long getTransactionId() {
+	public int getTransactionId() {
 		return transactionId;
 	}
 
-	public void setTransactionId(long transactionId) {
+	public void setTransactionId(int transactionId) {
 		this.transactionId = transactionId;
 	}
 
-	public long getPropertyId() {
+	public int getPropertyId() {
 		return propertyId;
 	}
 
-	public void setPropertyId(long propertyId) {
+	public void setPropertyId(int propertyId) {
 		this.propertyId = propertyId;
 	}
 

@@ -5,11 +5,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
-import javax.lang.model.element.Element;
-
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -34,13 +33,6 @@ public class PdfBilling {
 			+ "td {font-size:15px; background-color: white;  padding: 2px; border-bottom: 1px solid #d7e8f9; }"
 			+ "tr.balance td {background-color:  #d7e8f9;border-top: 1px solid #000;}" + ".nocss {}";
 
-	// public static void main(String[] args) throws IOException,
-	// DocumentException {
-	// File file = new File(DEST);
-	// file.getParentFile().mkdirs();
-	// new PdfBilling().createPdf(DEST);
-	// }
-
 	private Object header;
 
 	/**
@@ -60,11 +52,8 @@ public class PdfBilling {
 
 		StringBuilder sb = new StringBuilder();
 		sb.append("<div align=\"center\"><b>Rental Company</b></div>");
-		/*PdfPTable table3 = getHeadTable();
-		document.add(Chunk.NEWLINE);
-		document.add(table3);
-		*/
 		
+
 		Customer customer = rentalPdf.getCustomer();
 		Properties prop = rentalPdf.getProperties();
 		Company company = rentalPdf.getCompany();
@@ -75,10 +64,9 @@ public class PdfBilling {
 		document.add(table3);
 
 		// step 4
-		//document.add(getHead(new StringBuilder("<div><b>Account Activity</b></div>")));
+		document.add(getHead(new StringBuilder("<div><b>Account Activity</b></div>")));
 		PdfPTable table = getTable(rentalPdf.getActivityList());
 		PdfPTable table2 = getFootTable(company, statement, customer);
-
 
 		document.add(table);
 		document.add(Chunk.NEWLINE);
@@ -95,14 +83,8 @@ public class PdfBilling {
 
 		StringBuilder builder = new StringBuilder();
 		builder.append("<div align=\"center\"><b>REMITANCE</b></div>");
-		//document.add(getHead(builder));
+		document.add(getHead(builder));
 		document.add(table2);
-
-		/*
-		 * document.add(Chunk.NEWLINE); List<RentalPdf> rentalPdf=null;
-		 * PdfPTable table4 = getRentalPdf(rentalPdf);
-		 * 
-		 */
 		// step 5
 		document.close();
 	}
@@ -112,110 +94,6 @@ public class PdfBilling {
 		return element;
 	}
 
-	/*public PdfPTable getHeadTable() throws IOException {
-
-		StringBuilder sb = new StringBuilder();
-		sb.append("<table>");
-		sb.append("<tr>");
-		sb.append(
-				"<th style=\"text-align: left;background-color:white;color:black;\" width=\"50%\">[Rental Company]:</th>");
-		sb.append(
-				"<th style=\"text-align: right;background-color:white;color:blue;\" width=\"90%\"><b>STATEMENT</b> </th>");
-		sb.append("<th style=\"text-align: center;background-color:white;color:black;\" width=\"20%\"></th>");
-		sb.append("</tr>");
-
-		sb.append("<tr>");
-		sb.append("<td style=\"text-align: left;border-bottom: 0px;\">");
-		sb.append("[Street Address]");
-		sb.append("</td>");
-		sb.append("<td style=\"text-align: right;border-bottom: 0px;\">");
-		sb.append("");
-		sb.append("</td>");
-		sb.append("<td style=\"text-align: center;border-bottom: 0px;\">");
-		sb.append("");
-		sb.append("</td>");
-		sb.append("</tr>");
-
-		sb.append("<tr>");
-		sb.append("<td style=\"text-align: left;border-bottom: 0px;\">");
-		sb.append("[City, ST ZIP]");
-		sb.append("</td>");
-		sb.append("<td style=\"text-align: right;border-bottom: 0px;\">");
-		sb.append("Statement Date");
-		sb.append("</td>");
-		sb.append("<td style=\"text-align: center;border-bottom: 0px;border: 1px solid #000;\">");
-		sb.append("04/30/2014");
-		sb.append("</td>");
-		sb.append("</tr>");
-
-		sb.append("<tr>");
-		sb.append("<td style=\"text-align: left;border-bottom: 0px;\">");
-		sb.append("phone:000 000-0000");
-		sb.append("</td>");
-		sb.append("<td style=\"text-align: right;border-bottom: 0px;\">");
-		sb.append("CUSTOMER ID");
-		sb.append("</td>");
-		sb.append("<td style=\"text-align: center;border-bottom: 0px;border: 1px solid #000;\">");
-		sb.append("[ABC 123]");
-		sb.append("</td>");
-		sb.append("</tr>");
-
-		sb.append("<tr>");
-		sb.append("<td style=\"text-align: left;border-bottom: 0px;\">");
-		sb.append("Bill To:[Customer Name]");
-		sb.append("</td>");
-		sb.append("<td style=\"text-align: right;border-bottom: 0px;\">");
-		sb.append("property  [Street Address]");
-		sb.append("</td>");
-		sb.append("<td style=\"text-align: center;border-bottom: 0px;\">");
-		sb.append(" ");
-		sb.append("</td>");
-		sb.append("</tr>");
-
-		sb.append("<tr>");
-		sb.append("<td style=\"text-align: left;border-bottom: 0px;\">");
-		sb.append("[Street Address]");
-		sb.append("</td>");
-		sb.append("<td style=\"text-align: right;border-bottom: 0px;\">");
-		sb.append("City, [ST ZIP");
-		sb.append("</td>");
-		sb.append("<td style=\"text-align: center;border-bottom: 0px;\">");
-		sb.append("  ");
-		sb.append("</td>");
-		sb.append("</tr>");
-
-		sb.append("<tr>");
-		sb.append("<td style=\"text-align: left;border-bottom: 0px;\" >");
-		sb.append("City, [ST ZIP]");
-		sb.append("</td>");
-		sb.append("<td style=\"text-align: right;border-bottom: 0px;\">");
-		sb.append("Contract From     1-Feb-2014");
-		sb.append("</td>");
-		sb.append("<td style=\"text-align: center;border-bottom: 0px;\">");
-		sb.append("  ");
-		sb.append("</td>");
-		sb.append("</tr>");
-
-		sb.append("<tr>");
-		sb.append("<td style=\"text-align: left;border-bottom: 0px;\">");
-		sb.append("[phone]");
-		sb.append("</td>");
-		sb.append("<td style=\"text-align: right;border-bottom: 0px;\">");
-		sb.append(" To       31-Jan-2015");
-		sb.append("</td>");
-
-		// sb.append("<td >");
-		sb.append("   ");
-		// sb.append("</td>");
-		sb.append("</tr>");
-
-		sb.append("</table>");
-
-		return (PdfPTable) getElements(sb);
-
-	}*/
-
-	
 	public PdfPTable getHeadTable(Company company, Customer cust, Statement statement, Properties prop)
 			throws IOException {
 
@@ -329,8 +207,7 @@ public class PdfBilling {
 		return (PdfPTable) getElements(sb2);
 
 	}
-	
-	
+
 	public PdfPTable getTable(List<Activity> activity) throws IOException {
 
 		StringBuilder sb = new StringBuilder();
@@ -397,95 +274,6 @@ public class PdfBilling {
 
 	}
 
-	/*public PdfPTable getFootTable() throws IOException {
-
-		StringBuilder sb = new StringBuilder();
-		sb.append("<table>");
-		sb.append("<tr>");
-		sb.append(
-				"<th style=\"text-align: left;background-color:white;color:black;\" width=\"60%\">Please make Check Payable to [Name] and mail to:</th>");
-		sb.append(
-				"<th style=\"text-align: right;background-color:white;color:black;\" width=\"30%\"> STATEMENT DATE</th>");
-		sb.append("<th style=\"text-align: center;background-color:white;color:black;\" width=\"20%\">04/30/2014</th>");
-		sb.append("</tr>");
-
-		sb.append("<tr>");
-		sb.append("<td style=\"text-align: left;border-bottom: 0px;\">");
-		sb.append("[Company Name]");
-		sb.append("</td>");
-		sb.append("<td style=\"text-align: right;border-bottom: 0px;\">");
-		sb.append("CUSTOMER ID");
-		sb.append("</td>");
-		sb.append("<td style=\"text-align: center;border-bottom: 0px;\">");
-		sb.append("[ABC123]");
-		sb.append("</td>");
-		sb.append("</tr>");
-
-		sb.append("<tr>");
-		sb.append("<td style=\"text-align: left;border-bottom: 0px;\">");
-		sb.append("[Street Address]");
-		sb.append("</td>");
-		sb.append("<td style=\"text-align: right;border-bottom: 0px;\">");
-		sb.append("");
-		sb.append("</td>");
-		sb.append("<td style=\"text-align: center;border-bottom: 0px;\">");
-		sb.append("");
-		sb.append("</td>");
-		sb.append("</tr>");
-
-		sb.append("<tr>");
-		sb.append("<td style=\"text-align: left;border-bottom: 0px;\">");
-		sb.append("[City, ST, ZIP]");
-		sb.append("</td>");
-		sb.append("<td style=\"text-align: right;border-bottom: 0px;\">");
-		sb.append("DUE DATE");
-		sb.append("</td>");
-		sb.append("<td style=\"text-align: center;border-bottom: 0px;border: 1px solid #000;\">");
-		sb.append("05/30/2014");
-		sb.append("</td>");
-		sb.append("</tr>");
-
-		sb.append("<tr>");
-		sb.append("<td style=\"text-align: left;border-bottom: 0px;\">");
-		sb.append("");
-		sb.append("</td>");
-		sb.append("<td style=\"text-align: right;border-bottom: 0px;\">");
-		sb.append("BALANCE DUE");
-		sb.append("</td>");
-		sb.append("<td style=\"text-align: center;border-bottom: 0px;border: 1px solid #000;\">");
-		sb.append("$ 1,020.00");
-		sb.append("</td>");
-		sb.append("</tr>");
-
-		sb.append("<tr>");
-		sb.append("<td style=\"text-align: left;border-bottom: 0px;\">");
-		sb.append("-");
-		sb.append("</td>");
-		sb.append("<td style=\"text-align: right;border-bottom: 0px;\">");
-		sb.append("-");
-		sb.append("</td>");
-		sb.append("<td style=\"text-align: center;border-bottom: 0px;\">");
-		sb.append(" ");
-		sb.append("</td>");
-		sb.append("</tr>");
-
-		sb.append("<tr>");
-		sb.append("<td style=\"text-align: left;border-bottom: 0px;\">");
-		sb.append("Please write Customer ID on your check.");
-		sb.append("</td>");
-		sb.append("<td style=\"text-align: right;border-bottom: 0px;\">");
-		sb.append("AMMOUNT ENCLOSED");
-		sb.append("</td>");
-		sb.append("<td style=\"text-align: center;border-bottom: 0px;border: 1px solid #000;\">");
-		sb.append("  ");
-		sb.append("</td>");
-		sb.append("</tr>");
-
-		sb.append("</table>");
-
-		return (PdfPTable) getElements(sb);
-	}*/
-	
 	public PdfPTable getFootTable(Company company, Statement statement, Customer customer) throws IOException {
 
 		StringBuilder sb = new StringBuilder();
@@ -573,9 +361,6 @@ public class PdfBilling {
 
 		return (PdfPTable) getElements(sb);
 	}
-	
-	
-	
 
 	public Element getElements(StringBuilder sb) throws IOException {
 		CSSResolver cssResolver = new StyleAttrCSSResolver();
@@ -596,11 +381,9 @@ public class PdfBilling {
 		XMLWorker worker = new XMLWorker(css, true);
 		XMLParser p = new XMLParser(worker);
 		p.parse(new ByteArrayInputStream(sb.toString().getBytes()));
-		return null;
 
-		//return elements.get(0);
+		return elements.get(0);
 
 	}
 
-	
 }

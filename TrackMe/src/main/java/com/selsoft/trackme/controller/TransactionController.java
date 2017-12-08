@@ -2,11 +2,16 @@ package com.selsoft.trackme.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
+
+import javax.ws.rs.PathParam;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,6 +38,13 @@ public class TransactionController {
 		
 		try {
 			 content = new String(json.getBytes());
+			 
+			 if (content.length() > 2*1024*1024) //  2MB
+
+	            {
+				 logger.info("File is too big");
+
+	            }
 		} catch (IOException e3) {
 			e3.printStackTrace();
 		}
@@ -58,14 +70,19 @@ public class TransactionController {
 
 	}
 
-	@RequestMapping(value = "/ getTransaction", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<Transaction> getTransaction(long transactionId) {
-		return transactionService.getTransaction(transactionId);
+	@RequestMapping(value = "/getTransaction/{transactionid}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<Transaction> getTransaction(@PathVariable("transactionid") Integer transactionid) {
+		
+		return transactionService.getTransaction(transactionid);
 	}
 
-	@RequestMapping(value = "/ getTransactionsForProperty", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<Transaction> getTransactionsForProperty(int propertyId) {
-		return transactionService.getTransactionsForProperty(propertyId);
+	@RequestMapping(value = "/getTransactionsForProperty/{transactionid}/{fromdate}/{todate}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<Transaction> getTransactionsForProperty(@PathVariable("propertyid") int propertyId,
+			@PathVariable("fromdate") @DateTimeFormat(pattern="yyyy-MM-dd")  Date fromDate
+			,@PathVariable("todate") @DateTimeFormat(pattern="yyyy-MM-dd") Date toDate) {
+		
+		
+		return transactionService.getTransactionsForProperty(propertyId,fromDate,toDate);
 	}
 
 }

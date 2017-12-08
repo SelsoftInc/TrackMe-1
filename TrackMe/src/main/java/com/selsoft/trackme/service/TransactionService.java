@@ -1,5 +1,6 @@
 package com.selsoft.trackme.service;
 
+import java.util.Date;
 import java.util.List;
 
 import com.selsoft.trackme.model.Transaction;
@@ -9,10 +10,10 @@ public interface TransactionService {
 
 	public void saveTransaction(Transaction transaction);
 
-	public List<Transaction> getTransaction(long transactionId);
+	public List<Transaction> getTransaction(int transactionId);
 
 	public ValidError validateTransactionData(Transaction transaction);
 
-	public List<Transaction> getTransactionsForProperty(int propertyId);
+	public List<Transaction> getTransactionsForProperty(int propertyId, Date fromDate, Date toDate);
 
 }
