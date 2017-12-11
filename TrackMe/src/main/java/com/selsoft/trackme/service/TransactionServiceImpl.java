@@ -63,7 +63,11 @@ public class  TransactionServiceImpl implements TransactionService{
 		return transactionDAO.getTransactionsForProperty(propertyId,fromDate,toDate);
 	}
 
-	
+	@Override
+	public List<Transaction> getTransactionReport(String reportType, String duration) {
+		return transactionDAO.getTransactionReport(reportType,duration);
+	}
+
 		
 }
 
