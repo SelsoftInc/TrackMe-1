@@ -94,7 +94,6 @@ public class TransactionController {
 
 		return transactionService.getTransactionReport(reportType, duration);
 	}
-	
-
+		
 
 }

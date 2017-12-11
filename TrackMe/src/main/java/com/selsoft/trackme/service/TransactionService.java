@@ -18,7 +18,4 @@ public interface TransactionService {
 
 	public List<Transaction> getTransactionReport(String reportType, String duration);
 
-	
-
-	
-}
+	}

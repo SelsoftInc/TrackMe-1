@@ -13,4 +13,4 @@ public interface TransactionDAO {
 	public List<Transaction> getTransactionsForProperty(int propertyId, Date fromDate, Date toDate);
 	public List<Transaction> getTransactionReport(String reportType, String duration);
 
-}
+	}

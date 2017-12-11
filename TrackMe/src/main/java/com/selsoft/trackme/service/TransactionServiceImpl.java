@@ -68,7 +68,7 @@ public class  TransactionServiceImpl implements TransactionService{
 		return transactionDAO.getTransactionReport(reportType,duration);
 	}
 
-		
+	
 }
 
 
