@@ -19,14 +19,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.selsoft.trackme.constants.TrackMeConstants;
 import com.selsoft.trackme.dto.PasswordDto;
 import com.selsoft.trackme.model.Transaction;
 import com.selsoft.trackme.model.ValidError;
 import com.selsoft.trackme.service.TransactionService;
-
 
 @RestController
 @RequestMapping(value = "/transaction")
@@ -99,7 +97,6 @@ public class TransactionController {
 		return transactionService.getTransactionReport(reportType, year, duration);
 	}
 	
-
 
 	@RequestMapping(value = "/getTransactionReport/{reportType}/{year}/{duration}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<Transaction> getTransactionReport(@PathVariable("reportType") String reportType,

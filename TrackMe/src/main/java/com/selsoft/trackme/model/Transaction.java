@@ -112,6 +112,4 @@ public class Transaction {
 				+ Arrays.toString(file) + "]";
 	}
 
-	
-	
 }
