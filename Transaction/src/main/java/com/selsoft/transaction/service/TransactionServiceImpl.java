@@ -1,5 +1,8 @@
 package com.selsoft.transaction.service;
 
+import java.util.Date;
+import java.util.List;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +15,8 @@ import com.selsoft.transaction.model.Transaction;
 import com.selsoft.transaction.model.ValidError;
 
 
-@Service
 @Transactional
-public class TransactionServiceImpl implements TransactionService{
+public class  TransactionServiceImpl implements TransactionService{
 	
 	@Autowired
 	private TransactionDAO  transactionDAO;
@@ -25,9 +27,6 @@ public class TransactionServiceImpl implements TransactionService{
 	public void saveTransaction(Transaction transaction) {
 		transactionDAO.saveTransaction(transaction);
 	}
-
-	
-	
 
 	@Override
 	public ValidError validateTransactionData(Transaction transaction) {
@@ -52,12 +51,22 @@ public class TransactionServiceImpl implements TransactionService{
 				return null;
 	}
 
+	@Override
+	public List<Transaction> getTransaction(int transactionId) {
+		
+		return transactionDAO.getTransaction(transactionId);
+	}
 
+	@Override
+	public List<Transaction> getTransactionsForProperty(int propertyId, Date fromDate, Date toDate) {
+		return transactionDAO.getTransactionsForProperty(propertyId,fromDate,toDate);
+	}
 
+	@Override
+	public List<Transaction> getTransactionReport(String reportType, String duration) {
+		return transactionDAO.getTransactionReport(reportType,duration);
+	}
 
-	
-
-	
 		
 }
 

@@ -1,37 +1,40 @@
 package com.selsoft.transaction.model;
 
+import java.io.InputStream;
+import java.util.Arrays;
 import java.util.Date;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.web.multipart.MultipartFile;
 
 @Document(collection = "TRANSACTION")
 public class Transaction {
-	
+
 	@Id
-	private long transactionId;
-	private long propertyId;
+	private int transactionId;
+	private int propertyId;
 	private long ownerId;
-	private long tenantId;
-	private long propertyManagerId;
+	private long managerId;
 	private double amount;
 	private String transactionType;
-	private String paidBy;
+	private String transactionCode;
 	private int paidById;
 	private String paymentMode;
 	private Date paidOn;
-	private String transactionDesc;
 	private String category;
-	public long getTransactionId() {
+	private Date enteredOn;
+	private byte[] file;
+	public int getTransactionId() {
 		return transactionId;
 	}
-	public void setTransactionId(long transactionId) {
+	public void setTransactionId(int transactionId) {
 		this.transactionId = transactionId;
 	}
-	public long getPropertyId() {
+	public int getPropertyId() {
 		return propertyId;
 	}
-	public void setPropertyId(long propertyId) {
+	public void setPropertyId(int propertyId) {
 		this.propertyId = propertyId;
 	}
 	public long getOwnerId() {
@@ -40,17 +43,11 @@ public class Transaction {
 	public void setOwnerId(long ownerId) {
 		this.ownerId = ownerId;
 	}
-	public long getTenantId() {
-		return tenantId;
+	public long getManagerId() {
+		return managerId;
 	}
-	public void setTenantId(long tenantId) {
-		this.tenantId = tenantId;
-	}
-	public long getPropertyManagerId() {
-		return propertyManagerId;
-	}
-	public void setPropertyManagerId(long propertyManagerId) {
-		this.propertyManagerId = propertyManagerId;
+	public void setManagerId(long managerId) {
+		this.managerId = managerId;
 	}
 	public double getAmount() {
 		return amount;
@@ -64,11 +61,11 @@ public class Transaction {
 	public void setTransactionType(String transactionType) {
 		this.transactionType = transactionType;
 	}
-	public String getPaidBy() {
-		return paidBy;
+	public String getTransactionCode() {
+		return transactionCode;
 	}
-	public void setPaidBy(String paidBy) {
-		this.paidBy = paidBy;
+	public void setTransactionCode(String transactionCode) {
+		this.transactionCode = transactionCode;
 	}
 	public int getPaidById() {
 		return paidById;
@@ -88,51 +85,32 @@ public class Transaction {
 	public void setPaidOn(Date paidOn) {
 		this.paidOn = paidOn;
 	}
-	public String getTransactionDesc() {
-		return transactionDesc;
-	}
-	public void setTransactionDesc(String transactionDesc) {
-		this.transactionDesc = transactionDesc;
-	}
 	public String getCategory() {
 		return category;
 	}
 	public void setCategory(String category) {
 		this.category = category;
 	}
+	public Date getEnteredOn() {
+		return enteredOn;
+	}
+	public void setEnteredOn(Date enteredOn) {
+		this.enteredOn = enteredOn;
+	}
+	public byte[] getFile() {
+		return file;
+	}
+	public void setFile(byte[] file) {
+		this.file = file;
+	}
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("Transaction [transactionId=");
-		builder.append(transactionId);
-		builder.append(", propertyId=");
-		builder.append(propertyId);
-		builder.append(", ownerId=");
-		builder.append(ownerId);
-		builder.append(", tenantId=");
-		builder.append(tenantId);
-		builder.append(", propertyManagerId=");
-		builder.append(propertyManagerId);
-		builder.append(", amount=");
-		builder.append(amount);
-		builder.append(", transactionType=");
-		builder.append(transactionType);
-		builder.append(", paidBy=");
-		builder.append(paidBy);
-		builder.append(", paidById=");
-		builder.append(paidById);
-		builder.append(", paymentMode=");
-		builder.append(paymentMode);
-		builder.append(", paidOn=");
-		builder.append(paidOn);
-		builder.append(", transactionDesc=");
-		builder.append(transactionDesc);
-		builder.append(", category=");
-		builder.append(category);
-		builder.append("]");
-		return builder.toString();
+		return "Transaction [transactionId=" + transactionId + ", propertyId=" + propertyId + ", ownerId=" + ownerId
+				+ ", managerId=" + managerId + ", amount=" + amount + ", transactionType=" + transactionType
+				+ ", transactionCode=" + transactionCode + ", paidById=" + paidById + ", paymentMode=" + paymentMode
+				+ ", paidOn=" + paidOn + ", category=" + category + ", enteredOn=" + enteredOn + ", file="
+				+ Arrays.toString(file) + "]";
 	}
+
 	
-			 
-	 
 }

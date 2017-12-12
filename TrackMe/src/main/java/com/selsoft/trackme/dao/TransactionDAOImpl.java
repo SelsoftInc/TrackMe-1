@@ -179,7 +179,7 @@ public class TransactionDAOImpl implements TransactionDAO {
            } else if(StringUtils.equals("M", reportType)) { //Monthly report
            	if(year == 0 || StringUtils.isBlank(duration) || !ArrayUtils.contains(MONTHS_IN_YEAR, duration)) 
            		throw new ValidError("Error", " Year and Month can not be null");
-           	int selectedMonth = ArrayUtils.indexOf(MONTHS_IN_YEAR, duration) + 1; //(index of array + 1, for Jan =1, Feb = 2, ...., Dec = 12)
+           	int selectedMonth = ArrayUtils.indexOf(MONTHS_IN_YEAR, duration) + 1;           	//(index of array + 1, for Jan =1, Feb = 2, ...., Dec = 12)
            	int lastDayOfMonth = 0; //Based on year (leap or regular year) and month, set the last day of the month and use it against paidOn
            	
            	fromDate = year + "-01-01";
