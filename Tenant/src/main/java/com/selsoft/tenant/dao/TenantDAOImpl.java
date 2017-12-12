@@ -10,8 +10,10 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
+import com.mongodb.DuplicateKeyException;
 import com.selsoft.tenant.constants.TrackMeConstants;
 import com.selsoft.tenant.model.Tenant;
+import com.selsoft.tenant.utils.TenantException;
 
 @Repository
 @Qualifier("tanantDAO")
@@ -27,10 +29,16 @@ public class TenantDAOImpl implements TenantDAO {
 	/**
 	 * saves new tenant to tenant table
 	 */
-	public void saveNewTenant(Tenant tenant) {
-		template.save(tenant);
-	}
-
+	public void saveNewTenant(Tenant tenant){
+		
+			try {
+				template.insert(tenant);
+			} catch(Exception e) {
+				logger.info(tenant.getTenantEmailId() + " already exists in the database");
+				//throw new TenantException("Error", "Owner with the email id " + tenant.getTenantEmailId() + " already exists, please add a owner with a different email id.");
+			} 
+			}
+		
 	/**
 	 * find all tenants
 	 */

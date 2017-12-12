@@ -1,15 +1,21 @@
 package com.selsoft.tenant.controller;
 
 import java.util.List;
+
 import org.apache.log4j.Logger;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.selsoft.tenant.constants.TenantConstants.TENANT_STATUS;
+import com.selsoft.tenant.model.Errors;
 import com.selsoft.tenant.model.Tenant;
-import com.selsoft.tenant.model.TenantStatus;
 import com.selsoft.tenant.service.TenantService;
 
 @RestController
@@ -25,10 +31,23 @@ public class TenantController {
 	 * tenants--------------------------------------------------------
 	 */
 
-	@RequestMapping(value = "/addNewTenant", method = RequestMethod.PUT)
-	public void addNewTenant(@RequestBody Tenant tenant) {
+	//@RequestMapping(value = "/addNewTenant", method = RequestMethod.PUT)
+	@RequestMapping(value = "/addNewTenant", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Errors> addNewTenant(@RequestBody Tenant tenant) {
+		
+		Errors errors=null;	
+		try {
+		    errors= tenantService.saveNewTenant(tenant);
+		
+		} catch(Exception ex) {
+			ex.printStackTrace();
+		}
+		return new ResponseEntity<Errors>(errors, HttpStatus.CREATED);
+		
+		
+		/*
 		logger.info(tenant.getTenantFirstName() + " data comes into TenantController addNewTenant() for processing");
-		tenantService.addNewTenant(tenant);
+		tenantService.addNewTenant(tenant);*/
 	}
 
 	/*
@@ -38,7 +57,7 @@ public class TenantController {
 
 	@RequestMapping(value = "/getAllTenants", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<Tenant> getAllTenants(String status) {
-		return tenantService.getAllTenants(TenantStatus.NEW.toString());
+		return tenantService.getAllTenants(TENANT_STATUS.NEW.toString());
 	}
 
 	/*

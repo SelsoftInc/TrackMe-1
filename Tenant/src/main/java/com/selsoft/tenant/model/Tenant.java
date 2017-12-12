@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Tenant {
 	
 	@Id
-	private int tenantId;
+	private String tenantId;
 	private String tenantFirstName;
 	private String tenantLastName;
 	private String tenantEmailId;
@@ -15,15 +15,15 @@ public class Tenant {
 	private String tenantStatus;
 
 	public Tenant() {
-		this.tenantStatus = TenantStatus.NEW.toString();
+		this.tenantStatus = TENANT_STATUS.NEW.toString();
 
 	}
 
-	public int getTenantId() {
+	public String getTenantId() {
 		return tenantId;
 	}
 
-	public void setTenantId(int tenantId) {
+	public void setTenantId(String tenantId) {
 		this.tenantId = tenantId;
 	}
 
