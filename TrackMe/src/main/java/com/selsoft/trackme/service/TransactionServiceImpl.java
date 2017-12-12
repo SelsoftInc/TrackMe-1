@@ -8,19 +8,17 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.selsoft.trackme.constants.ErrorConstants;
 import com.selsoft.trackme.dao.TransactionDAO;
-
 import com.selsoft.trackme.model.Transaction;
 import com.selsoft.trackme.model.ValidError;
 
 @Service
 @Transactional
-public class  TransactionServiceImpl implements TransactionService{
-	
+public class TransactionServiceImpl implements TransactionService {
+
 	@Autowired
-	private TransactionDAO  transactionDAO;
+	private TransactionDAO transactionDAO;
 
 	private static final Logger logger = Logger.getLogger(TransactionServiceImpl.class);
 
@@ -32,7 +30,8 @@ public class  TransactionServiceImpl implements TransactionService{
 	@Override
 	public ValidError validateTransactionData(Transaction transaction) {
 		String transactionType = transaction.getTransactionType();
-		logger.info(transaction.getTransactionType() + " data comes into LeaseController saveTransaction() for processing");
+		logger.info(
+				transaction.getTransactionType() + " data comes into LeaseController saveTransaction() for processing");
 
 		if (StringUtils.equals("OWN", transactionType)) {
 			ValidError validError = new ValidError(ErrorConstants.ERROR110, ErrorConstants.ERRROR110_MESSAGE);
@@ -49,28 +48,34 @@ public class  TransactionServiceImpl implements TransactionService{
 			return validError;
 
 		}
-				return null;
+		return null;
 	}
 
 	@Override
 	public List<Transaction> getTransaction(int transactionId) {
-		
+
 		return transactionDAO.getTransaction(transactionId);
 	}
 
 	@Override
 	public List<Transaction> getTransactionsForProperty(int propertyId, Date fromDate, Date toDate) {
-		return transactionDAO.getTransactionsForProperty(propertyId,fromDate,toDate);
+		return transactionDAO.getTransactionsForProperty(propertyId, fromDate, toDate);
+	}
+	
+	@Override
+	public List<Transaction> getTransactionReport(String reportType, int year, String duration) throws Throwable {
+		return transactionDAO.getTransactionReport(reportType, year, duration);
+	}
+
+
+	@Override
+	public List<Transaction> getTransactionReport(String reportType, String year, String duration) {
+		return transactionDAO.getTransactionReport(reportType, year, duration);
 	}
 
 	@Override
-	public List<Transaction> getTransactionReport(String reportType, String duration) {
-		return transactionDAO.getTransactionReport(reportType,duration);
+	public List<Transaction> getTransactionReportYearly(String year) {
+		return transactionDAO.getTransactionReportYearly(year);
 	}
 
-	
 }
-
-
-
-

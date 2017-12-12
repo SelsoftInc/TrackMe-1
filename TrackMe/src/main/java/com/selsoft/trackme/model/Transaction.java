@@ -12,7 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class Transaction {
 
 	@Id
-	private int transactionId;
+	private String transactionId;
 	private int propertyId;
 	private long ownerId;
 	private long managerId;
@@ -25,10 +25,10 @@ public class Transaction {
 	private String category;
 	private Date enteredOn;
 	private byte[] file;
-	public int getTransactionId() {
+	public String getTransactionId() {
 		return transactionId;
 	}
-	public void setTransactionId(int transactionId) {
+	public void setTransactionId(String transactionId) {
 		this.transactionId = transactionId;
 	}
 	public int getPropertyId() {

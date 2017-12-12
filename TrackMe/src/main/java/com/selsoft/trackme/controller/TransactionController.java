@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.ws.rs.PathParam;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -20,12 +21,12 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.selsoft.trackme.constants.TrackMeConstants;
 import com.selsoft.trackme.dto.PasswordDto;
 import com.selsoft.trackme.model.Transaction;
 import com.selsoft.trackme.model.ValidError;
 import com.selsoft.trackme.service.TransactionService;
 
-import ch.qos.logback.core.net.SyslogOutputStream;
 
 @RestController
 @RequestMapping(value = "/transaction")
@@ -86,14 +87,33 @@ public class TransactionController {
 			@PathVariable("fromdate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date fromDate,
 			@PathVariable("todate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date toDate) {
 
-			return transactionService.getTransactionsForProperty(propertyId, fromDate, toDate);
+		return transactionService.getTransactionsForProperty(propertyId, fromDate, toDate);
 	}
-	@RequestMapping(value = "/getTransaction/reporttype/{reporttype}/duration/{duration}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<Transaction> getTransactionReport(@PathVariable("reportType") String reportType,
-			@PathVariable("duration") String duration ) {
+	
+	
+	@RequestMapping(value = "/getTransactionReport", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<Transaction> getTransactionReport(@RequestParam(name="reportType", required=true, defaultValue="Y") String reportType, 
+													@RequestParam(name="year", required=false, defaultValue="0") int year,
+													@RequestParam(name="duration", required=false) String duration) throws Throwable {
 
-		return transactionService.getTransactionReport(reportType, duration);
+		return transactionService.getTransactionReport(reportType, year, duration);
 	}
-		
+	
+
+
+	@RequestMapping(value = "/getTransactionReport/{reportType}/{year}/{duration}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<Transaction> getTransactionReport(@PathVariable("reportType") String reportType,
+			@PathVariable("year") String year, @PathVariable(value = "duration", required = false) String duration) {
+		List<Transaction> transactionList = null;
+		if (StringUtils.equals(reportType, TrackMeConstants.YEAR)) {
+			transactionList = transactionService.getTransactionReportYearly(year);
+		} else if (StringUtils.equals(reportType, TrackMeConstants.MONTH)) {
+			transactionList = transactionService.getTransactionReport(reportType, year, duration);
+		} else if (StringUtils.equals(reportType, TrackMeConstants.QUARTER)) {
+			transactionList = transactionService.getTransactionReport(reportType, year, duration);
+		}
+		return transactionList;
+
+	}
 
 }

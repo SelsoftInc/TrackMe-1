@@ -5,7 +5,7 @@ package com.selsoft.trackme.model;
  * @author Sudhansu Sekhar
  *
  */
-public class ValidError {
+public class ValidError extends Throwable{
 
 	private String errorCode;
 	private String errorMsg;
