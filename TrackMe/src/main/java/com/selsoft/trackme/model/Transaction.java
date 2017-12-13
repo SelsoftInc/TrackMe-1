@@ -111,5 +111,4 @@ public class Transaction {
 				+ ", paidOn=" + paidOn + ", category=" + category + ", enteredOn=" + enteredOn + ", file="
 				+ Arrays.toString(file) + "]";
 	}
-	
-}
+	}

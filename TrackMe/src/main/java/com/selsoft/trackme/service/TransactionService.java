@@ -18,5 +18,4 @@ public interface TransactionService {
 
 	public List<Transaction> getTransactionReport(String reportType, int year, String duration) throws Throwable;
 	
-
 }

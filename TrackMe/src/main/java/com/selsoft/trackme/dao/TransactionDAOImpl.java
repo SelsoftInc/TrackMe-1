@@ -235,7 +235,6 @@ public class TransactionDAOImpl implements TransactionDAO {
            	transactionList=template.find(query, Transaction.class);
            }
 		return transactionList;
-	   
-	}
+	   	}
 }
 		   
