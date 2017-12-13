@@ -13,5 +13,4 @@ public interface TenantService {
 	public List<Tenant> getAllTenants(String status);
 	String getTenantStatusById(int id);
 	public Errors saveNewTenant(Tenant tenant);
-	
-}
+	}

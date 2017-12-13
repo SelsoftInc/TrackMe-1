@@ -48,10 +48,9 @@ public class TransactionDAOImpl implements TransactionDAO {
 	}
 
 	@Override
-	public List<Transaction> getTransaction(int transactionId) {
+	public List<Transaction> getTransaction(String transactionId) {
 		List<Transaction> transactionList = null;
-
-		if (transactionId != 0) {
+		if (transactionId !=null) {
 
 			Query query = new Query(Criteria.where("transactionId").is(transactionId));
 			transactionList = template.find(query, Transaction.class);
@@ -63,7 +62,7 @@ public class TransactionDAOImpl implements TransactionDAO {
 		return transactionList;
 	}
 
-	public List<Transaction> getTransactionsForProperty(@PathVariable("propertyid") int propertyId,
+	public List<Transaction> getTransactionsForProperty(@PathVariable("propertyid") String propertyId,
 			@PathVariable("fromdate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date fromDate,
 			@PathVariable("todate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date toDate) {
 
@@ -75,7 +74,7 @@ public class TransactionDAOImpl implements TransactionDAO {
 			// return validation error
 		} else {
 			logger.info("NO validation error- toDate is greater");
-			// do not do anything. allow for next step
+			
 		}
 		return null;
 
@@ -143,7 +142,7 @@ public class TransactionDAOImpl implements TransactionDAO {
 	      DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
 	      DateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd");  
 
-	       String todate= "2017-05-02";
+	       String todate= "2017-06-10";
 	      // Date fromDate = outputFormat.parse(duration);      
 	       //Date toDate = outputFormat.parse(todate);
 
@@ -182,42 +181,60 @@ public class TransactionDAOImpl implements TransactionDAO {
            	int selectedMonth = ArrayUtils.indexOf(MONTHS_IN_YEAR, duration) + 1;           	//(index of array + 1, for Jan =1, Feb = 2, ...., Dec = 12)
            	int lastDayOfMonth = 0; //Based on year (leap or regular year) and month, set the last day of the month and use it against paidOn
            	
+         // **Leap year check - if leap year - input will be reporttype, year, month
+           	boolean isLeapYear = ((year % 4 == 0) && (year % 100 != 0) || (year % 400 == 0));
+         // **if leap year true - checking months for deciding start date & end date
+         // **Since exiting array is available not creating new array. 
+           		
+           		if(StringUtils.equalsIgnoreCase("JAN", duration)) {
+           			fromDate = year + "-01-01";
+               		toDate = year + "-01-31";
+           		}else if(StringUtils.equalsIgnoreCase("FEB", duration) && isLeapYear) {
+          			fromDate = year + "-02-01";
+               		toDate = year + "-02-29";
+           		}else if(StringUtils.equalsIgnoreCase("FEB", duration) && !isLeapYear) {        			
+           			fromDate = year + "-02-01";
+               		toDate = year + "-02-28";         			
+           		}else if(StringUtils.equalsIgnoreCase("MAR", duration)) {          			
+           			fromDate = year + "-03-01";
+               		toDate = year + "-03-31";           			
+           		}else if(StringUtils.equalsIgnoreCase("APR", duration)) {         			
+           			fromDate = year + "-04-01";
+               		toDate = year + "-04-30";         			
+           		}else if(StringUtils.equalsIgnoreCase("MAY", duration)) {           			
+           			fromDate = year + "-05-01";
+               		toDate = year + "-05-31";           			
+           		}else if(StringUtils.equalsIgnoreCase("JUN", duration)) {           			
+           			fromDate = year + "-06-01";
+               		toDate = year + "-06-30";          			
+           		}else if(StringUtils.equalsIgnoreCase("JUL", duration)) {          			
+           			fromDate = year + "-07-01";
+               		toDate = year + "-07-31";         			
+           		}else if(StringUtils.equalsIgnoreCase("AUG", duration)) {           			
+           			fromDate = year + "-08-01";
+               		toDate = year + "-08-31";          			
+           		}else if(StringUtils.equalsIgnoreCase("SEP", duration)) {          			
+           			fromDate = year + "-09-01";
+               		toDate = year + "-09-30";          			
+           		}else if(StringUtils.equalsIgnoreCase("OCT", duration)) {          			
+           			fromDate = year + "-10-01";
+               		toDate = year + "-10-31";          			
+           		}else if(StringUtils.equalsIgnoreCase("NOV", duration)) {          			
+           			fromDate = year + "-11-01";
+               		toDate = year + "-11-30";          			
+           		}else if(StringUtils.equalsIgnoreCase("DEC", duration)) {        			
+           			fromDate = year + "-12-01";
+               		toDate = year + "-12-31";        			
+           		}
            	fromDate = year + "-01-01";
            	toDate = year + "-" + StringUtils.leftPad(String.valueOf(selectedMonth), 2, "0") + "-" + StringUtils.leftPad(String.valueOf(lastDayOfMonth), 2, "0");
            	
-           }
-           
+           }          
            if(StringUtils.isNotBlank(fromDate) && StringUtils.isNotBlank(toDate)) {
            	query.addCriteria(Criteria.where("paidOn").gte(fromDate).lte(toDate));
            	transactionList=template.find(query, Transaction.class);
            }
-           return transactionList;
-	} 
-	   
-	   	@Override
-	public List<Transaction> getTransactionReportYearly(String year) {
-		LocalDate startDate = new LocalDate(Integer.parseInt(year), 01, 01);
-		LocalDate endDate = new LocalDate(Integer.parseInt(year), 12, 31);
-		Query query = new Query(Criteria.where("paidOn").gte(startDate.toDate()).lte(endDate.toDate()));
-		List<Transaction> transactionList = template.find(query, Transaction.class);
-
 		return transactionList;
-	}
-
-		@Override
-		public List<Transaction> getTransactionReport(String reportType, String year, String duration) {
-
-			List<Transaction> transactionList = null;
-			DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
-			DateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd");
-			String todate = "2017-05-02";
-			Query query = new Query();
-			Criteria c = Criteria.where("paidOn").lte("2017-12-07");
-			query.addCriteria(c);
-			transactionList = template.find(query, Transaction.class);
-
-			return null;
-		}
-
+	   	}
 }
 		   

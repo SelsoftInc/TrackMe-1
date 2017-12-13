@@ -104,5 +104,4 @@ public class LeaseDAOImpl implements LeaseDAO {
 
 		return returnDate;
 	}
-
 }

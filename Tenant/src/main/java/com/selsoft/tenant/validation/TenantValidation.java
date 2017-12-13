@@ -6,6 +6,7 @@ public class TenantValidation {
 
 	private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
 			+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+	
 
 	// First Name and Last Name Validation
 	public ValidError nameValidation(String firstName, String lastName) {

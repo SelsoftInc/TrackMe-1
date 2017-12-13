@@ -66,5 +66,4 @@ public class TenantController {
 	public List<Tenant> getNewTenants() {
 		return tenantService.getAllTenants("NEW");
 	}
-
 }

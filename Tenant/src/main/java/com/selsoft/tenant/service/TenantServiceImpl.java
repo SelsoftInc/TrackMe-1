@@ -109,7 +109,6 @@ public class TenantServiceImpl implements TenantService {
 	}
 
 	public Errors validateTenant(Tenant tenat) {
-
 		String firstName = tenat.getTenantFirstName();
 		String lastName = tenat.getTenantLastName();
 		String email = tenat.getTenantEmailId();

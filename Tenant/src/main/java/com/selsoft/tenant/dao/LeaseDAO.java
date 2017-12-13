@@ -14,5 +14,4 @@ public interface LeaseDAO {
 	void saveRentalDetail(RentalDetail rentalDetail, int propertyId);
 	List<RentalDetail> getAllRentalDetails(Integer propertyId);
 	RentalDetail getRentalDetail(Integer propertyId, Date inputDate);
-
 }

@@ -18,7 +18,6 @@ public class Tenant {
 		this.tenantStatus = TENANT_STATUS.NEW.toString();
 
 	}
-
 	public String getTenantId() {
 		return tenantId;
 	}

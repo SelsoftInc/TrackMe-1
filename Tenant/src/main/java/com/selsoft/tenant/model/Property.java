@@ -151,6 +151,7 @@ public class Property {
 		builder.append(propertyStatus);
 		builder.append("]");
 		return builder.toString();
+		
 	}
 
 	

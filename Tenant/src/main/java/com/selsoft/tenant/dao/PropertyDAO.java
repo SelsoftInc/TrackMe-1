@@ -15,7 +15,6 @@ public interface PropertyDAO {
 		public List<Property> getAllProperties(String status);
 		public void updateProperty(RentalDetail rentalDetail, int propertyId);
 		List<Property> findAll();
-
 	}
 
 

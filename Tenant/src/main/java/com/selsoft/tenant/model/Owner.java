@@ -14,8 +14,7 @@ public class Owner {
 	private String ownerStatus;
 	private String emailId;
 	private String ownerPhoneNumber;
- 
-	public Owner() {
+ 	public Owner() {
 		this.ownerStatus = OwnerStatus.NEW.toString();
 	}
 

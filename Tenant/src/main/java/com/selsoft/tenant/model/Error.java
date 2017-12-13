@@ -11,8 +11,7 @@ public class Error {
 		this.errorType = errorType;
 		this.error = error;
 	}
-	
-	public Error(TenantException e) {
+		public Error(TenantException e) {
 		this.errorType = e.getErrorType();
 		this.error = e.getError();
 	}
