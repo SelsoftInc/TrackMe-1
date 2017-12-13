@@ -67,4 +67,5 @@ public class TenantDAOImpl implements TenantDAO {
 		return tenantList;
 	}
 
+	
 }

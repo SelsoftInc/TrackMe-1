@@ -86,6 +86,4 @@ public class Tenant {
 		return builder.toString();
 	}
 
-	
-
 }

@@ -8,7 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Owner {
 	
 	@Id
-	private int ownerId;
+	private String ownerId;
 	private String ownerFirstName;
 	private String ownerLastName;
 	private String ownerStatus;
@@ -19,11 +19,11 @@ public class Owner {
 		this.ownerStatus = OwnerStatus.NEW.toString();
 	}
 
-	public int getOwnerId() {
+	public String getOwnerId() {
 		return ownerId;
 	}
 
-	public void setOwnerId(int ownerId) {
+	public void setOwnerId(String ownerId) {
 		this.ownerId = ownerId;
 	}
 

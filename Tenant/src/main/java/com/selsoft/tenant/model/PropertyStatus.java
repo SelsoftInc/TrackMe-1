@@ -19,10 +19,4 @@ public enum PropertyStatus {
 		 return value; 
 		 }
 	
-	
-
-
-
-
-
 }

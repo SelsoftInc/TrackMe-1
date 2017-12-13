@@ -90,7 +90,6 @@ public class LeaseDAOImpl implements LeaseDAO {
 		List<RentalDetail> rentalDetailList = template.find(query, RentalDetail.class);
 		logger.info("RECENT RENTAL DETAIL: " + rentalDetailList.get(0));
 
-		
 		return rentalDetailList.get(0);
 	}
 

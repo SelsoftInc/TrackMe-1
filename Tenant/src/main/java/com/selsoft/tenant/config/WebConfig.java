@@ -9,7 +9,6 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
  * @author Sudhansu Sekhar
  *
  */
-
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = "com.selsoft.trackme")

@@ -27,8 +27,7 @@ public class TenantController {
 	private TenantService tenantService;
 
 	/*
-	 * //-------------------Add new
-	 * tenants--------------------------------------------------------
+	 * //-------------------Add new tenants--------------------------------------------------------
 	 */
 
 	//@RequestMapping(value = "/addNewTenant", method = RequestMethod.PUT)
@@ -51,8 +50,7 @@ public class TenantController {
 	}
 
 	/*
-	 * //-------------------Retrieve All
-	 * tenants--------------------------------------------------------
+	 * //-------------------Retrieve All tenants--------------------------------------------------------
 	 */
 
 	@RequestMapping(value = "/getAllTenants", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -61,8 +59,7 @@ public class TenantController {
 	}
 
 	/*
-	 * //-------------------Retrieve New
-	 * tenants--------------------------------------------------------
+	 * //-------------------Retrieve New tenants--------------------------------------------------------
 	 */
 
 	@RequestMapping(value = "/getNewTenants", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)

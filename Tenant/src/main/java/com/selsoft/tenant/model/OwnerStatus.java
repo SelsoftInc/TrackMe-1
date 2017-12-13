@@ -10,7 +10,6 @@ public enum OwnerStatus {
 	 public String getValue() {
 		 return value; 
 		 }
-
 }
 
 

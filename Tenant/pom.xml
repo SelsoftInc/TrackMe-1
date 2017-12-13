@@ -74,7 +74,6 @@
 			<version>1.10.6.RELEASE</version>
 		</dependency>
 
-
 		<!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-eureka-server -->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>

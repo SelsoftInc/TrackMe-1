@@ -35,5 +35,4 @@ public class ValidError {
 		builder.append("]");
 		return builder.toString();
 	}
-
 }

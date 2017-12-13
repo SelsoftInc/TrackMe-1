@@ -50,4 +50,5 @@ public class ErrorConstants implements Serializable {
 	public static final String SUCCESSLOGOUT108 = "successlogout108";
 	public static final String SUCCESSLOGOUT108_MESSAGE = "User Logged Out Successfully.";
 
+	
 }
