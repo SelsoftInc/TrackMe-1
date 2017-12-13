@@ -18,5 +18,4 @@ public enum PropertyStatus {
 	 public String getValue() {
 		 return value; 
 		 }
-	
-}
+	}

@@ -8,5 +8,4 @@ public interface TenantDAO {
 	public void saveNewTenant(Tenant tenant);
 	List<Tenant> findAll();
 	List<Tenant> fetchTenants(String status);
-
 }

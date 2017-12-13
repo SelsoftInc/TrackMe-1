@@ -70,5 +70,4 @@ public class RentalDetail {
 		return builder.toString();
 	}
 	
-	
 }

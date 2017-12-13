@@ -20,6 +20,7 @@ import com.selsoft.tenant.constants.TenantConstants;
 		public void setErrorType(String errorType) {
 			this.errorType = errorType;
 		}
+		
 
 		public String getError() {
 			return error;

@@ -87,5 +87,4 @@ public class PropertyDAOImpl implements PropertyDAO{
 		template.updateFirst(query, update, Property.class);
 	}
 	
-
 }
