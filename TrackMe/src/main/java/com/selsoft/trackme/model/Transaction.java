@@ -13,10 +13,10 @@ public class Transaction {
 
 	@Id
 	private String transactionId;
-	private int propertyId;
-	private long ownerId;
-	private long managerId;
-	private double amount;
+	private String propertyId;
+	private String ownerId;
+	private String managerId;
+	private String amount;
 	private String transactionType;
 	private String transactionCode;
 	private int paidById;
@@ -31,28 +31,28 @@ public class Transaction {
 	public void setTransactionId(String transactionId) {
 		this.transactionId = transactionId;
 	}
-	public int getPropertyId() {
+	public String getPropertyId() {
 		return propertyId;
 	}
-	public void setPropertyId(int propertyId) {
+	public void setPropertyId(String propertyId) {
 		this.propertyId = propertyId;
 	}
-	public long getOwnerId() {
+	public String getOwnerId() {
 		return ownerId;
 	}
-	public void setOwnerId(long ownerId) {
+	public void setOwnerId(String ownerId) {
 		this.ownerId = ownerId;
 	}
-	public long getManagerId() {
+	public String getManagerId() {
 		return managerId;
 	}
-	public void setManagerId(long managerId) {
+	public void setManagerId(String managerId) {
 		this.managerId = managerId;
 	}
-	public double getAmount() {
+	public String getAmount() {
 		return amount;
 	}
-	public void setAmount(double amount) {
+	public void setAmount(String amount) {
 		this.amount = amount;
 	}
 	public String getTransactionType() {
@@ -111,5 +111,4 @@ public class Transaction {
 				+ ", paidOn=" + paidOn + ", category=" + category + ", enteredOn=" + enteredOn + ", file="
 				+ Arrays.toString(file) + "]";
 	}
-
-}
+	}
