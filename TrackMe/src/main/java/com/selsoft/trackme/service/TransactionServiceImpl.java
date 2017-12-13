@@ -52,13 +52,13 @@ public class TransactionServiceImpl implements TransactionService {
 	}
 
 	@Override
-	public List<Transaction> getTransaction(int transactionId) {
+	public List<Transaction> getTransaction(String transactionId) {
 
 		return transactionDAO.getTransaction(transactionId);
 	}
 
 	@Override
-	public List<Transaction> getTransactionsForProperty(int propertyId, Date fromDate, Date toDate) {
+	public List<Transaction> getTransactionsForProperty(String propertyId, Date fromDate, Date toDate) {
 		return transactionDAO.getTransactionsForProperty(propertyId, fromDate, toDate);
 	}
 	
@@ -66,17 +66,5 @@ public class TransactionServiceImpl implements TransactionService {
 	public List<Transaction> getTransactionReport(String reportType, int year, String duration) throws Throwable {
 		return transactionDAO.getTransactionReport(reportType, year, duration);
 	}
-
-
-	@Override
-	public List<Transaction> getTransactionReport(String reportType, String year, String duration) {
-		return transactionDAO.getTransactionReport(reportType, year, duration);
-	}
-
-	@Override
-	public List<Transaction> getTransactionReportYearly(String year) {
-		return transactionDAO.getTransactionReportYearly(year);
-	}
-	
 
 }
