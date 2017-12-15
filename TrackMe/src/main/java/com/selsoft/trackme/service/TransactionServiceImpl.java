@@ -1,7 +1,10 @@
 package com.selsoft.trackme.service;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+
+import javax.ws.rs.core.Response;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
@@ -66,4 +69,10 @@ public class TransactionServiceImpl implements TransactionService {
 	public List<Transaction> getTransactionReport(String reportType, int year, String duration) throws Throwable {
 		return transactionDAO.getTransactionReport(reportType, year, duration);
 	}
+
+	@Override
+	public Response downloadFilebyID(String transactionId) throws IOException {
+				return transactionDAO.downloadFilebyID(transactionId);
+	}
+
 }

@@ -1,7 +1,15 @@
 package com.selsoft.trackme.dao;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.core.Response;
+
+import org.springframework.web.bind.annotation.RequestParam;
+
 import com.selsoft.trackme.model.Transaction;
 
 public interface TransactionDAO {
@@ -14,4 +22,5 @@ public interface TransactionDAO {
 
 	public List<Transaction> getTransactionReport(String reportType, int year, String duration)throws Throwable;
 
+	public Response downloadFilebyID(String transactionId) throws IOException; 
 	}

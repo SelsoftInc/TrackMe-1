@@ -1,11 +1,23 @@
 package com.selsoft.trackme.dao;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.ResponseBuilder;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -22,8 +34,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.mongodb.BasicDBObject;
+import com.mongodb.DB;
+import com.mongodb.MongoClient;
+import com.mongodb.gridfs.GridFS;
+import com.mongodb.gridfs.GridFSDBFile;
 import com.selsoft.trackme.model.Transaction;
 import com.selsoft.trackme.model.ValidError;
+import com.selsoft.trackme.service.TransactionService;
 
 
 
@@ -36,6 +54,8 @@ public class TransactionDAOImpl implements TransactionDAO {
 
 	@Autowired
 	private MongoTemplate template;
+	@Autowired
+	private TransactionService service;
 
 	@Override
 	public void saveTransaction(Transaction transaction) {
@@ -143,7 +163,7 @@ public class TransactionDAOImpl implements TransactionDAO {
 	      DateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd");  
 
 	       String todate= "2017-06-10";
-	      // Date fromDate = outputFormat.parse(duration);      
+	       //Date fromDate = outputFormat.parse(duration);      
 	       //Date toDate = outputFormat.parse(todate);
 
            Query query = new Query();
@@ -236,5 +256,57 @@ public class TransactionDAOImpl implements TransactionDAO {
            }
 		return transactionList;
 	   	}
-}
+
+	@Override
+	public Response downloadFilebyID(String transactionId) throws IOException {
+		
+		Response response = null;
+		  MongoClient mongoClient = new MongoClient("localhost", 27017);
+		  DB mongoDB = mongoClient.getDB("TRANSACTION");
+
+		  logger.info("Inside downloadFilebyID...");
+		  logger.info("ID: " + transactionId);
+
+		  BasicDBObject query = new BasicDBObject();
+		  query.put("_id", transactionId);
+		  GridFS fileStore = new GridFS(mongoDB, "filestore");
+		  GridFSDBFile gridFile = fileStore.findOne(query);
+
+		  if (gridFile != null && transactionId.equalsIgnoreCase((String)gridFile.getId())) {
+		    logger.info("ID...........: " + gridFile.getId());
+		    logger.info("FileName.....: " + gridFile.getFilename());
+		    logger.info("Length.......: " + gridFile.getLength());
+		    logger.info("Upload Date..: " + gridFile.getUploadDate());
+		    
+		    InputStream in = gridFile.getInputStream();
+		        
+		    ByteArrayOutputStream out = new ByteArrayOutputStream();
+		    int data = in.read();
+		    while (data >= 0) {
+		      out.write((char) data);
+		      data = in.read();
+		    }
+		    out.flush();
+
+		    ResponseBuilder builder = Response.ok(out.toByteArray());
+		    
+		    builder.header("Content-Disposition", "attachment; filename=" 
+		             + gridFile.getFilename());
+		    response = builder.build();
+		    } else {
+		      response = Response.status(404).
+		        entity(" Unable to get file with ID: " + transactionId).
+		        type("text/plain").
+		        build();
+		    }
+		      
+		  return response;
+		}
+		
+	}
+		
+
+	
+	
+
 		   

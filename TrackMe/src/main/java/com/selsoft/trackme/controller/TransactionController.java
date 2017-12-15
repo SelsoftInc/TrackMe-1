@@ -4,6 +4,11 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.core.Response;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -91,5 +96,12 @@ public class TransactionController {
 		return transactionService.getTransactionReport(reportType, year, duration);
 	}
 	
+	@RequestMapping(value = "//download/file/{id}", method = RequestMethod.GET,produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+	public Response downloadFilebyID(@PathParam("id")  String transactionId)
+			throws IOException {
 	
+		return transactionService.downloadFilebyID(transactionId);
 	}
+	
+	
+}
