@@ -1,61 +1,44 @@
 package com.selsoft.trackme.dao;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.nio.file.Files;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
-import javax.servlet.ServletContext;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.ResponseBuilder;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
-import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-
-import com.mongodb.BasicDBObject;
-import com.mongodb.DB;
-import com.mongodb.MongoClient;
-import com.mongodb.gridfs.GridFS;
-import com.mongodb.gridfs.GridFSDBFile;
+import com.itextpdf.text.pdf.parser.Path;
+import com.itextpdf.text.pdf.parser.clipper.Paths;
 import com.selsoft.trackme.model.Transaction;
 import com.selsoft.trackme.model.ValidError;
-import com.selsoft.trackme.service.TransactionService;
-
-
 
 @Repository
 public class TransactionDAOImpl implements TransactionDAO {
 
 	private static final Logger logger = Logger.getLogger(TransactionDAOImpl.class);
-	private static final String[] QUARTERS_IN_YEAR = {"Q1", "Q2", "Q3", "Q4"};
-	private static final String[] MONTHS_IN_YEAR = {"JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"};
+	private static final String[] QUARTERS_IN_YEAR = { "Q1", "Q2", "Q3", "Q4" };
+	private static final String[] MONTHS_IN_YEAR = { "JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP",
+			"OCT", "NOV", "DEC" };
 
 	@Autowired
 	private MongoTemplate template;
-	@Autowired
-	private TransactionService service;
 
 	@Override
 	public void saveTransaction(Transaction transaction) {
@@ -70,7 +53,7 @@ public class TransactionDAOImpl implements TransactionDAO {
 	@Override
 	public List<Transaction> getTransaction(String transactionId) {
 		List<Transaction> transactionList = null;
-		if (transactionId !=null) {
+		if (transactionId != null) {
 
 			Query query = new Query(Criteria.where("transactionId").is(transactionId));
 			transactionList = template.find(query, Transaction.class);
@@ -94,7 +77,7 @@ public class TransactionDAOImpl implements TransactionDAO {
 			// return validation error
 		} else {
 			logger.info("NO validation error- toDate is greater");
-			
+
 		}
 		return null;
 
@@ -152,161 +135,175 @@ public class TransactionDAOImpl implements TransactionDAO {
 
 	@Override
 	public List<Transaction> getTransactionReport(String reportType, int year, String duration) throws Throwable {
-
 		List<Transaction> transactionList = null;
-		
+		reportType = StringUtils.upperCase(StringUtils.trimToEmpty(reportType));
+		duration = StringUtils.upperCase(StringUtils.trimToEmpty(duration));
+		String fromDate = null, toDate = null;
 
-		 reportType = StringUtils.upperCase(StringUtils.trimToEmpty(reportType));
-		 duration = StringUtils.upperCase(StringUtils.trimToEmpty(duration));
-			
-	      DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
-	      DateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd");  
+		if (StringUtils.equals("Y", reportType)) { // Yearly report
 
-	       String todate= "2017-06-10";
-	       //Date fromDate = outputFormat.parse(duration);      
-	       //Date toDate = outputFormat.parse(todate);
+			if (year <= 0)
+				throw new ValidError("Error", " Year can not be less than Zero");
+			fromDate = year + "-01-01";
+			toDate = year + "-12-31";
 
-           Query query = new Query();
-           
-           String fromDate = null, toDate = null;
-           
-           if(StringUtils.equals("Y", reportType)) { //Yearly report
-           	
-           	if(year <= 0) 
-           	throw new ValidError("Error", " Year can not be less than Zero");
-           	fromDate = year + "-01-01";
-           	toDate = year + "-12-31";
-           	
-           } else if(StringUtils.equals("Q", reportType)) { //Quarterly report
-           	if(year == 0 || StringUtils.isBlank(duration) || !ArrayUtils.contains(QUARTERS_IN_YEAR, duration)) 
-           		throw new ValidError("Error", " Year and  Quarterly can not be  Zero");
-           		          	
-           	if(StringUtils.equals("Q1", duration)) {
-           		fromDate = year + "-01-01";
-           		toDate = year + "-03-31";
-           	} else if(StringUtils.equals("Q2", duration)) {
-           		fromDate = year + "-04-01";
-           		toDate = year + "-06-30";
-           	} else if(StringUtils.equals("Q3", duration)) {
-           		fromDate = year + "-07-01";
-           		toDate = year + "-09-30";
-           	} else if(StringUtils.equals("Q4", duration)) {
-           		fromDate = year + "-10-01";
-           		toDate = year + "-12-31";
-           	}
-           	
-           } else if(StringUtils.equals("M", reportType)) { //Monthly report
-           	if(year == 0 || StringUtils.isBlank(duration) || !ArrayUtils.contains(MONTHS_IN_YEAR, duration)) 
-           		throw new ValidError("Error", " Year and Month can not be null");
-           	int selectedMonth = ArrayUtils.indexOf(MONTHS_IN_YEAR, duration) + 1;           	//(index of array + 1, for Jan =1, Feb = 2, ...., Dec = 12)
-           	int lastDayOfMonth = 0; //Based on year (leap or regular year) and month, set the last day of the month and use it against paidOn
-           	
-         // **Leap year check - if leap year - input will be reporttype, year, month
-           	boolean isLeapYear = ((year % 4 == 0) && (year % 100 != 0) || (year % 400 == 0));
-         // **if leap year true - checking months for deciding start date & end date
-         // **Since exiting array is available not creating new array. 
-           		
-           		if(StringUtils.equalsIgnoreCase("JAN", duration)) {
-           			fromDate = year + "-01-01";
-               		toDate = year + "-01-31";
-           		}else if(StringUtils.equalsIgnoreCase("FEB", duration) && isLeapYear) {
-          			fromDate = year + "-02-01";
-               		toDate = year + "-02-29";
-           		}else if(StringUtils.equalsIgnoreCase("FEB", duration) && !isLeapYear) {        			
-           			fromDate = year + "-02-01";
-               		toDate = year + "-02-28";         			
-           		}else if(StringUtils.equalsIgnoreCase("MAR", duration)) {          			
-           			fromDate = year + "-03-01";
-               		toDate = year + "-03-31";           			
-           		}else if(StringUtils.equalsIgnoreCase("APR", duration)) {         			
-           			fromDate = year + "-04-01";
-               		toDate = year + "-04-30";         			
-           		}else if(StringUtils.equalsIgnoreCase("MAY", duration)) {           			
-           			fromDate = year + "-05-01";
-               		toDate = year + "-05-31";           			
-           		}else if(StringUtils.equalsIgnoreCase("JUN", duration)) {           			
-           			fromDate = year + "-06-01";
-               		toDate = year + "-06-30";          			
-           		}else if(StringUtils.equalsIgnoreCase("JUL", duration)) {          			
-           			fromDate = year + "-07-01";
-               		toDate = year + "-07-31";         			
-           		}else if(StringUtils.equalsIgnoreCase("AUG", duration)) {           			
-           			fromDate = year + "-08-01";
-               		toDate = year + "-08-31";          			
-           		}else if(StringUtils.equalsIgnoreCase("SEP", duration)) {          			
-           			fromDate = year + "-09-01";
-               		toDate = year + "-09-30";          			
-           		}else if(StringUtils.equalsIgnoreCase("OCT", duration)) {          			
-           			fromDate = year + "-10-01";
-               		toDate = year + "-10-31";          			
-           		}else if(StringUtils.equalsIgnoreCase("NOV", duration)) {          			
-           			fromDate = year + "-11-01";
-               		toDate = year + "-11-30";          			
-           		}else if(StringUtils.equalsIgnoreCase("DEC", duration)) {        			
-           			fromDate = year + "-12-01";
-               		toDate = year + "-12-31";        			
-           		}
-           	fromDate = year + "-01-01";
-           	toDate = year + "-" + StringUtils.leftPad(String.valueOf(selectedMonth), 2, "0") + "-" + StringUtils.leftPad(String.valueOf(lastDayOfMonth), 2, "0");
-           	
-           }          
-           if(StringUtils.isNotBlank(fromDate) && StringUtils.isNotBlank(toDate)) {
-           	query.addCriteria(Criteria.where("paidOn").gte(fromDate).lte(toDate));
-           	transactionList=template.find(query, Transaction.class);
-           }
+		} else if (StringUtils.equals("Q", reportType)) { // Quarterly report
+			if (year == 0 || StringUtils.isBlank(duration) || !ArrayUtils.contains(QUARTERS_IN_YEAR, duration))
+				throw new ValidError("Error", " Year and  Quarterly can not be  Zero");
+
+			if (StringUtils.equals("Q1", duration)) {
+				fromDate = year + "-01-01";
+				toDate = year + "-03-31";
+			} else if (StringUtils.equals("Q2", duration)) {
+				fromDate = year + "-04-01";
+				toDate = year + "-06-30";
+			} else if (StringUtils.equals("Q3", duration)) {
+				fromDate = year + "-07-01";
+				toDate = year + "-09-30";
+			} else if (StringUtils.equals("Q4", duration)) {
+				fromDate = year + "-10-01";
+				toDate = year + "-12-31";
+			}
+
+		} else if (StringUtils.equals("M", reportType)) { // Monthly report
+			if (year == 0 || StringUtils.isBlank(duration) || !ArrayUtils.contains(MONTHS_IN_YEAR, duration))
+				throw new ValidError("Error", " Year and Month can not be null");
+
+			int selectedMonth = ArrayUtils.indexOf(MONTHS_IN_YEAR, duration) + 1; // (index of array + 1, for Jan =1,
+																					// Feb = 2, ...., Dec = 12)
+			int lastDayOfMonth = 0; // Based on year (leap or regular year) and month, set the last day of the month
+									// and use it against paidOn
+
+			// **Leap year check - if leap year - input will be reporttype, year, month
+			boolean isLeapYear = ((year % 4 == 0) && (year % 100 != 0) || (year % 400 == 0));
+			// **if leap year true - checking months for deciding start date & end date
+			// **Since exiting array is available not creating new array.
+
+			if (StringUtils.equalsIgnoreCase("JAN", duration)) {
+				fromDate = year + "-01-01";
+				toDate = year + "-01-31";
+			} else if (StringUtils.equalsIgnoreCase("FEB", duration) && isLeapYear) {
+				fromDate = year + "-02-01";
+				toDate = year + "-02-29";
+			} else if (StringUtils.equalsIgnoreCase("FEB", duration) && !isLeapYear) {
+				fromDate = year + "-02-01";
+				toDate = year + "-02-28";
+			} else if (StringUtils.equalsIgnoreCase("MAR", duration)) {
+				fromDate = year + "-03-01";
+				toDate = year + "-03-31";
+			} else if (StringUtils.equalsIgnoreCase("APR", duration)) {
+				fromDate = year + "-04-01";
+				toDate = year + "-04-30";
+			} else if (StringUtils.equalsIgnoreCase("MAY", duration)) {
+				fromDate = year + "-05-01";
+				toDate = year + "-05-31";
+			} else if (StringUtils.equalsIgnoreCase("JUN", duration)) {
+				fromDate = year + "-06-01";
+				toDate = year + "-06-30";
+			} else if (StringUtils.equalsIgnoreCase("JUL", duration)) {
+				fromDate = year + "-07-01";
+				toDate = year + "-07-31";
+			} else if (StringUtils.equalsIgnoreCase("AUG", duration)) {
+				fromDate = year + "-08-01";
+				toDate = year + "-08-31";
+			} else if (StringUtils.equalsIgnoreCase("SEP", duration)) {
+				fromDate = year + "-09-01";
+				toDate = year + "-09-30";
+			} else if (StringUtils.equalsIgnoreCase("OCT", duration)) {
+				fromDate = year + "-10-01";
+				toDate = year + "-10-31";
+			} else if (StringUtils.equalsIgnoreCase("NOV", duration)) {
+				fromDate = year + "-11-01";
+				toDate = year + "-11-30";
+			} else if (StringUtils.equalsIgnoreCase("DEC", duration)) {
+				fromDate = year + "-12-01";
+				toDate = year + "-12-31";
+			}
+
+			Calendar calendar = Calendar.getInstance();
+			int yearpart = year;
+			int monthPart = getExactMonth(duration);
+			int dateDay = 1;
+			DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+			calendar.set(yearpart, monthPart, dateDay);
+			int numOfDaysInMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+			System.out.println("Number of Days: " + numOfDaysInMonth);
+			fromDate = df.format(calendar.getTime());
+			calendar.add(Calendar.DAY_OF_MONTH, numOfDaysInMonth - 1);
+			toDate = df.format(calendar.getTime());
+			// fromDate = year + "-01-01";
+			// toDate = year + "-" + StringUtils.leftPad(String.valueOf(selectedMonth), 2,
+			// "0") + "-" + StringUtils.leftPad(String.valueOf(lastDayOfMonth), 2, "0");
+
+		}
+
+		if (StringUtils.isNotBlank(fromDate) && StringUtils.isNotBlank(toDate)) {
+
+			Query query = new Query().addCriteria(Criteria.where("paidOn").gte(fromDate).lte(toDate));
+			transactionList = template.find(query, Transaction.class);
+		}
 		return transactionList;
-	   	}
+	}
+
+	private static int getExactMonth(String month) {
+		Map<String, Integer> calenderMap = new ConcurrentHashMap<>();
+		calenderMap.put("JAN", 0);
+		calenderMap.put("FEB", 1);
+		calenderMap.put("MAR", 2);
+		calenderMap.put("APR", 3);
+		calenderMap.put("MAY", 4);
+		calenderMap.put("JUN", 5);
+		calenderMap.put("JUL", 6);
+		calenderMap.put("AUG", 7);
+		calenderMap.put("SEP", 8);
+		calenderMap.put("OCT", 9);
+		calenderMap.put("NOV", 10);
+		calenderMap.put("DEC", 11);
+		return calenderMap.get(month);
+	}
 
 	@Override
-	public Response downloadFilebyID(String transactionId) throws IOException {
+	public ResponseEntity downloadFilebyID( HttpServletRequest request,
+            HttpServletResponse response,String transactionId) throws IOException {
 		
-		Response response = null;
-		  MongoClient mongoClient = new MongoClient("localhost", 27017);
-		  DB mongoDB = mongoClient.getDB("TRANSACTION");
-
-		  logger.info("Inside downloadFilebyID...");
-		  logger.info("ID: " + transactionId);
-
-		  BasicDBObject query = new BasicDBObject();
-		  query.put("_id", transactionId);
-		  GridFS fileStore = new GridFS(mongoDB, "filestore");
-		  GridFSDBFile gridFile = fileStore.findOne(query);
-
-		  if (gridFile != null && transactionId.equalsIgnoreCase((String)gridFile.getId())) {
-		    logger.info("ID...........: " + gridFile.getId());
-		    logger.info("FileName.....: " + gridFile.getFilename());
-		    logger.info("Length.......: " + gridFile.getLength());
-		    logger.info("Upload Date..: " + gridFile.getUploadDate());
-		    
-		    InputStream in = gridFile.getInputStream();
-		        
-		    ByteArrayOutputStream out = new ByteArrayOutputStream();
-		    int data = in.read();
-		    while (data >= 0) {
-		      out.write((char) data);
-		      data = in.read();
-		    }
-		    out.flush();
-
-		    ResponseBuilder builder = Response.ok(out.toByteArray());
-		    
-		    builder.header("Content-Disposition", "attachment; filename=" 
-		             + gridFile.getFilename());
-		    response = builder.build();
-		    } else {
-		      response = Response.status(404).
-		        entity(" Unable to get file with ID: " + transactionId).
-		        type("text/plain").
-		        build();
-		    }
-		      
-		  return response;
-		}
+		/*String filePath = "C:\\output1";
+		String fileName="Selsoft-Raqmiyat.pdf";
+		//String fileName = file.getOriginalFilename();
+		String absolutePath=filePath+"\\"+fileName;
 		
-	}
-		
+		String dataDirectory = request.getServletContext().getRealPath(filePath);
+        //Path file = Paths.get(dataDirectory, fileName);
+        //if (Files.exists(file))
+        {
+            response.setContentType("application/pdf");
+            response.addHeader("Content-Disposition", "attachment; filename="+fileName);
+            try
+            {
+               // Files.copy(file, response.getOutputStream());
+                response.getOutputStream().flush();
+            }
+            catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }*/
+		return null;
+    }
+}
 
-	
-	
-
-		   
+	/*public String identifyFileTypeUsingFilesProbeContentType(final String fileName)
+    {
+       String fileType = "Undetermined";
+       final File file = new File(fileName);
+       try
+       {
+          fileType = Files.probeContentType(file.toPath());
+       }
+       catch (IOException ioException)
+       {
+          logger.info(
+               "ERROR: Unable to determine file type for " + fileName
+                  + " due to exception " + ioException);
+       }
+       return fileType;
+    }
+}*/

@@ -1,15 +1,10 @@
-package com.selsoft.trackme.model;
+package com.selsoft.trackme.dto;
 
 import java.util.Arrays;
 import java.util.Date;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-
-@Document(collection = "TRANSACTION")
-public class Transaction {
-
-	@Id
+public class TransactionDto {
+	
 	private String transactionId;
 	private String propertyId;
 	private String ownerId;
@@ -18,10 +13,11 @@ public class Transaction {
 	private String transactionType;
 	private String transactionCode;
 	private int paidById;
+	private String paymentMode;
 	private String paidOn;
 	private String category;
 	private String enteredOn;
-	private String filePath;
+	private byte[] file;
 	public String getTransactionId() {
 		return transactionId;
 	}
@@ -70,6 +66,12 @@ public class Transaction {
 	public void setPaidById(int paidById) {
 		this.paidById = paidById;
 	}
+	public String getPaymentMode() {
+		return paymentMode;
+	}
+	public void setPaymentMode(String paymentMode) {
+		this.paymentMode = paymentMode;
+	}
 	public String getPaidOn() {
 		return paidOn;
 	}
@@ -88,41 +90,20 @@ public class Transaction {
 	public void setEnteredOn(String enteredOn) {
 		this.enteredOn = enteredOn;
 	}
-	public String getFilePath() {
-		return filePath;
+	public byte[] getFile() {
+		return file;
 	}
-	public void setFilePath(String filePath) {
-		this.filePath = filePath;
+	public void setFile(byte[] file) {
+		this.file = file;
 	}
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("Transaction [transactionId=");
-		builder.append(transactionId);
-		builder.append(", propertyId=");
-		builder.append(propertyId);
-		builder.append(", ownerId=");
-		builder.append(ownerId);
-		builder.append(", managerId=");
-		builder.append(managerId);
-		builder.append(", amount=");
-		builder.append(amount);
-		builder.append(", transactionType=");
-		builder.append(transactionType);
-		builder.append(", transactionCode=");
-		builder.append(transactionCode);
-		builder.append(", paidById=");
-		builder.append(paidById);
-		builder.append(", paidOn=");
-		builder.append(paidOn);
-		builder.append(", category=");
-		builder.append(category);
-		builder.append(", enteredOn=");
-		builder.append(enteredOn);
-		builder.append(", filePath=");
-		builder.append(filePath);
-		builder.append("]");
-		return builder.toString();
+		return "TransactionDto [transactionId=" + transactionId + ", propertyId=" + propertyId + ", ownerId=" + ownerId
+				+ ", managerId=" + managerId + ", amount=" + amount + ", transactionType=" + transactionType
+				+ ", transactionCode=" + transactionCode + ", paidById=" + paidById + ", paymentMode=" + paymentMode
+				+ ", paidOn=" + paidOn + ", category=" + category + ", enteredOn=" + enteredOn + ", file="
+				+ Arrays.toString(file) + "]";
 	}
 	
-		}
+
+}

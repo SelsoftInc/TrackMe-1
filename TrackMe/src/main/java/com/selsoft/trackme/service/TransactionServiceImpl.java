@@ -4,11 +4,14 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.core.Response;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.selsoft.trackme.constants.ErrorConstants;
@@ -69,10 +72,11 @@ public class TransactionServiceImpl implements TransactionService {
 	public List<Transaction> getTransactionReport(String reportType, int year, String duration) throws Throwable {
 		return transactionDAO.getTransactionReport(reportType, year, duration);
 	}
-
+	
 	@Override
-	public Response downloadFilebyID(String transactionId) throws IOException {
-				return transactionDAO.downloadFilebyID(transactionId);
+	public ResponseEntity downloadFilebyID(HttpServletRequest request, HttpServletResponse response,
+			String transactionId) throws IOException {
+		return transactionDAO.downloadFilebyID(request,response,transactionId);
 	}
-
+	
 }
