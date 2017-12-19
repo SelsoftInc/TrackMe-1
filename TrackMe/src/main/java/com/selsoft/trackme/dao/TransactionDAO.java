@@ -1,5 +1,6 @@
 package com.selsoft.trackme.dao;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
@@ -21,7 +22,9 @@ public interface TransactionDAO {
 	public List<Transaction> getTransactionsForProperty(String propertyId, Date fromDate, Date toDate);
 
 	public List<Transaction> getTransactionReport(String reportType, int year, String duration)throws Throwable;
-	public ResponseEntity downloadFilebyID( HttpServletRequest request,
-            HttpServletResponse response,String transactionId) throws IOException; 
+	
+	//public File getFileByID(String transactionId) throws IOException;
+	
+	public String getFileNameById(String transactionId);
 
 	}

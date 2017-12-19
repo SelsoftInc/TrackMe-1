@@ -10,9 +10,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
@@ -26,7 +23,9 @@ import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.PathVariable;
 import com.itextpdf.text.pdf.parser.Path;
 import com.itextpdf.text.pdf.parser.clipper.Paths;
+import com.selsoft.trackme.model.Tenant;
 import com.selsoft.trackme.model.Transaction;
+import com.selsoft.trackme.model.User;
 import com.selsoft.trackme.model.ValidError;
 
 @Repository
@@ -103,9 +102,9 @@ public class TransactionDAOImpl implements TransactionDAO {
 		// int MILLIS_IN_DAY = 1000 * 60 * 60 * 24;
 
 		/*
-		 * Use SimpleDateFormat to get date in the format as passed in the constructor.
-		 * This object can be used to covert date in string format to java.util.Date and
-		 * vice versa
+		 * Use SimpleDateFormat to get date in the format as passed in the
+		 * constructor. This object can be used to covert date in string format
+		 * to java.util.Date and vice versa
 		 */
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy");
 		java.util.Date dateSelectedFrom = null;
@@ -125,7 +124,8 @@ public class TransactionDAOImpl implements TransactionDAO {
 			e.printStackTrace();
 		}
 
-		// use the compareTo method of java.util.Date to compare two java.util.Dates.
+		// use the compareTo method of java.util.Date to compare two
+		// java.util.Dates.
 		if (dateSelectedFrom.compareTo(dateSelectedTo) > 0) {
 			return fromDate;
 		} else {
@@ -169,14 +169,30 @@ public class TransactionDAOImpl implements TransactionDAO {
 			if (year == 0 || StringUtils.isBlank(duration) || !ArrayUtils.contains(MONTHS_IN_YEAR, duration))
 				throw new ValidError("Error", " Year and Month can not be null");
 
-			int selectedMonth = ArrayUtils.indexOf(MONTHS_IN_YEAR, duration) + 1; // (index of array + 1, for Jan =1,
-																					// Feb = 2, ...., Dec = 12)
-			int lastDayOfMonth = 0; // Based on year (leap or regular year) and month, set the last day of the month
+			int selectedMonth = ArrayUtils.indexOf(MONTHS_IN_YEAR, duration) + 1; // (index
+																					// of
+																					// array
+																					// +
+																					// 1,
+																					// for
+																					// Jan
+																					// =1,
+																					// Feb
+																					// =
+																					// 2,
+																					// ....,
+																					// Dec
+																					// =
+																					// 12)
+			int lastDayOfMonth = 0; // Based on year (leap or regular year) and
+									// month, set the last day of the month
 									// and use it against paidOn
 
-			// **Leap year check - if leap year - input will be reporttype, year, month
+			// **Leap year check - if leap year - input will be reporttype,
+			// year, month
 			boolean isLeapYear = ((year % 4 == 0) && (year % 100 != 0) || (year % 400 == 0));
-			// **if leap year true - checking months for deciding start date & end date
+			// **if leap year true - checking months for deciding start date &
+			// end date
 			// **Since exiting array is available not creating new array.
 
 			if (StringUtils.equalsIgnoreCase("JAN", duration)) {
@@ -232,8 +248,10 @@ public class TransactionDAOImpl implements TransactionDAO {
 			calendar.add(Calendar.DAY_OF_MONTH, numOfDaysInMonth - 1);
 			toDate = df.format(calendar.getTime());
 			// fromDate = year + "-01-01";
-			// toDate = year + "-" + StringUtils.leftPad(String.valueOf(selectedMonth), 2,
-			// "0") + "-" + StringUtils.leftPad(String.valueOf(lastDayOfMonth), 2, "0");
+			// toDate = year + "-" +
+			// StringUtils.leftPad(String.valueOf(selectedMonth), 2,
+			// "0") + "-" + StringUtils.leftPad(String.valueOf(lastDayOfMonth),
+			// 2, "0");
 
 		}
 
@@ -263,47 +281,14 @@ public class TransactionDAOImpl implements TransactionDAO {
 	}
 
 	@Override
-	public ResponseEntity downloadFilebyID( HttpServletRequest request,
-            HttpServletResponse response,String transactionId) throws IOException {
-		
-		/*String filePath = "C:\\output1";
-		String fileName="Selsoft-Raqmiyat.pdf";
-		//String fileName = file.getOriginalFilename();
-		String absolutePath=filePath+"\\"+fileName;
-		
-		String dataDirectory = request.getServletContext().getRealPath(filePath);
-        //Path file = Paths.get(dataDirectory, fileName);
-        //if (Files.exists(file))
-        {
-            response.setContentType("application/pdf");
-            response.addHeader("Content-Disposition", "attachment; filename="+fileName);
-            try
-            {
-               // Files.copy(file, response.getOutputStream());
-                response.getOutputStream().flush();
-            }
-            catch (IOException ex) {
-                ex.printStackTrace();
-            }
-        }*/
-		return null;
-    }
-}
+	public String getFileNameById(String transactionId) {
 
-	/*public String identifyFileTypeUsingFilesProbeContentType(final String fileName)
-    {
-       String fileType = "Undetermined";
-       final File file = new File(fileName);
-       try
-       {
-          fileType = Files.probeContentType(file.toPath());
-       }
-       catch (IOException ioException)
-       {
-          logger.info(
-               "ERROR: Unable to determine file type for " + fileName
-                  + " due to exception " + ioException);
-       }
-       return fileType;
-    }
-}*/
+		String filePath = null;
+		Query query = new Query(Criteria.where("transactionId").is(transactionId));
+		// query.fields().include("filePath");
+		List<Transaction> transactionList = template.find(query, Transaction.class);
+		if (transactionList != null && !transactionList.isEmpty())
+			filePath = transactionList.get(0).getFilePath();
+		return filePath;
+	}
+}

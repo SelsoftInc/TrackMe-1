@@ -1,5 +1,6 @@
 package com.selsoft.trackme.service;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
@@ -8,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.core.Response;
 
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,11 +74,39 @@ public class TransactionServiceImpl implements TransactionService {
 	public List<Transaction> getTransactionReport(String reportType, int year, String duration) throws Throwable {
 		return transactionDAO.getTransactionReport(reportType, year, duration);
 	}
-	
-	@Override
-	public ResponseEntity downloadFilebyID(HttpServletRequest request, HttpServletResponse response,
-			String transactionId) throws IOException {
-		return transactionDAO.downloadFilebyID(request,response,transactionId);
+			
+	public String getFileNameById(String transactionId) {
+				
+		File downloadFile = new File("C:\\downloadfile");
+		String filename = downloadFile.getName();
+		String fileExt = FilenameUtils.getExtension(filename);
+		String mimeType = "";
+		
+		if (fileExt == null) {
+			mimeType = "application/octet-stream";
+		} else if (StringUtils.equalsIgnoreCase("pdf", fileExt)) {
+			mimeType = "application/pdf";
+		}
+		else if(StringUtils.equalsIgnoreCase("text", fileExt)){
+			mimeType = "application/text";
+		}
+		else if(StringUtils.equalsIgnoreCase("doc", fileExt)){
+			mimeType = "application/doc";
+		}
+		else if(StringUtils.equalsIgnoreCase("image", fileExt)){
+			mimeType = "application/image";
+		}
+		else if(StringUtils.equalsIgnoreCase("jpg", fileExt)){
+			mimeType = "application/jpg";
+		}
+		else if(StringUtils.equalsIgnoreCase("png", fileExt)){
+			mimeType = "application/png";
+		}
+		else if(StringUtils.equalsIgnoreCase("gif", fileExt)){
+			mimeType = "application/gif";
+		}
+		logger.info("MIME type: " + mimeType);
+		return transactionDAO.getFileNameById(transactionId);
+		
 	}
-	
 }
