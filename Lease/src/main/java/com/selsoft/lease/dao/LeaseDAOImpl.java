@@ -106,4 +106,20 @@ public class LeaseDAOImpl implements LeaseDAO {
 		return returnDate;
 	}
 
-}
+	@Override
+	public String getFileNameById(String leaseId) {
+		List<Lease> leaseList = null;
+		if (leaseId != null) {
+
+			Query query = new Query(Criteria.where("leaseId").is(leaseId));
+			leaseList = template.find(query, Lease.class);
+		} else {
+
+			leaseList = template.findAll(Lease.class);
+		}
+
+		return leaseId; 
+	}
+	}
+
+

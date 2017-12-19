@@ -1,10 +1,12 @@
 package com.selsoft.lease.service;
 
+import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -126,4 +128,48 @@ public class LeaseServiceImpl implements LeaseService {
 		return leaseDAO.getRentalDetail(propertyId, date);
 	}
 
-}
+	@Override
+	public String getFileNameById(String leaseId) {
+		File downloadFile = new File("");
+		String filename = downloadFile.getName();
+		String fileExt = FilenameUtils.getExtension(filename);
+		String mimeType = "";
+
+		if (fileExt == null) {
+			mimeType = "application/octet-stream";
+		} else if (StringUtils.equalsIgnoreCase("pdf", fileExt)) {
+			mimeType = "application/pdf";
+		}
+		else if(StringUtils.equalsIgnoreCase("text", fileExt)){
+			mimeType = "application/text";
+		}
+		
+		else if(StringUtils.equalsIgnoreCase("image", fileExt)){
+			mimeType = "application/image";
+		}
+		else if(StringUtils.equalsIgnoreCase("jpg", fileExt)){
+			mimeType = "application/jpg";
+		}
+		else if(StringUtils.equalsIgnoreCase("png", fileExt)){
+			mimeType = "application/png";
+		}
+		else if(StringUtils.equalsIgnoreCase("gif", fileExt)){
+			mimeType = "application/gif";
+		}
+		logger.info("MIME type: " + mimeType);
+				 	
+		// set content attributes for the response
+		// response.setContentType(mimeType);
+		// response.setContentLength((int) downloadFile.length());
+
+		// set headers for the response
+		// String headerKey = "Content-Disposition";
+		// String headerValue = String.format("attachment; filename=\"%s\"",
+		// downloadFile.getName());
+		// response.setHeader(headerKey, headerValue);
+
+		return null;
+	}
+	}
+
+

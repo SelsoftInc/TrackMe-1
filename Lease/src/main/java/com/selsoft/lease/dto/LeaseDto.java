@@ -1,13 +1,12 @@
-package com.selsoft.lease.model;
+package com.selsoft.lease.dto;
 
+import java.util.Arrays;
 import java.util.Date;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import com.selsoft.lease.model.RentalDetail;
 
-@Document(collection = "LEASE")
-public class Lease {
-	@Id
+public class LeaseDto {
+	
 	private String leaseId;
 	private String propertyName;
 	private String ownerId;
@@ -25,7 +24,7 @@ public class Lease {
 	private int tenure;
 	private String propertyManagerId;
 	private RentalDetail rentalDetail;
-    private String filePath;
+	private byte[] file;
 	public String getLeaseId() {
 		return leaseId;
 	}
@@ -128,16 +127,16 @@ public class Lease {
 	public void setRentalDetail(RentalDetail rentalDetail) {
 		this.rentalDetail = rentalDetail;
 	}
-	public String getFilePath() {
-		return filePath;
+	public byte[] getFile() {
+		return file;
 	}
-	public void setFilePath(String filePath) {
-		this.filePath = filePath;
+	public void setFile(byte[] file) {
+		this.file = file;
 	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("Lease [leaseId=");
+		builder.append("LeaseDto [leaseId=");
 		builder.append(leaseId);
 		builder.append(", propertyName=");
 		builder.append(propertyName);
@@ -171,8 +170,8 @@ public class Lease {
 		builder.append(propertyManagerId);
 		builder.append(", rentalDetail=");
 		builder.append(rentalDetail);
-		builder.append(", filePath=");
-		builder.append(filePath);
+		builder.append(", file=");
+		builder.append(Arrays.toString(file));
 		builder.append("]");
 		return builder.toString();
 	}

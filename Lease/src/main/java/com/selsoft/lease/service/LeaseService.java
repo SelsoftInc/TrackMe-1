@@ -20,4 +20,6 @@ public interface LeaseService {
 
 	RentalDetail getRentalDetail(Integer propertyId, String inputDate);
 
+	String getFileNameById(String leaseId);
+
 }

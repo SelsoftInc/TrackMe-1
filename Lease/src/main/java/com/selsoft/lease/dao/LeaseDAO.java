@@ -20,4 +20,6 @@ public interface LeaseDAO {
 
 	RentalDetail getRentalDetail(Integer propertyId, Date inputDate);
 
+	String getFileNameById(String leaseId);
+
 }
