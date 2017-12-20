@@ -8,7 +8,6 @@ import java.util.List;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
-import javax.ws.rs.PathParam;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.selsoft.trackme.constants.TransactionConstants;
 import com.selsoft.trackme.dto.TransactionDto;
 import com.selsoft.trackme.model.Transaction;
 import com.selsoft.trackme.model.ValidError;
@@ -76,7 +76,7 @@ public class TransactionController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		String filePath = "C:\\output2";
+		String filePath = TransactionConstants.FILEPATH;
 		String fileName = file.getOriginalFilename();
 		String absolutePath=filePath+"\\"+fileName;
 		try {

@@ -285,7 +285,6 @@ public class TransactionDAOImpl implements TransactionDAO {
 
 		String filePath = null;
 		Query query = new Query(Criteria.where("transactionId").is(transactionId));
-		// query.fields().include("filePath");
 		List<Transaction> transactionList = template.find(query, Transaction.class);
 		if (transactionList != null && !transactionList.isEmpty())
 			filePath = transactionList.get(0).getFilePath();
