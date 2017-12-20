@@ -8,22 +8,19 @@ import com.selsoft.lease.model.RentalDetail;
 public class LeaseDto {
 	
 	private String leaseId;
-	private String propertyName;
-	private String ownerId;
+	private Date leaseStartDate;
+	private Date leaseEndDate;
+	private String moveInDate;
+	private String tenure;
+	private String leaseStatus;
+	private String leaseType;
+	private int rent;
+	private int deposit;
+	private String propertyId;
 	private String ownerFirstName;
 	private String ownerLastName;
 	private String tenantId;
-	private String tenantFirstName;
-	private String tenantLastName;
-	private String additionalTenant;
-	private String rentalId;
-	private String propertyId;
-	private String leaseType;
-	private Date leaseStartDate;
-	private Date leaseEndDate;
-	private int tenure;
-	private String propertyManagerId;
-	private RentalDetail rentalDetail;
+	private String managerId;
 	private byte[] file;
 	public String getLeaseId() {
 		return leaseId;
@@ -31,17 +28,59 @@ public class LeaseDto {
 	public void setLeaseId(String leaseId) {
 		this.leaseId = leaseId;
 	}
-	public String getPropertyName() {
-		return propertyName;
+	public Date getLeaseStartDate() {
+		return leaseStartDate;
 	}
-	public void setPropertyName(String propertyName) {
-		this.propertyName = propertyName;
+	public void setLeaseStartDate(Date leaseStartDate) {
+		this.leaseStartDate = leaseStartDate;
 	}
-	public String getOwnerId() {
-		return ownerId;
+	public Date getLeaseEndDate() {
+		return leaseEndDate;
 	}
-	public void setOwnerId(String ownerId) {
-		this.ownerId = ownerId;
+	public void setLeaseEndDate(Date leaseEndDate) {
+		this.leaseEndDate = leaseEndDate;
+	}
+	public String getMoveInDate() {
+		return moveInDate;
+	}
+	public void setMoveInDate(String moveInDate) {
+		this.moveInDate = moveInDate;
+	}
+	public String getTenure() {
+		return tenure;
+	}
+	public void setTenure(String tenure) {
+		this.tenure = tenure;
+	}
+	public String getLeaseStatus() {
+		return leaseStatus;
+	}
+	public void setLeaseStatus(String leaseStatus) {
+		this.leaseStatus = leaseStatus;
+	}
+	public String getLeaseType() {
+		return leaseType;
+	}
+	public void setLeaseType(String leaseType) {
+		this.leaseType = leaseType;
+	}
+	public int getRent() {
+		return rent;
+	}
+	public void setRent(int rent) {
+		this.rent = rent;
+	}
+	public int getDeposit() {
+		return deposit;
+	}
+	public void setDeposit(int deposit) {
+		this.deposit = deposit;
+	}
+	public String getPropertyId() {
+		return propertyId;
+	}
+	public void setPropertyId(String propertyId) {
+		this.propertyId = propertyId;
 	}
 	public String getOwnerFirstName() {
 		return ownerFirstName;
@@ -61,71 +100,11 @@ public class LeaseDto {
 	public void setTenantId(String tenantId) {
 		this.tenantId = tenantId;
 	}
-	public String getTenantFirstName() {
-		return tenantFirstName;
+	public String getManagerId() {
+		return managerId;
 	}
-	public void setTenantFirstName(String tenantFirstName) {
-		this.tenantFirstName = tenantFirstName;
-	}
-	public String getTenantLastName() {
-		return tenantLastName;
-	}
-	public void setTenantLastName(String tenantLastName) {
-		this.tenantLastName = tenantLastName;
-	}
-	public String getAdditionalTenant() {
-		return additionalTenant;
-	}
-	public void setAdditionalTenant(String additionalTenant) {
-		this.additionalTenant = additionalTenant;
-	}
-	public String getRentalId() {
-		return rentalId;
-	}
-	public void setRentalId(String rentalId) {
-		this.rentalId = rentalId;
-	}
-	public String getPropertyId() {
-		return propertyId;
-	}
-	public void setPropertyId(String propertyId) {
-		this.propertyId = propertyId;
-	}
-	public String getLeaseType() {
-		return leaseType;
-	}
-	public void setLeaseType(String leaseType) {
-		this.leaseType = leaseType;
-	}
-	public Date getLeaseStartDate() {
-		return leaseStartDate;
-	}
-	public void setLeaseStartDate(Date leaseStartDate) {
-		this.leaseStartDate = leaseStartDate;
-	}
-	public Date getLeaseEndDate() {
-		return leaseEndDate;
-	}
-	public void setLeaseEndDate(Date leaseEndDate) {
-		this.leaseEndDate = leaseEndDate;
-	}
-	public int getTenure() {
-		return tenure;
-	}
-	public void setTenure(int tenure) {
-		this.tenure = tenure;
-	}
-	public String getPropertyManagerId() {
-		return propertyManagerId;
-	}
-	public void setPropertyManagerId(String propertyManagerId) {
-		this.propertyManagerId = propertyManagerId;
-	}
-	public RentalDetail getRentalDetail() {
-		return rentalDetail;
-	}
-	public void setRentalDetail(RentalDetail rentalDetail) {
-		this.rentalDetail = rentalDetail;
+	public void setManagerId(String managerId) {
+		this.managerId = managerId;
 	}
 	public byte[] getFile() {
 		return file;
@@ -138,38 +117,32 @@ public class LeaseDto {
 		StringBuilder builder = new StringBuilder();
 		builder.append("LeaseDto [leaseId=");
 		builder.append(leaseId);
-		builder.append(", propertyName=");
-		builder.append(propertyName);
-		builder.append(", ownerId=");
-		builder.append(ownerId);
+		builder.append(", leaseStartDate=");
+		builder.append(leaseStartDate);
+		builder.append(", leaseEndDate=");
+		builder.append(leaseEndDate);
+		builder.append(", moveInDate=");
+		builder.append(moveInDate);
+		builder.append(", tenure=");
+		builder.append(tenure);
+		builder.append(", leaseStatus=");
+		builder.append(leaseStatus);
+		builder.append(", leaseType=");
+		builder.append(leaseType);
+		builder.append(", rent=");
+		builder.append(rent);
+		builder.append(", deposit=");
+		builder.append(deposit);
+		builder.append(", propertyId=");
+		builder.append(propertyId);
 		builder.append(", ownerFirstName=");
 		builder.append(ownerFirstName);
 		builder.append(", ownerLastName=");
 		builder.append(ownerLastName);
 		builder.append(", tenantId=");
 		builder.append(tenantId);
-		builder.append(", tenantFirstName=");
-		builder.append(tenantFirstName);
-		builder.append(", tenantLastName=");
-		builder.append(tenantLastName);
-		builder.append(", additionalTenant=");
-		builder.append(additionalTenant);
-		builder.append(", rentalId=");
-		builder.append(rentalId);
-		builder.append(", propertyId=");
-		builder.append(propertyId);
-		builder.append(", leaseType=");
-		builder.append(leaseType);
-		builder.append(", leaseStartDate=");
-		builder.append(leaseStartDate);
-		builder.append(", leaseEndDate=");
-		builder.append(leaseEndDate);
-		builder.append(", tenure=");
-		builder.append(tenure);
-		builder.append(", propertyManagerId=");
-		builder.append(propertyManagerId);
-		builder.append(", rentalDetail=");
-		builder.append(rentalDetail);
+		builder.append(", managerId=");
+		builder.append(managerId);
 		builder.append(", file=");
 		builder.append(Arrays.toString(file));
 		builder.append("]");

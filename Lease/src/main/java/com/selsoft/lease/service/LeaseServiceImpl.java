@@ -130,11 +130,11 @@ public class LeaseServiceImpl implements LeaseService {
 
 	@Override
 	public String getFileNameById(String leaseId) {
-		File downloadFile = new File("");
+		File downloadFile = new File("C:\\downloadfile");
 		String filename = downloadFile.getName();
 		String fileExt = FilenameUtils.getExtension(filename);
 		String mimeType = "";
-
+		
 		if (fileExt == null) {
 			mimeType = "application/octet-stream";
 		} else if (StringUtils.equalsIgnoreCase("pdf", fileExt)) {
@@ -143,7 +143,9 @@ public class LeaseServiceImpl implements LeaseService {
 		else if(StringUtils.equalsIgnoreCase("text", fileExt)){
 			mimeType = "application/text";
 		}
-		
+		else if(StringUtils.equalsIgnoreCase("doc", fileExt)){
+			mimeType = "application/doc";
+		}
 		else if(StringUtils.equalsIgnoreCase("image", fileExt)){
 			mimeType = "application/image";
 		}
@@ -157,19 +159,10 @@ public class LeaseServiceImpl implements LeaseService {
 			mimeType = "application/gif";
 		}
 		logger.info("MIME type: " + mimeType);
-				 	
-		// set content attributes for the response
-		// response.setContentType(mimeType);
-		// response.setContentLength((int) downloadFile.length());
-
-		// set headers for the response
-		// String headerKey = "Content-Disposition";
-		// String headerValue = String.format("attachment; filename=\"%s\"",
-		// downloadFile.getName());
-		// response.setHeader(headerKey, headerValue);
-
-		return null;
+		
+		return leaseDAO.getFileNameById(leaseId);
+		
 	}
-	}
+}
 
 

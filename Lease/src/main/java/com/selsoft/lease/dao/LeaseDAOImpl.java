@@ -23,7 +23,6 @@ import com.selsoft.lease.model.Property;
 import com.selsoft.lease.model.RentalDetail;
 import com.selsoft.lease.model.Tenant;
 
-
 @Repository
 public class LeaseDAOImpl implements LeaseDAO {
 
@@ -108,18 +107,12 @@ public class LeaseDAOImpl implements LeaseDAO {
 
 	@Override
 	public String getFileNameById(String leaseId) {
-		List<Lease> leaseList = null;
-		if (leaseId != null) {
-
-			Query query = new Query(Criteria.where("leaseId").is(leaseId));
-			leaseList = template.find(query, Lease.class);
-		} else {
-
-			leaseList = template.findAll(Lease.class);
-		}
-
-		return leaseId; 
-	}
+		String filePath = null;
+		Query query = new Query(Criteria.where("leaseId").is(leaseId));
+		List<Lease> leaseList = template.find(query, Lease.class);
+		if (leaseList != null && !leaseList.isEmpty())
+			filePath = leaseList.get(0).getFilePath();
+		return filePath;
 	}
 
-
+}
