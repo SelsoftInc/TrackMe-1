@@ -9,5 +9,6 @@ import com.selsoft.commonutility.model.CommonUtility;
 public interface CommonUtilityDAO {
 
 	List<CommonUtility> getCommonData( CommonUtility commonUtility);
-
+	List<CommonUtility> getDashboardDataForManager(String managerId);
+	
 }
