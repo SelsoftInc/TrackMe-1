@@ -5,22 +5,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.codehaus.jettison.json.JSONArray;
-import org.codehaus.jettison.json.JSONException;
-import org.codehaus.jettison.json.JSONObject;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "OWNER")
 public class Owner implements Serializable {
 	
-	private static final Logger logger = Logger.getLogger(Owner.class);
-	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 2689072918162828855L;
-	
 	@Id
 	private String ownerId;
 	private String ownerFirstName;
@@ -29,9 +26,8 @@ public class Owner implements Serializable {
 	private String email;
 	private String ownerPhoneNumber;
 	private String managerId;
-	private double grossIncome;
-	private double expense;
-	private double netIncome;
+	
+	private static final Logger logger = Logger.getLogger(Owner.class);
 	
 	private List<Error> errors = null;
  
@@ -83,36 +79,31 @@ public class Owner implements Serializable {
 		this.ownerPhoneNumber = ownerPhoneNumber;
 	}
 
+	/*@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Owner [ownerId=");
+		builder.append(ownerId);
+		builder.append(", ownerFirstName=");
+		builder.append(ownerFirstName);
+		builder.append(", ownerLastName=");
+		builder.append(ownerLastName);
+		builder.append(", ownerStatus=");
+		builder.append(ownerStatus);
+		builder.append(", emailId=");
+		builder.append(email);
+		builder.append(", ownerPhoneNumber=");
+		builder.append(ownerPhoneNumber);
+		builder.append("]");
+		return builder.toString();
+	}*/
+	
 	public String getManagerId() {
 		return managerId;
 	}
 
 	public void setManagerId(String managerId) {
 		this.managerId = managerId;
-	}
-
-	public double getGrossIncome() {
-		return grossIncome;
-	}
-
-	public void setGrossIncome(double grossIncome) {
-		this.grossIncome = grossIncome;
-	}
-
-	public double getExpense() {
-		return expense;
-	}
-
-	public void setExpense(double expense) {
-		this.expense = expense;
-	}
-
-	public double getNetIncome() {
-		return netIncome;
-	}
-
-	public void setNetIncome(double netIncome) {
-		this.netIncome = netIncome;
 	}
 
 	public List<Error> getErrors() {
@@ -125,22 +116,19 @@ public class Owner implements Serializable {
 
 	@Override
 	public String toString() {
+		//return "User [firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + ", loggedOnFlag=" + loggedOnFlag + ", lastAccessed=" + lastAccessed + ", userType=" + userType + "]";
 		return toJSON().toString();
 	}
 	
-	public JSONObject toJSON() throws JSONException {
-		
+	public JSONObject toJSON() {
+		//return "User [firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + ", loggedOnFlag=" + loggedOnFlag + ", lastAccessed=" + lastAccessed + ", userType=" + userType + "]";
 		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("managerId",  this.managerId);
 		jsonObject.put("ownerId", this.ownerId);
 		jsonObject.put("email", this.email);
 		jsonObject.put("ownerFirstName", this.ownerFirstName);
 		jsonObject.put("ownerLastName", this.ownerLastName);
 		jsonObject.put("ownerStatus", this.getOwnerStatus());
 		jsonObject.put("ownerPhoneNumber", this.ownerPhoneNumber);
-		jsonObject.put("grossIncome", this.grossIncome);
-		jsonObject.put("expense", this.expense);
-		jsonObject.put("netIncome", this.netIncome);
 		if(this.errors != null && this.errors.size() > 0) {
 			jsonObject.put("errors", this.getErrorJSON());
 		}
@@ -167,6 +155,31 @@ public class Owner implements Serializable {
 		return jObject;
 	}
 
+	/*public Map toJSONString() {
+		//return "User [firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + ", loggedOnFlag=" + loggedOnFlag + ", lastAccessed=" + lastAccessed + ", userType=" + userType + "]";
+		return toJSON().toMap();
+	}
+	
+	public JSONObject toJSON() {
+		//return "User [firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + ", loggedOnFlag=" + loggedOnFlag + ", lastAccessed=" + lastAccessed + ", userType=" + userType + "]";
+		
+		JSONObject jObject = new JSONObject();
+		try
+		{
+		    jObject.put("firstName", this.firstName);
+		    jObject.put("lastName", this.lastName);
+		    jObject.put("email", this.email);
+		    jObject.put("loggedOnFlag", this.loggedOnFlag);
+		    jObject.put("lastAccessedOn", this.lastAccessedOn);
+		    jObject.put("userType", this.userType);
+		    jObject.put("userStatus", this.userStatus);
+		    jObject.put("errors", getErrorJSON());
+		} catch (JSONException jse) {
+		    logger.error(jse);
+		}
+		return jObject;
+	}*/
+	
 	public void addError(Error error) {
 		if(this.errors == null) {
 			this.errors = new ArrayList<Error>();

@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.codehaus.jettison.json.JSONException;
-import org.codehaus.jettison.json.JSONObject;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,8 +31,8 @@ public class CommonUtilityController {
 		return commonUtilityService.getCommonData(commonUtility);
 	}
 
-	@RequestMapping(value = "/getDashboardDataForManager/{managerid} ", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-	public String getDashboardDataForManager (@PathVariable("managerId") String managerId) throws JSONException {
+	@RequestMapping(value = "/getDashboardDataForManager/{managerId}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public String getDashboardDataForManager(@PathVariable("managerId") String managerId) throws JSONException {
 		
 		JSONObject jsonObject = new JSONObject();
 		List<CommonUtility> commonUtility = null;

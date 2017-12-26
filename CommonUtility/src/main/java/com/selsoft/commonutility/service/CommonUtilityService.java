@@ -13,6 +13,5 @@ public interface CommonUtilityService {
 
 	List<CommonUtility> getDashboardDataForManager(String managerId) throws CommonUtilityException;
 
-
 }
 
