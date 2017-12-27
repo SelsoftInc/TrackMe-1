@@ -1,6 +1,10 @@
 package com.selsoft.commonutility.dao;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
@@ -59,62 +63,94 @@ public class CommonUtilityDAOImpl implements CommonUtilityDAO {
 	}
 
 	@Override
-	public long activeOwners(String managerId) {
+	public long activeOwners(String managerId) throws CommonUtilityException {
 		long activeOwnerCount = 0;
-		Query query = new Query();
-		query.addCriteria(
-				Criteria.where("managerId").is(managerId).and("ownerStatus").in("New","Active"));
+		try{
+		Query query = new Query(Criteria.where("managerId").is(managerId).and("ownerStatus").in("New"));
 		activeOwnerCount = template.count(query, Owner.class);
+		}catch(Throwable t){
+			throw new CommonUtilityException("Fatal", t);
+		}
 		return activeOwnerCount;
 	}
 
 	@Override
-	public long totalNoOfProperties(String managerId) {
+	public long totalNoOfProperties(String managerId) throws CommonUtilityException {
 		long totalNoOfProperties = 0;
-		Query query1 = new Query();
-		query1.addCriteria(Criteria.where("managerId").is(managerId).and("propertyStatus").in("Active","Occupied"));
+		try{
+		Query query1 = new Query(
+				Criteria.where("managerId").is(managerId).and("propertyStatus").in("Active", "Occupied"));
 		totalNoOfProperties = template.count(query1, Property.class);
+		}catch(Throwable t){
+			throw new CommonUtilityException("Fatal", t);
+		}
 		return totalNoOfProperties;
 	}
 
 	@Override
-	public long totalNoOfActiveProperties(String managerId) {
+	public long totalNoOfOccupiedProperties(String managerId) throws CommonUtilityException {
 		long totalNoOfActiveProperties = 0;
-		Query query2 = new Query();
-		query2.addCriteria(Criteria.where("managerId").is(managerId).and("propertyStatus").is("Occupied"));
+		try{
+		Query query2 = new Query(Criteria.where("managerId").is(managerId).and("propertyStatus").is("Occupied"));
 		totalNoOfActiveProperties = template.count(query2, Property.class);
+		}catch(Throwable t){
+			throw new CommonUtilityException("Fatal", t);
+		}
+		
 		return totalNoOfActiveProperties;
 	}
 
 	@Override
-	public long totalNoOfVacantProperties(String managerId) {
+	public long totalNoOfVacantProperties(String managerId) throws CommonUtilityException {
 		long totalNoOfVacantProperties = 0;
-		Query query3 = new Query();
-		query3.addCriteria(Criteria.where("managerId").is(managerId).and("propertyStatus").is("Active"));
+		try{
+		Query query3 = new Query(Criteria.where("managerId").is(managerId).and("propertyStatus").is("Active"));
 		totalNoOfVacantProperties = template.count(query3, Property.class);
+		}catch(Throwable t){
+			throw new CommonUtilityException("Fatal", t);
+		}
 		return totalNoOfVacantProperties;
 	}
 
 	@Override
-	public double totalRentCollected(String managerId, String paidOn, String transactionType, String transactionCode) {
-
+	public double totalRentCollected(String managerId, String year) throws CommonUtilityException {
 		Query query4 = new Query();
-		String fromDate = null, toDate = null;
+		Calendar calendar = Calendar.getInstance();
+		int curYear = calendar.get(Calendar.YEAR);
+		String fromDate = curYear + "-01-01";
+		Date date = new Date();
+		String strDateFormat = "yyyy-MM-dd";
+		DateFormat dateFormat = new SimpleDateFormat(strDateFormat);
+		String toDate = dateFormat.format(date);
+           try{         
 		query4.addCriteria(Criteria.where("managerId").is(managerId).and("paidOn").gte(fromDate).lte(toDate)
-				.and("transactionType").is("Income").and("transactionCode ").is("'Rent"));
+				.and("transactionType").is("Income").and("transactionCode").is("Rent"));
 		List<Transaction> transactionList = template.find(query4, Transaction.class);
+           
 		double totalAmount = 0;
+
 		for (Transaction transaction : transactionList) {
 			double amount = Double.parseDouble(transaction.getAmount());
 			totalAmount += amount;
 		}
+           
 		return totalAmount;
+           }catch(Throwable t){
+        	   throw new CommonUtilityException("Fatal", t);
+           }
 	}
 
 	@Override
-	public double totalExpense(String managerId, String paidOn, String transactionType) {
+	public double totalExpense(String managerId, String year) throws CommonUtilityException {
 		Query query5 = new Query();
-		String fromDate = null, toDate = null;
+		Calendar calendar = Calendar.getInstance();
+		int curYear = calendar.get(Calendar.YEAR);
+		String fromDate = curYear + "-01-01";
+		Date date = new Date();
+		String strDateFormat = "yyyy-MM-dd";
+		DateFormat dateFormat = new SimpleDateFormat(strDateFormat);
+		String toDate = dateFormat.format(date);
+         try{
 		query5.addCriteria(Criteria.where("managerId").is(managerId).and("paidOn").gte(fromDate).lte(toDate)
 				.and("transactionType").is("Expense"));
 		List<Transaction> transList = template.find(query5, Transaction.class);
@@ -124,6 +160,9 @@ public class CommonUtilityDAOImpl implements CommonUtilityDAO {
 			totalAmount += amount;
 		}
 		return totalAmount;
+         }catch(Throwable t){
+        	 throw new CommonUtilityException("Fatal", t);
+         }
 	}
 
 }

@@ -1,7 +1,9 @@
 package com.selsoft.commonutility.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.apache.log4j.Logger;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.selsoft.commonutility.dao.CommonUtilityDAO;
@@ -26,17 +28,38 @@ public class CommonUtilityServiceImpl implements CommonUtilityService {
 	}
 
 	@Override
-	public List<CommonUtility> getDashboardDataForManager(String managerId) throws CommonUtilityException {
-		String paidOn = null;
-		String transactionType = null;
-		String transactionCode = null;
-		long ownerList = commonUtilityDAO.activeOwners(managerId);
-		long propertyList = commonUtilityDAO.totalNoOfActiveProperties(managerId);
-		long propList = commonUtilityDAO.totalNoOfProperties(managerId);
-		long propsList = commonUtilityDAO.totalNoOfVacantProperties(managerId);
-		double transactionList = commonUtilityDAO.totalRentCollected(managerId, paidOn, transactionType,
-				transactionCode);
-		double trans = commonUtilityDAO.totalExpense(managerId, paidOn, transactionType);
-		return null;
+	public JSONObject getDashboardDataForManager(String managerId) {
+		String year = null;
+		JSONObject jsonObject = new JSONObject();
+		List<Error> errorList = new ArrayList<Error>();
+
+		try {
+			long activeOwners = commonUtilityDAO.activeOwners(managerId);
+			long totalProperties = commonUtilityDAO.totalNoOfProperties(managerId);
+			long occupiedProperties = commonUtilityDAO.totalNoOfOccupiedProperties(managerId);
+			long vacantProperties = commonUtilityDAO.totalNoOfVacantProperties(managerId);
+			double totalRent = commonUtilityDAO.totalRentCollected(managerId, year);
+			double totalExpenses = commonUtilityDAO.totalExpense(managerId, year);
+
+			jsonObject.put("success", true);
+			jsonObject.put("activeOwners", activeOwners);
+			jsonObject.put("totalProperties", totalProperties);
+			jsonObject.put("occupiedProperties", occupiedProperties);
+			jsonObject.put("vacantProperties", vacantProperties);
+			jsonObject.put("totalRentCollectedTillDate", totalRent);
+			jsonObject.put("totalExpenseTillDate", totalExpenses);
+
+		} catch (CommonUtilityException e) {
+			errorList.add(new Error(e));
+			jsonObject.put("error", errorList);
+			jsonObject.put("success", false);
+		} catch (Throwable t) {
+			errorList.add(new Error(new CommonUtilityException("Fatal", t)));
+			jsonObject.put("success", false);
+			// jsonObject.put("errorType", Error);
+			jsonObject.put("error", new Error(new CommonUtilityException("Fatal", t)));
+		}
+
+		return jsonObject;
 	}
 }

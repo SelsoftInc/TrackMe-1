@@ -34,31 +34,8 @@ public class CommonUtilityController {
 	@RequestMapping(value = "/getDashboardDataForManager/{managerId}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public String getDashboardDataForManager(@PathVariable("managerId") String managerId) throws JSONException {
 		
-		JSONObject jsonObject = new JSONObject();
-		List<CommonUtility> commonUtility = null;
-		List<Error> errorList = new ArrayList<Error>();
-		
-		try {
-			commonUtility = commonUtilityService.getDashboardDataForManager(managerId);
-			jsonObject.put("success", true);
-			jsonObject.put("activeOwners", 7);
-			jsonObject.put("totalProperties", 13);
-			jsonObject.put("occupiedProperties", 9);
-			jsonObject.put("vacantProperties", 4);
-			jsonObject.put("totalRentCollectedTillDate", 21600);
-			jsonObject.put("totalExpenseTillDate", 1325.34);
-			} catch(CommonUtilityException e) {
-			errorList.add(new Error(e));
-			jsonObject.put("error", errorList);
-			jsonObject.put("success", false);
-		} catch(Throwable t) {
-			errorList.add(new Error(new CommonUtilityException("Fatal", t)));
-			jsonObject.put("success", false);
-			//jsonObject.put("errorType", Error);
-			jsonObject.put("error", new Error(new CommonUtilityException("Fatal", t)));
-		}
-		
-		return jsonObject.toString(); 
+		JSONObject jsonObject = commonUtilityService.getDashboardDataForManager(managerId);
+
+		return jsonObject.toString();
 	}
-		
 }
