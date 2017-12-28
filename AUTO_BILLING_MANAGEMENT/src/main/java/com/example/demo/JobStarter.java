@@ -4,9 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class AutoBillingManagementApplication {
+public class JobStarter {
 
 	public static void main(String[] args) {
-		SpringApplication.run(AutoBillingManagementApplication.class, args);
+		SpringApplication.run(JobStarter.class, args);
 	}
 }

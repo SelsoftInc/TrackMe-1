@@ -7,7 +7,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 
 @SpringBootTest
-public class AutoBillingManagementApplicationTests {
+public class JobStarterTests {
 
 	@Autowired
     private ScheduledTasks tasks;

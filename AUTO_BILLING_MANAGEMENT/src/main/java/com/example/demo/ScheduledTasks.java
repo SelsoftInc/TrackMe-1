@@ -36,7 +36,8 @@ public class ScheduledTasks {
 
 	}
 
-    @Scheduled(cron = "*/5 * * * * *")
+    //@Scheduled(cron = "*/5 * * * * *")
+    @Scheduled(cron = "0 0 0 20  ? ")
 	public void performTaskUsingCron() {
 
 		log.info("Regular task performed using Cron at "
