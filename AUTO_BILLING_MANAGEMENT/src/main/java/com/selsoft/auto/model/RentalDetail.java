@@ -1,4 +1,4 @@
-package com.selsoft.demo.model;
+package com.selsoft.auto.model;
 
 import java.util.Date;
 

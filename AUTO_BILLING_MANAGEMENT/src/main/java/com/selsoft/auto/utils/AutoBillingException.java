@@ -1,4 +1,4 @@
-package com.selsoft.demo.utils;
+package com.selsoft.auto.utils;
 
 import org.apache.commons.lang3.StringUtils;
 

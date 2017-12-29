@@ -1,4 +1,4 @@
-package com.selsoft.demo.model;
+package com.selsoft.auto.model;
 public class ValidError {
 
 	private String errorCode;

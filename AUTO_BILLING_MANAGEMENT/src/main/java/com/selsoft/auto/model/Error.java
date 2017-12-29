@@ -1,6 +1,6 @@
-package com.selsoft.demo.model;
+package com.selsoft.auto.model;
 
-import com.selsoft.demo.utils.AutoBillingException;
+import com.selsoft.auto.utils.AutoBillingException;
 
 public class Error {
 	
